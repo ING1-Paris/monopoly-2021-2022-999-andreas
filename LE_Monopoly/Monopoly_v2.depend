@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1639045201 source:d:\andreas\documents\ece\algo-programtion-structurée c\monopoly_v2\main.c
+	"menu.h"
+
+1639045214 d:\andreas\documents\ece\algo-programtion-structurée c\monopoly_v2\menu.h
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	"sous-programmes.c"
+
+1639045197 d:\andreas\documents\ece\algo-programtion-structurée c\monopoly_v2\sous-programmes.c
+	"menu.h"
+
