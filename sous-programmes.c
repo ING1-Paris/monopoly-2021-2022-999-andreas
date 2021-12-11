@@ -30,7 +30,7 @@ void banque(info_joueur jeanMichel)
     printf("ici c'est la banque");
     printf("que voulez faire");
 
-    if jeanMichel.position[1]-jeanMichel.position[0]>=0:
+    if jeanMichel.position[0]-jeanMichel.position[1]>=0:
     {
         jeanMichel.argent+=200;
     }
