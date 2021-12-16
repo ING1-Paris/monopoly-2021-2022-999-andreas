@@ -15,7 +15,6 @@ void lance_de(int etat_de[])
     {
         printf("c'est un double ! vous relancerai les des\n");
         etat_de[2]=1; // on a un double
-
     }
 
     printf("%d %d", etat_de[0], etat_de[1]);
