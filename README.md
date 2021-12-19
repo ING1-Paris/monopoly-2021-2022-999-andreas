@@ -6,7 +6,7 @@ Ce jeu étant particulièrement long, nous développerons en C une version allé
 
 ## Frabriqué avec
 
-- [Code blocks]- Editeur de code
+- [Code::Blocks](https://www.codeblocks.org/)- Editeur de code
 - [GitHub Desktop](https://desktop.github.com/) - Extensions Git
 
 ## Auteurs
