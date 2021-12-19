@@ -6,10 +6,8 @@ Ce jeu étant particulièrement long, nous développerons en C une version allé
 
 ## Frabriqué avec
 
-- [Visual Studio Code](https://code.visualstudio.com/) - Editeur de code
-- [Atom](https://atom.io/) - Editeur de textes
-- [GitFlow](https://github.com/nvie/gitflow) - Extensions Git
-- [GitKraken](https://www.gitkraken.com/) - Git GUI Client
+- [Code blocks]- Editeur de code
+- [GitHub Desktop](https://desktop.github.com/) - Extensions Git
 
 ## Auteurs
 
