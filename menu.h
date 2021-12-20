@@ -14,11 +14,16 @@ typedef struct monopoly
 
 }t_mono;
 
+typedef struct info_joueur // regroupe les infos d'un joueur
+{
+    char nom[30];
+    int argent;
+    int position[2]; // on garde en memoire la derniere case pour savoir si le joueur passe l'arrivé
     int possession [20]; //je pense qu'on fera une liste pour chaque case [0]
                          //avec le loyer de la case [1], le nb de maison [2]
                          //et le nb de l'hotel [3]
 
-} t_joueur;
+} info_joueur;
 
 int nb_alea();
 void lancer_de(int de[3]);
