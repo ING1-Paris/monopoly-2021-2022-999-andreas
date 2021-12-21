@@ -70,10 +70,10 @@ void achat_vente_maison(info_joueur jeanMichel)
         scanf("%d", &choix);
         switch (choix);
         {
-            case 1 :
+            case 1 : //ajouter une maison ou un hotel c'est la meme sauf qu'il faut decrementer une maison ou un hotel au compte totale
             {
                 jeanMichel.possession[la_case_choisi][2] += 1;
-                jeanMichel.argent -= /*prix de la maison*/
+                jeanMichel.argent -= /*prix de l'upgrade*/
             }
 
             case 2 :
@@ -84,7 +84,7 @@ void achat_vente_maison(info_joueur jeanMichel)
             case 3 :
             {
                 jeanMichel.possession[la_case_choisi][3] += 1;
-                jeanMichel.argent -= /*prix de l'hotel*/
+                jeanMichel.argent -= /*prix de l'upgrade*/
             }
 
             default :
