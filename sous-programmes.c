@@ -4,17 +4,13 @@ int nb_alea()
     return rand()%(6)+1;
 }
 
-<<<<<<< Updated upstream
-int lancer_de()
+void lancer_de(int de[3])
 {
-    int de[3] = {0};
-
     de[0] = nb_alea();
     de[1] = nb_alea();
 
     if (de[0]==de[1])
     {
-        printf("c'est un double ! vous relancerai les des\n");
         de[2]=1; // on a un double
 
     }
@@ -31,11 +27,6 @@ int menu()
     }while (choix<0 || choix >4);
     return choix;
 
-<<<<<<< Updated upstream
-    printf("%d %d", de[0], de[1]);
-    return de;
-=======
->>>>>>> Stashed changes
 }
 
 void Color(int couleurDuTexte,int couleurDeFond)
@@ -63,7 +54,7 @@ void setConsoleSize()
 ///merci AD
 void plateau(int ligne)
 {
-    /// cr�ation des cases
+    /// création des cases
     int i,j;
     gotoligcol(5+ligne,0);
         printf(" \n==============================================================================================================================================================="); /// 144
@@ -367,7 +358,114 @@ void afficher_point(int joueur,int ligplat, int colplat,char pion,t_mono plat[4]
         }
 }
 
-void banque()
+
+void casechance(t_joueur tabdejoueur[6],int i, t_mono plat [4][8], int ligne)
 {
-    printf("ici c'est la banque");
+    int carte;
+    char tab[15][200] = { {"vous prenez 3 jours de conge, vous allez manger des tapas a mardrid.Si vous passer par la case depart prenez 200 euros"},{"sortie de douane.Vous pouvez la conserver(utilisable une seul fois)"},{"avancez jusqu a la case depart"},{"votre passeport à expirer, vous ne jouez pas pendant 2 tours"},{"vous avez ete expule de la ou vous etes, vous revenez a Paris"},{"vous avez gagne une soiree poker à Bucarest vous gagnez 100 euros"},{"On vous a vole votre argent a Sofia vous perdez 100 euros"},{"sortie de douane.Vous pouvez la conserver(utilisable une seul fois)"},{"vous vous faites arnaquer par un portugais vous perdez 150 euros"},{"vous gagnez un prix de beaute et vous remportez 200 euros"},{"Pour votre anniverssaire vos enfants vous offre un voyage a Londres.Si vous passer par la case depart prenez 200 euros"},{"vous payez votre tourne a Dublin et vous perdez 100 euros"},{"direction la case depart"},{"changement de proramme pendant votre voyage,vous allez a Rome.Si vous passer par la case depart prenez 200 euros"},{"vous etes bloquer par la neige à Stockholm,vous y restez 2 jours de plus"},{"vous gagnez un jeu televise,vous partez imediatement pour Berlin.Si vous passer par la case depart prenez 200 euros"}};
+    carte=rand()%(15);
+    printf(tab[carte]);
+    switch(carte)
+    {
+        case 0 :
+        {
+            gotoligcol(54+ligne,4);
+            printf("%c",tabdejoueur[i].pionjoueur);
+            plat[4][2].presence++;
+            break;
+        }
+        case 1:
+        {
+            //carte sortie de douane
+            break;
+        }
+
+        case 2 :
+        {
+            gotoligcol(3+ligne,3);
+            printf("%c",tabdejoueur[i].pionjoueur);
+            plat[1][1].presence++;
+            break;
+        }
+
+        case 3 :
+        {
+            //pas jouer pendant 2 tours;
+            break;
+        }
+        case 4 :
+        {
+            gotoligcol(17+ligne,3);
+            printf("%c",tabdejoueur[i].pionjoueur);
+            plat[4][8].presence++;
+            break;
+        }
+        case 5:
+        {
+            tabdejoueur[i].argent=tabdejoueur[i].argent+100;
+            break;
+        }
+        case 6:
+        {
+            tabdejoueur[i].argent=tabdejoueur[i].argent-100;
+            break;
+        }
+        case 7:
+        {
+            // carte sortie de douane
+            break;
+        }
+        case 8:
+        {
+            tabdejoueur[i].argent=tabdejoueur[i].argent-150;
+            break;
+        }
+        case 9:
+        {
+            tabdejoueur[i].argent=tabdejoueur[i].argent+200;
+            break;
+        }
+        case 10:
+        {
+            gotoligcol(47+ligne,3);
+            printf("%c",tabdejoueur[i].pionjoueur);
+            plat[4][3].presence++;
+            break;
+        }
+        case 11:
+        {
+            tabdejoueur[i].argent=tabdejoueur[i].argent-100;
+            break;
+        }
+        case 12:
+        {
+            gotoligcol(3+ligne,3);
+            printf("%c",tabdejoueur[i].pionjoueur);
+            plat[1][1].presence++;
+            break;
+        }
+        case 13:
+        {
+            gotoligcol(35+ligne,3);
+            printf("%c",tabdejoueur[i].pionjoueur);
+            plat[4][4].presence++;
+            break;
+        }
+        case 14:
+        {
+            //bouge pas pendant 2 jours
+            break;
+        }
+        case 15:
+        {
+            gotoligcol(23+ligne,3);
+            printf("%c",tabdejoueur[i].pionjoueur);
+            plat[4][7].presence++;
+            break;
+        }
+    }
 }
+
+
+
+
