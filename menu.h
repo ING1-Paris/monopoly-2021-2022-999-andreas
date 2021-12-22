@@ -5,14 +5,23 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define VILLE 0
+#define GARE 1
+#define CHANCE 2
+#define COMM 3
+#define PRISON 4
+#define ARRIVE 5
+#define PARC 6
+#define IMPOT 7
 
 typedef struct monopoly
 {
-    char type[20]; // ville, gare, chance, communaute, prison, depart, parc
+    char type[20]; // ville, gare, chance, communaute, prison, depart, parc, impot
     int prix;
+    int loyer;
     int presence;
     int maison;
-    int hotel;
+    int hotel;// yen a pas besoin en fait ?
     int hypo;
 
 }t_mono;
