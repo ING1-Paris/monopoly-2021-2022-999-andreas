@@ -25,11 +25,6 @@ void menu_taches()
 
     switch(choix)
     {
-        case 1 :
-        {
-            break;
-        }
-
         case 2 :
         {
             achat_vente_maison();
@@ -83,7 +78,7 @@ void achat_vente_maison(info_joueur jeanMichel)
 
             case 3 :
             {
-                jeanMichel.possession[la_case_choisi][3] += 1;
+                jeanMichel.possession[la_case_choisi][3]   += 1;
                 jeanMichel.argent -= /*prix de l'upgrade*/
             }
 
@@ -115,3 +110,6 @@ void hypotheque(info_joueur jeanMichel)
 
     }
 }
+
+
+/*il faut trouver un moyen de stocker les infos des loyers de chaque proprieter en fonction des maisons */

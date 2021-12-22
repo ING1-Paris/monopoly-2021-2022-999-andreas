@@ -1,11 +1,12 @@
 #include "menu.h"
 
+
 int nb_alea()
 {
     return rand()%(6)+1;
 }
 
-void lance_de(int etat_de[])
+void lance_de(int etat_de[3])
 {
 
     etat_de[0] = nb_alea();
@@ -14,16 +15,16 @@ void lance_de(int etat_de[])
     if (etat_de[0]==etat_de[1])
     {
         printf("c'est un double ! vous relancerai les des\n");
-        etat_de[2]=1; // on a un double
+        etat_de[2]+=1; // on a un double
     }
 
     printf("%d %d", etat_de[0], etat_de[1]);
 }
 
-///il faudra integrer ça pour initialiser les loyer des cases avec le fichier infos_villes /// il faudra aussi faire ca pour les infos à sauvegarder dans un autre fichier
+///il faudra integrer ça pour initialiser les loyer des cases avec le fichier infos_villes /// il faudra aussi faire ca pour les infos à sauvegarder
 
-void lecture(t_mono tab[MAX], char fichier[20])// fonction lisant le contenue du fichier
-                                               // et le mettant dans un tableau
+void lecture(t_film tab[MAX], char fichier[20])// fonction lisant le contenue du fichier
+                                               // et le mettant dans un tableau de structure
 {
     int i = 0;
 
@@ -51,7 +52,7 @@ void lecture(t_mono tab[MAX], char fichier[20])// fonction lisant le contenue du
 
 }
 
-void ecriture(t_film tab[MAX], char ficher[20])// fonction ecrivant la tableau
+void ecriture(t_film tab[MAX], char ficher[20])// fonction ecrivant le tableau de structure
                                                // dans le fichier texte
 {
     int i = 0;
@@ -79,3 +80,4 @@ void ecriture(t_film tab[MAX], char ficher[20])// fonction ecrivant la tableau
     pf = NULL;
 
 }
+///note : je ne sais pas encore comment on vas faire pour lire correctement le fichier, mettre les bonnes infos au bon endroit

@@ -4,28 +4,23 @@
 int main()
 {
     srand(time(NULL));
+    /*
+    -afficher le menu avec le nom des sauvegardes
+    -on travaille sur le fichier choisi
+    -initialisation des cases et joueur en fonction du fichier (si le nom du fichier sur lequel on travaille est en dernier dans le tableau alors tout à 0)
+    -demander le nombre de joueur si besoin
+    -demander les noms des joueurs si besoin
+    -lancer la partie
+    */
+
+
+
+
 
     int etat_de[3] = {0,0,0};
-    int i;
     info_joueur Dennis;
 
-    for (i=0;i<2;i++)
-    {
-        printf("%d ",etat_de[i]);
-    }
-    printf("\n");
-
     lance_de(etat_de);
-
-    for (i=0;i<2;i++)
-    {
-        printf("%d ",etat_de[i]);
-    }
-
-
-
-    banque(Dennis);
-
 
     return 0;
 }

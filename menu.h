@@ -5,17 +5,23 @@
 #include <stdlib.h>
 #include <time.h>
 
+
 typedef struct monopoly
 {
+    char type[20]; // ville, gare, chance, communaute, prison, depart, parc
+    int prix;
+    int presence;
     int maison;
     int hotel;
-    int presence;
-    int prix;
+    int hypo;
 
 }t_mono;
 
 typedef struct info_joueur // regroupe les infos d'un joueur
 {
+
+    int prison;
+    int nb_double;
     char nom[30];
     int argent;
     int position[2]; // on garde en memoire la derniere case pour savoir si le joueur passe l'arrivé
@@ -30,7 +36,7 @@ typedef struct info_joueur // regroupe les infos d'un joueur
 
 //dans sous-programmes
 int nb_alea();
-void lance_de(int etat_de[]);
+void lance_de(int etat_de[3]);
 
 //dans banque
 void achat_vente_maison(info_joueur jeanMichel);
