@@ -15,13 +15,13 @@ void lance_de(int etat_de[3])
     if (etat_de[0]==etat_de[1])
     {
         printf("c'est un double ! vous relancerai les des\n");
-        etat_de[2]+=1; // on a un double
+        etat_de[2]=1; // on a un double
     }
 
     printf("%d %d", etat_de[0], etat_de[1]);
 }
 
-///il faudra integrer ça pour initialiser les loyer des cases avec le fichier infos_villes /// il faudra aussi faire ca pour les infos à sauvegarder
+///il faudra integrer Ã§a pour initialiser les loyer des cases avec le fichier infos_villes /// il faudra aussi faire ca pour les infos Ã  sauvegarder
 
 void lecture(t_film tab[MAX], char fichier[20])// fonction lisant le contenue du fichier
                                                // et le mettant dans un tableau de structure
