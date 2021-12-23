@@ -13,7 +13,78 @@ void passage_arrivee(info_joueur jeanMichel)
 
 }
 
-void menu_taches()
+void achat_vente_maison(info_joueur jeanMichel, t_mono plateau[32], int nb_maison, int nb_hotel)
+{
+    int la_case_choisi;
+    int choix;
+
+    printf("avec quelle case voulez vous interagir ?\n"); // le mieux serait de pouvoir cliquer
+    scanf("%d", &la_case_choisi);                         // sur la case mais jps si c'est possible
+
+
+    if (jeanMichel.possession[la_case_choisi])
+    {
+        printf("1. ajouter une maison\n");
+        printf("2. ne rien faire\n");
+        if (plateau[la_case_choisi].maison == 4)
+        {
+            printf("3. ajouter un hotel\n");
+        }
+
+        scanf("%d", &choix);
+        switch (choix)
+        {
+            case 1 :
+            {
+                plateau.maison[la_case_choisi] += 1;
+                jeanMichel.argent -= /*prix de l'upgrade*/
+                nb_maison -=1;
+            }
+
+            case 2 :
+            {
+                menu_taches(jeanMichel, plateau);
+            }
+
+            case 3 :
+            {
+                plateau.hotel[la_case_choisi]  += 1;
+                plateau.maison[la_case_choisi] = 0;
+                jeanMichel.argent -= /*prix de l'upgrade*/
+                nb_maison +=4;
+                nb_hotel -=1;
+            }
+
+            default :
+            {
+                achat_vente_maison(jeanMichel,plateau, nb_maison, nb_hotel)
+            }
+        }
+    }
+
+    else:
+    {
+        printf("cette rue appartient à un autre joueur, quel dommage...\n");
+        menu_taches(jeanMichel,plateau, nb_maison, nb_hotel);
+    }
+}
+
+void hypotheque(info_joueur jeanMichel, t_mono plateau[32], int nb_maison, int nb_hotel)
+{
+    int la_case_choisi;
+
+    printf("avec quelle case voulez vous interagir ?\n"); // le mieux serait de pouvoir cliquer
+    scanf("%d", &la_case_choisi);
+
+    if(jeanMichel.possession[la_case_choisi])
+    {
+        jeanMichel.possession[la_case_choisi] =0;
+        jeanMichel.argent += /*prix de la case -10%*/
+        plateau.hypo[la_case_choisi] = 1;
+    }
+}
+
+void menu_taches(info_joueur jeanMichel, t_mono plateau[32], int nb_maison, int nb_hotel)
 {
     int choix;
 
@@ -27,87 +98,21 @@ void menu_taches()
     {
         case 2 :
         {
-            achat_vente_maison();
+            achat_vente_maison(jeanMichel, plateau, nb_maison, nb_hotel);
             break;
         }
 
         case 3 :
         {
-            hypotheque();
+            hypotheque(jeanMichel, plateau, nb_maison, nb_hotel);
             break;
         }
 
         default :
         {
-            menu_taches();
+            menu_taches(jeanMichel, plateau, nb_maison, nb_hotel);
 
         }
-    }
-}
-
-void achat_vente_maison(info_joueur jeanMichel)
-{
-    int la_case_choisi;
-
-    printf("avec quelle case voulez vous interagir ?\n"); // le mieux serait de pouvoir cliquer
-    scanf("%d", &la_case_choisi);                         // sur la case mais jps si c'est possible
-
-
-    if (/*la_case_choisi est dans jeanMichel.possession*/)
-    {
-        printf("1. ajouter une maison\n");
-        printf("2. ne rien faire\n"):
-        if (jeanMichel.possession[la_case_choisi][2]==4)
-        {
-            printf("3. ajouter un hotel\n");
-        }
-
-        scanf("%d", &choix);
-        switch (choix);
-        {
-            case 1 : //ajouter une maison ou un hotel c'est la meme sauf qu'il faut decrementer une maison ou un hotel au compte totale
-            {
-                jeanMichel.possession[la_case_choisi][2] += 1;
-                jeanMichel.argent -= /*prix de l'upgrade*/
-            }
-
-            case 2 :
-            {
-                menu_taches();
-            }
-
-            case 3 :
-            {
-                jeanMichel.possession[la_case_choisi][3]   += 1;
-                jeanMichel.argent -= /*prix de l'upgrade*/
-            }
-
-            default :
-            {
-
-            }
-        }
-    }
-
-    else:
-    {
-        printf("cette rue appartient à un autre joueur, quel dommage...\n");
-        menu_taches();
-    }
-}
-
-void hypotheque(info_joueur jeanMichel)
-{
-    int la_case_choisi;
-
-    printf("avec quelle case voulez vous interagir ?\n"); // le mieux serait de pouvoir cliquer
-    scanf("%d", &la_case_choisi);
-
-    if(/*la_case_choisi est dans jeanMichel.possession*/)
-    {
-        jeanMichel.possession[la_case_choisi] =0;
-        jeanMichel.argent -= /*prix de la case -10%*/
-
     }
 }
 

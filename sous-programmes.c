@@ -23,7 +23,7 @@ void lance_de(int etat_de[3])
 
 ///il faudra integrer ça pour initialiser les loyer des cases avec le fichier infos_villes /// il faudra aussi faire ca pour les infos à sauvegarder
 
-void lecture(t_film tab[MAX], char fichier[20])// fonction lisant le contenue du fichier
+/*void lecture(t_film tab[MAX], char fichier[20])// fonction lisant le contenue du fichier
                                                // et le mettant dans un tableau de structure
 {
     int i = 0;
@@ -79,5 +79,6 @@ void ecriture(t_film tab[MAX], char ficher[20])// fonction ecrivant le tableau d
     fclose(pf);
     pf = NULL;
 
-}
+}*/
 ///note : je ne sais pas encore comment on vas faire pour lire correctement le fichier, mettre les bonnes infos au bon endroit
+///ça serait mieux de faire avec des pointeur pour le tab joueur et le plateau

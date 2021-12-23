@@ -16,27 +16,24 @@
 
 typedef struct monopoly
 {
-    char type[20]; // ville, gare, chance, communaute, prison, depart, parc, impot
+    int type; // ville, gare, chance, communaute, prison, depart, parc, impot
     int prix;
     int loyer;
     int presence;
     int maison;
-    int hotel;// yen a pas besoin en fait ?
-    int hypo;
+    int hotel;
+    int hypo; // si c'est hypotheque ou pas
 
 }t_mono;
 
 typedef struct info_joueur // regroupe les infos d'un joueur
 {
-
     int prison;
     int nb_double;
     char nom[30];
     int argent;
     int position[2]; // on garde en memoire la derniere case pour savoir si le joueur passe l'arrivé
-    int possession [15]; //je pense qu'on fera une liste pour chaque case [0]
-                         //avec le loyer de la case [1], le nb de maison [2]
-                         //et le nb de l'hotel [3]
+    int possession [15]; //on met juste la place des proprieters, tout le reste est stocke dans le plateau
 
 } info_joueur;
 
@@ -48,7 +45,8 @@ int nb_alea();
 void lance_de(int etat_de[3]);
 
 //dans banque
-void achat_vente_maison(info_joueur jeanMichel);
-void hypotheque(info_joueur jeanMichel);
+void menu_taches(info_joueur jeanMichel, t_mono plateau[32], int nb_maison, int nb_hotel);
+void achat_vente_maison(info_joueur jeanMichel, t_mono plateau[32], int nb_maison, int nb_hotel);
+void hypotheque(info_joueur jeanMichel, t_mono plateau[32], int nb_maison, int nb_hotel);
 
 #endif // MENU_H_INCLUDED
