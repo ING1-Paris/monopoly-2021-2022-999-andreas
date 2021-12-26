@@ -21,6 +21,24 @@ void lance_de(int etat_de[3])
     printf("%d %d", etat_de[0], etat_de[1]);
 }
 
+int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre)// renvoie une info preciser dans les parametre d'une ville en particulier
+{
+    int i;
+    int j;
+
+    for (i=0; i<19; i++)
+    {
+        for (j=0; j<9; j++)
+        {
+            if (la_case_choisi == info_villes[i][j])
+            {
+                return info_villes[i][info_a_rendre];
+            }
+        }
+    }
+    return 0;
+}
+
 ///il faudra integrer ça pour initialiser les loyer des cases avec le fichier infos_villes /// il faudra aussi faire ca pour les infos à sauvegarder
 
 /*void lecture(t_film tab[MAX], char fichier[20])// fonction lisant le contenue du fichier

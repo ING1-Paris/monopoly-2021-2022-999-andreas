@@ -8,8 +8,12 @@ int main()
     int etat_de[3] = {0,0,0};
     int nb_maison;
     int nb_hotel;
+    int choix;
 
-    int info_villes[19][9] ={{60,50,2,10,30,90,160,250,1},
+
+    info_joueur jeanMichel;
+
+    int info_villes[19][9] ={{60,50,2,10,30,90,160,250,1},/// prix | prix maison | loyer sans maison | 1 maison | 2 maisons | 3 maisons | 4 maisons | 1 hotel | place sur le plateau
                         {60,50,4,20,60,180,320,450,3},
                         {100,50,6,30,90,270,400,550,6},
                         {120,50,8,40,100,300,450,600,7},
@@ -72,11 +76,56 @@ int main()
     */
 
     ///si on cree une nouvelle partie -------------------------------------------------------
+
+
     nb_maison = 32;
     nb_hotel = 12;
 
     //initialisation des prix des cases ville et gare
 
+    //initialisation de l'argent des joueurs
+    jeanMichel.argent = 1500;
+    jeanMichel.possession[0] = 3;
+    jeanMichel.position[0] = 3;
+
+    plateau[3].maison = 4;
+
+    ///debut d'un tours
+
+    do
+    {
+        printf("1. lancer des des\n");
+        printf("2. acheter/vendre une maison ou un hotel\n");
+        printf("3. hypothequer une case\n");
+
+        scanf("%d", &choix);
+    }
+    while((choix != 1 ) && (choix != 2 ) && (choix != 3));
+
+    switch(choix)
+    {
+        case 1 :
+        {
+            break;
+        }
+
+        case 2 :
+        {
+            achat_vente_maison(&jeanMichel, plateau, &nb_maison, &nb_hotel, info_villes);
+            break;
+        }
+
+        case 3 :
+        {
+            hypotheque(&jeanMichel, plateau, &nb_maison, &nb_hotel, info_villes);
+            break;
+        }
+    }
+
+
+    printf("%d\n", plateau[3].maison );
+    printf("%d\n", jeanMichel.argent);
+    //lance_de(etat_de);
 
     return 0;
 }

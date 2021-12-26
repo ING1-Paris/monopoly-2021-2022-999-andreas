@@ -13,107 +13,94 @@ void passage_arrivee(info_joueur jeanMichel)
 
 }
 
-void achat_vente_maison(info_joueur jeanMichel, t_mono plateau[32], int nb_maison, int nb_hotel)
+void achat_vente_maison(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
 {
+    int quantite;
     int la_case_choisi;
     int choix;
 
-    printf("avec quelle case voulez vous interagir ?\n"); // le mieux serait de pouvoir cliquer
-    scanf("%d", &la_case_choisi);                         // sur la case mais jps si c'est possible
+    do
+    {
+        printf("avec quelle case voulez vous interagir ?\n"); // le mieux serait de pouvoir cliquer
+        scanf("%d", &la_case_choisi);
+    }
+    while(!jeanMichel->possession[la_case_choisi]);
 
 
-    if (jeanMichel.possession[la_case_choisi])
+    do
     {
         printf("1. ajouter une maison\n");
-        printf("2. ne rien faire\n");
+        printf("2. vendre une maison/hotel\n");
         if (plateau[la_case_choisi].maison == 4)
         {
             printf("3. ajouter un hotel\n");
         }
 
         scanf("%d", &choix);
-        switch (choix)
+    }
+    while ((choix!= 1) && (choix!=2) && (choix!=3));
+
+    switch (choix)
+    {
+        case 1 :
         {
-            case 1 :
-            {
-                plateau.maison[la_case_choisi] += 1;
-                jeanMichel.argent -= /*prix de l'upgrade*/
-                nb_maison -=1;
-            }
-
-            case 2 :
-            {
-                menu_taches(jeanMichel, plateau);
-            }
-
-            case 3 :
-            {
-                plateau.hotel[la_case_choisi]  += 1;
-                plateau.maison[la_case_choisi] = 0;
-                jeanMichel.argent -= /*prix de l'upgrade*/
-                nb_maison +=4;
-                nb_hotel -=1;
-            }
-
-            default :
-            {
-                achat_vente_maison(jeanMichel,plateau, nb_maison, nb_hotel)
-            }
+            plateau[la_case_choisi].maison += 1;
+            jeanMichel->argent -= info_case(info_villes, la_case_choisi, 1); // on prend l'info 1 (le prix d'une upgrade) de la case choisi dans info_villes
+            nb_maison -=1;
+            break;
         }
-    }
 
-    else:
-    {
-        printf("cette rue appartient à un autre joueur, quel dommage...\n");
-        menu_taches(jeanMichel,plateau, nb_maison, nb_hotel);
-    }
-}
-
-void hypotheque(info_joueur jeanMichel, t_mono plateau[32], int nb_maison, int nb_hotel)
-{
-    int la_case_choisi;
-
-    printf("avec quelle case voulez vous interagir ?\n"); // le mieux serait de pouvoir cliquer
-    scanf("%d", &la_case_choisi);
-
-    if(jeanMichel.possession[la_case_choisi])
-    {
-        jeanMichel.possession[la_case_choisi] =0;
-        jeanMichel.argent += /*prix de la case -10%*/
-        plateau.hypo[la_case_choisi] = 1;
-    }
-}
-
-void menu_taches(info_joueur jeanMichel, t_mono plateau[32], int nb_maison, int nb_hotel)
-{
-    int choix;
-
-    printf("1. lancer des dés\n");
-    printf("2. acheter/vendre une maison ou un hotel\n");
-    printf("3. hypothéquer une case\n");
-
-    scanf("%d", &choix);
-
-    switch(choix)
-    {
         case 2 :
         {
-            achat_vente_maison(jeanMichel, plateau, nb_maison, nb_hotel);
+            printf("combien de maisons ou hotel voulais vous vendre : ");
+            scanf("%d", &quantite);
+            printf("\n");
+            if (plateau[la_case_choisi].hotel)
+            {
+                quantite -=1;
+                plateau[la_case_choisi].hotel = 0;
+                nb_hotel +=1;
+                jeanMichel->argent +=(info_case(info_villes, la_case_choisi,1))/2;
+            }
+
+            plateau[la_case_choisi].maison -=quantite;
+            nb_maison +=quantite;
+            jeanMichel->argent += (quantite * ((info_case(info_villes, la_case_choisi,1)/2)));
             break;
         }
 
         case 3 :
         {
-            hypotheque(jeanMichel, plateau, nb_maison, nb_hotel);
+            plateau[la_case_choisi].hotel  += 1;
+            jeanMichel->argent -= info_case(info_villes, la_case_choisi, (plateau[la_case_choisi].maison+2));
+            plateau[la_case_choisi].maison = 0;
+            nb_maison +=4;
+            nb_hotel -=1;
             break;
         }
-
-        default :
-        {
-            menu_taches(jeanMichel, plateau, nb_maison, nb_hotel);
-
-        }
     }
+}
+
+void hypotheque(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
+{
+    int la_case_choisi;
+
+    do
+    {
+        printf("avec quelle case voulez vous interagir ?\n"); // le mieux serait de pouvoir cliquer
+        scanf("%d", &la_case_choisi);
+    }
+    while(!jeanMichel->possession[la_case_choisi]);
+
+    if(plateau[la_case_choisi].maison || plateau[la_case_choisi].hotel)
+    {
+        jeanMichel->argent += (((plateau[la_case_choisi].hotel) + (plateau[la_case_choisi].maison)) * (info_case(info_villes, la_case_choisi, 1)))/2;
+    }
+
+    jeanMichel->possession[la_case_choisi] =0;
+    jeanMichel->argent += ((info_case(info_villes, la_case_choisi, 0)/2));
+    plateau[la_case_choisi].hypo = 1;
+
 }
 
 

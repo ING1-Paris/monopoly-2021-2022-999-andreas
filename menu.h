@@ -43,10 +43,10 @@ typedef struct info_joueur // regroupe les infos d'un joueur
 //dans sous-programmes
 int nb_alea();
 void lance_de(int etat_de[3]);
+int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre);
 
 //dans banque
-void menu_taches(info_joueur jeanMichel, t_mono plateau[32], int nb_maison, int nb_hotel);
-void achat_vente_maison(info_joueur jeanMichel, t_mono plateau[32], int nb_maison, int nb_hotel);
-void hypotheque(info_joueur jeanMichel, t_mono plateau[32], int nb_maison, int nb_hotel);
+void achat_vente_maison(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
+void hypotheque(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
 
 #endif // MENU_H_INCLUDED
