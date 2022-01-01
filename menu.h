@@ -49,9 +49,14 @@ void lance_de(int etat_de[3]);
 int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre);
 int init_sauvegarde(info_joueur* tabjoueurs[] ,t_mono* plateau[32], char fichiers[2][LEN]);
 int sauvegarde(info_joueur* tabjoueurs[] ,t_mono* plateau[32], char fichers[2][LEN]);
+int sauvegarde_nom(char fichiers[2][LEN]);
+void nom_fichier(char fichiers[2][LEN]);
 
 //dans banque
-void achat_vente_maison(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
+void ajout_maison(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int info_villes[19][9]);
+void vendre_maison(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
+void menu_achat_vente_maison();
+void ajout_hotel(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
 void hypotheque(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
 void faillite(info_joueur* jeanMichel, int paymant, t_mono plateau[32]);
 

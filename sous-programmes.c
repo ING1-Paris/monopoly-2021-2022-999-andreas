@@ -54,6 +54,22 @@ void nom_fichier(char fichiers[2][LEN])//return deux nom de fichier (un pour les
 
 }
 
+int sauvegarde_nom(char fichiers[2][LEN])
+{
+    FILE* pf = fopen(fichiers[0], "w");
+    if (pf == NULL)
+    {
+        printf("Erreur d'ouverture de fichier.");
+        return 1;
+    }
+
+    fprintf(pf, "%s %s\n",fichiers[0], fichiers[1]);
+
+    fclose(pf);
+    pf = NULL;
+    return 0;
+}
+
 
 int init_sauvegarde(info_joueur* tabjoueurs[] ,t_mono* plateau[32], char fichiers[2][LEN])// fonction lisant le contenue du fichier
                                                                                         // et le mettant dans un tableau de structure
