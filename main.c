@@ -9,14 +9,14 @@ int main()
     int nb_maison;
     int nb_hotel;
     int choix;
-    char fichiers[2][LEN] = {{"./fichier_save/joueurs"},{"./fichier_save/plateau"}};
-
+    int nb_joueur;
+    char fichiers[2][LEN] = {"./fichier_saves/joueurs.txt","./fichier_saves/plateau.txt"};
 
     info_joueur tabJoueurs[6];
 
     int info_villes[19][9] ={{60,50,2,10,30,90,160,250,1},/// prix | prix maison | loyer sans maison | 1 maison | 2 maisons | 3 maisons | 4 maisons | 1 hotel | place sur le plateau
                         {60,50,4,20,60,180,320,450,3},    ///   0         1                 2              3          4           5           6          7                8
-                        {100,50,6,30,90,270,400,550,6},   // il faut rajouter une case groupe de couleur
+                        {100,50,6,30,90,270,400,550,6},   // il faut rajouter une case groupe de couleur ou pas
                         {120,50,8,40,100,300,450,600,7},
                         {120,100,10,50,150,450,625,750,9},
                         {140,100,10,50,150,450,625,750,10},
@@ -68,6 +68,9 @@ int main()
     plateau[30].type =VILLE;
     plateau[31].type =VILLE;
 
+
+    //etc
+
     /*
     -afficher le menu avec le nom des sauvegardes
     -on travaille sur le fichier choisi
@@ -77,31 +80,80 @@ int main()
     -lancer la partie
     */
 
+    //--------------------------------------------------------- on lis et on affiche se que contient le fichier nom
+    /*                                                            //le joueur choisi la save qu'il veut charger
+    char nom_tempo[15][2][LEN];
+
+    FILE* pf = fopen("./fichier_save/noms_save", "r");
+    if (pf == NULL)
+    {
+        printf("Erreur d'ouverture de fichier.");
+    }
+
+    for (i = 0 ;i <15 ; i++)
+    {
+        printf("download\n");
+
+        fscanf(pf, "%s", nom_tempo[i][0]);
+        fscanf(pf, "%s", nom_tempo[i][1]);
+        printf("%d. %s %s\n", i+1, nom_tempo[i][0], nom_tempo[i][1]);
+    }
+
+    fclose(pf);
+    pf = NULL;
+
+    do
+    {
+        printf("entrer le numero de la sauvegarde que vous voulez charger");
+        scanf("%d", &choix);
+    }
+    while((choix<16) && (choix>0));
+
+    for(i = 0; i<60; i++)
+    {
+        fichiers[0][i] = nom_tempo[choix][0][i];
+        fichiers[1][i] = nom_tempo[choix][1][i];
+    }*/
+
+
+
+
+
+    //initialisation à partir des noms de fichiers selectionner
+
     ///si on cree une nouvelle partie -------------------------------------------------------
 
 
 
     nb_maison = 32;
     nb_hotel = 12;
+    nb_joueur = 6;
+
 
     //initialisation des prix des cases ville et gare
 
     //initialisation de l'argent des joueurs
 
-    /* TEST
+    for (int i = 0; i<32; i++)
+    {
+        plateau[i].hotel = 0;
+        plateau[i].hypo = 0;
+        plateau[i].loyer = 0;
+        plateau[i].maison = 0;
+        plateau[i].presence = 0;
+        plateau[i].prix = 0;
+        plateau[i].type = 0;
+    }
+
     for ( i=0; i<6; i++)
     {
         tabJoueurs[i].argent = 200;
         tabJoueurs[i].nb_double = 0;
-        tabJoueurs[i].nom = "oui";
-        tabJoueurs[i].position = 2; // il faudra bien initialiser à 0 /!\
-        tabJoueurs[i].possession[0] = 1;
-        tabJoueurs[i].prison = 0;
+        tabJoueurs[i].nom[0] = "y";
+        tabJoueurs[i].position[0] = 2; // il faudra bien initialiser à 0 /!\ tabJoueurs[i].prison = 0;
+    }
 
-        nom_fichier(fichiers);
-    }*/
-
-
+    sauvegarde(tabJoueurs ,plateau ,fichiers, nb_joueur);
 
 
     /* TEST
@@ -110,6 +162,8 @@ int main()
 
     plateau[3].maison = 4;
     */
+
+
 
     ///debut d'un tours
 
