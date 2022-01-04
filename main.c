@@ -1,3 +1,4 @@
+
 #include "menu.h"
 
 int main()
@@ -68,13 +69,10 @@ int main()
     plateau[30].type =VILLE;
     plateau[31].type =VILLE;
 
-
-    //etc
-
     /*
     -afficher le menu avec le nom des sauvegardes
     -on travaille sur le fichier choisi
-    -initialisation des cases et joueur en fonction du fichier (si le nom du fichier sur lequel on travaille est en dernier dans le tableau alors tout à 0)
+    -initialisation des cases et joueur en fonction du fichier (si le nom du fichier sur lequel on travaille est en dernier dans le tableau alors tout Ã  0)
     -demander le nombre de joueur si besoin
     -demander les noms des joueurs si besoin
     -lancer la partie
@@ -119,11 +117,9 @@ int main()
 
 
 
-    //initialisation à partir des noms de fichiers selectionner
+    //initialisation Ã  partir des noms de fichiers selectionner
 
     ///si on cree une nouvelle partie -------------------------------------------------------
-
-
 
     nb_maison = 32;
     nb_hotel = 12;
@@ -132,7 +128,7 @@ int main()
 
     //initialisation des prix des cases ville et gare
 
-    //initialisation de l'argent des joueurs
+    //initialisation des infos des joueurs
 
     for (int i = 0; i<32; i++)
     {
@@ -150,26 +146,101 @@ int main()
         tabJoueurs[i].argent = 200;
         tabJoueurs[i].nb_double = 0;
         tabJoueurs[i].nom[0] = "y";
-        tabJoueurs[i].position[0] = 2; // il faudra bien initialiser à 0 /!\ tabJoueurs[i].prison = 0;
+        tabJoueurs[i].position[0] = 2; // il faudra bien initialiser Ã  0 /!\ tabJoueurs[i].prison = 0;
     }
 
     sauvegarde(tabJoueurs ,plateau ,fichiers, nb_joueur);
 
 
-    /* TEST
-    jeanMichel.possession[0] = 3;
-    jeanMichel.position[0] = 3;
-
-    plateau[3].maison = 4;
-    */
-
-
-
     ///debut d'un tours
 
+/// nouvelle partie
+///----------------------------------------------------------------------------------------------------------------///
+///dÃ©but de la partie
+    if (choix==1)
+    {
+        ///dÃ©but de la partie
+        do
+        {
+            printf("nombre de joueur entre 2 et 6");            ///choix du nombre de joueur entre 2 et 6 joueurs
+            scanf("%d",&nbdejoueur);
+        }while(nbdejoueur<2 || nbdejoueur>6);
+        for(i=0;i<nbdejoueur;i++)                                   ///remplissage du tableau de structure joueur
+        {
+            printf("entrez le nom du joueur n %d",i+1);
+            scanf("%s",&tabdejoueur[i].nom);
+            fflush(stdin);
+            printf("choisissez un caractere pour votre pion");
+            scanf("%c",&tabdejoueur[i].pionjoueur);
+            fflush(stdin);
+            tabdejoueur[i].argent=1500;
+            tabdejoueur[i].position[2]=0;
+            for (j=0;j<23;j++)
+            {
+                tabdejoueur[i].possession[j]=0;
+            }
+        }
+        do
+        {
+            for (i=0;i<nbdejoueur;i++)
+            {
+                tabdejoueur[i].position[1]=tabdejoueur[i].position[2];
+                plateau(ligne);
+                affichage_possession(tabdejoueur,i,ligne);
+                gotoligcol(30+ligne,70);
+                do
+                    {
+                        printf("1. lancer des des\n");
+                        gotoligcol(31+ligne,70);
+                        printf("2. acheter/vendre une maison ou un hotel\n");
+                        gotoligcol(32+ligne,70);
+                        printf("3. hypothequer une case\n");
+                        scanf("%d", &choix);
+                    }while((choix<1 || choix> 3));
 
+        switch(choix)
+            {
+                case 1 :
+                {
+                    break;
+                }
 
+                case 2 :
+                {
+                    achat_vente_maison(&tabdejoueur[i], plateau, &nb_maison, &nb_hotel, t_villes[19][9]);
+                    break;
+                }
 
+                case 3 :
+                {
+                    hypotheque(&tabdejoueur[i], plateau, &nb_maison, &nb_hotel, t_villes[19][9]);
+                    break;
+                }
+            }
+                plateau(ligne);
+
+                gotoligcol(29+ligne,70);
+                printf("vous avez fait:");
+                gotoligcol(30+ligne,75);
+                lancer_de(de);
+                tabdejoueur[i].position[2]=(tabdejoueur[i].position[1]+de[0]+de[1])%32;
+                afficher_point(tabdejoueur,i,plat,ligne);
+                passage_arrivee(tabdejoueur,i);
+                ///action apres le tour
+                nddejoueurenjeu=0;
+                system('cls');
+                for (j=0;j<nbdejoueur;j++)
+                {
+                    if (tabdejoueur[i].argent!=0)
+                    {
+                        nddejoueurenjeu=nddejoueurenjeu+1;
+                    }
+                }
+            }
+
+        }while (nddejoueurenjeu=1);
+    }
+///------------------------------------------------------------------------------------------------------------------///
+    gotoligcol(60+ligne,1);
     return 0;
 }
-

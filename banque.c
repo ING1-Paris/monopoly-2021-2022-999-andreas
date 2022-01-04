@@ -1,13 +1,11 @@
 #include "menu.h"
-int la_case_choisi;
 
-void passage_arrivee(info_joueur jeanMichel)
+
+void passage_arrivee(t_joueur jeanMichel[6], int i)
 {
-    printf("ici c'est le passage de tours");
-
-    if ((jeanMichel.position[0]-jeanMichel.position[1])<0)
+    if ((jeanMichel[i].position[0]-jeanMichel[i].position[1])<0)
     {
-        jeanMichel.argent+=200;
+        jeanMichel[i].argent+=200;
     }
 
 
@@ -32,6 +30,7 @@ void menu_achat_vente_maison(info_joueur* jeanMichel, t_mono plateau[32], int* n
         case 1 :
         {
             ajout_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
+
             break;
         }
 
@@ -146,8 +145,6 @@ void hypotheque(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int
 
 /*il faut trouver un moyen de stocker les infos des loyers de chaque proprieter en fonction des maisons */
 /*il faut trouver un moyen de blinder les input avant d'essaye faire l'action impossib ou pas en fait*/
-/*ajouter un retour vers le menu si une conditions est pas respecter dans actions  (il y en a encore genre : si le joueur à pas de maisons il peut pas en vendre)*/
+/*ajouter un retour vers le menu si une conditions est pas respecter dans actions  (il y en a encore genre : si le joueur Ã  pas de maisons il peut pas en vendre)*/
 
 /*remplacer tout les la_case_choisis par des jeanMichel.position[0] et mettre les fonctions dans le menu.h*/
-/*je crois qu'il faut aussi faire en sorte que tu puisse faire des actions sur tout le groupe de couleur*/
-/*il faut mettre les parametre de la fonction menu_achat_vente_maison*/
