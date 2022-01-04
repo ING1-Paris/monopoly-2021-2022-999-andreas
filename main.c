@@ -169,42 +169,6 @@ int main()
 
 
 
-    /*do
-    {
-        printf("1. lancer des des\n");
-        printf("2. acheter/vendre une maison ou un hotel\n");
-        printf("3. hypothequer une case\n");
-
-        scanf("%d", &choix);
-    }
-    while((choix != 1 ) && (choix != 2 ) && (choix != 3));
-
-    switch(choix)
-    {
-        case 1 :
-        {
-            break;
-        }
-
-        case 2 :
-        {
-            achat_vente_maison(&jeanMichel, plateau, &nb_maison, &nb_hotel, info_villes);
-            break;
-        }
-
-        case 3 :
-        {
-            hypotheque(&jeanMichel, plateau, &nb_maison, &nb_hotel, info_villes);
-            break;
-        }
-    }*/
-
-
-    /* TEST
-    printf("%d\n", plateau[3].maison );
-    printf("%d\n", jeanMichel.argent);
-    */
-
 
     return 0;
 }
