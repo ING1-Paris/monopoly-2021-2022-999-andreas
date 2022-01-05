@@ -1,1 +1,1 @@
-./fichier_save/joueurs. /fichier_save/plateau 
+./fichier_save/joueurs.txt /fichier_save/plateau.txt

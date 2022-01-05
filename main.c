@@ -4,16 +4,18 @@
 int main()
 {
     srand(time(NULL));
-    int i;
-    t_mono plateau[32];
-    int etat_de[3] = {0,0,0};
-    int nb_maison;
-    int nb_hotel;
-    int choix;
-    int nb_joueur;
-    char fichiers[2][LEN] = {"./fichier_saves/joueurs.txt","./fichier_saves/plateau.txt"};
+    int i, j, choix, nb_joueur, nb_joueur_actu, nb_maison, nb_hotel;
+    int ligne = 2;
+    setConsoleSize();
 
-    info_joueur tabJoueurs[6];
+    int de[3] = {0,0,0};
+    t_fichier fichiers;
+
+    strcpy(fichiers.joueur, "./fichier_saves/joueurs");
+    strcpy(fichiers.plateau, "./fichier_saves/plateau");
+
+    t_joueur tabJoueur[6];
+    t_mono plateau[32];
 
     int info_villes[19][9] ={{60,50,2,10,30,90,160,250,1},/// prix | prix maison | loyer sans maison | 1 maison | 2 maisons | 3 maisons | 4 maisons | 1 hotel | place sur le plateau
                         {60,50,4,20,60,180,320,450,3},    ///   0         1                 2              3          4           5           6          7                8
@@ -78,169 +80,98 @@ int main()
     -lancer la partie
     */
 
-    //--------------------------------------------------------- on lis et on affiche se que contient le fichier nom
-    /*                                                            //le joueur choisi la save qu'il veut charger
-    char nom_tempo[15][2][LEN];
 
-    FILE* pf = fopen("./fichier_save/noms_save", "r");
-    if (pf == NULL)
-    {
-        printf("Erreur d'ouverture de fichier.");
-    }
-
-    for (i = 0 ;i <15 ; i++)
-    {
-        printf("download\n");
-
-        fscanf(pf, "%s", nom_tempo[i][0]);
-        fscanf(pf, "%s", nom_tempo[i][1]);
-        printf("%d. %s %s\n", i+1, nom_tempo[i][0], nom_tempo[i][1]);
-    }
-
-    fclose(pf);
-    pf = NULL;
-
-    do
-    {
-        printf("entrer le numero de la sauvegarde que vous voulez charger");
-        scanf("%d", &choix);
-    }
-    while((choix<16) && (choix>0));
-
-    for(i = 0; i<60; i++)
-    {
-        fichiers[0][i] = nom_tempo[choix][0][i];
-        fichiers[1][i] = nom_tempo[choix][1][i];
-    }*/
+    printf("depart\n");
+    init_nom_sauvegarde(&fichiers);
+    printf("arriver\n");
+    printf("%s %s ", fichiers.joueur, fichiers.plateau);
 
 
 
 
 
-    //initialisation à partir des noms de fichiers selectionner
-
-    ///si on cree une nouvelle partie -------------------------------------------------------
-
-    nb_maison = 32;
-    nb_hotel = 12;
-    nb_joueur = 6;
 
 
-    //initialisation des prix des cases ville et gare
-
-    //initialisation des infos des joueurs
-
-    for (int i = 0; i<32; i++)
-    {
-        plateau[i].hotel = 0;
-        plateau[i].hypo = 0;
-        plateau[i].loyer = 0;
-        plateau[i].maison = 0;
-        plateau[i].presence = 0;
-        plateau[i].prix = 0;
-        plateau[i].type = 0;
-    }
-
-    for ( i=0; i<6; i++)
-    {
-        tabJoueurs[i].argent = 200;
-        tabJoueurs[i].nb_double = 0;
-        tabJoueurs[i].nom[0] = "y";
-        tabJoueurs[i].position[0] = 2; // il faudra bien initialiser à 0 /!\ tabJoueurs[i].prison = 0;
-    }
-
-    sauvegarde(tabJoueurs ,plateau ,fichiers, nb_joueur);
 
 
-    ///debut d'un tours
+
+
+
+
+/*
+    choix = menu();
 
 /// nouvelle partie
 ///----------------------------------------------------------------------------------------------------------------///
 ///début de la partie
+
     if (choix==1)
     {
         ///début de la partie
+        nb_maison = 32;
+        nb_hotel = 12;
+
         do
         {
             printf("nombre de joueur entre 2 et 6");            ///choix du nombre de joueur entre 2 et 6 joueurs
-            scanf("%d",&nbdejoueur);
-        }while(nbdejoueur<2 || nbdejoueur>6);
-        for(i=0;i<nbdejoueur;i++)                                   ///remplissage du tableau de structure joueur
+            scanf("%d",&nb_joueur);
+        }while(nb_joueur<2 || nb_joueur>6);
+
+        for(i=0;i<nb_joueur;i++)                                   ///remplissage du tableau de structure joueur
         {
             printf("entrez le nom du joueur n %d",i+1);
-            scanf("%s",&tabdejoueur[i].nom);
+            scanf("%s",&tabJoueur[i].nom);
             fflush(stdin);
             printf("choisissez un caractere pour votre pion");
-            scanf("%c",&tabdejoueur[i].pionjoueur);
+            scanf("%c",&tabJoueur[i].pionjoueur);
             fflush(stdin);
-            tabdejoueur[i].argent=1500;
-            tabdejoueur[i].position[2]=0;
+            tabJoueur[i].argent=1500;
+            tabJoueur[i].position[2]=0;
             for (j=0;j<23;j++)
             {
-                tabdejoueur[i].possession[j]=0;
+                tabJoueur[i].possession[j]=0;
             }
         }
+
         do
         {
-            for (i=0;i<nbdejoueur;i++)
+            for (i=0;i<nb_joueur;i++)
             {
-                tabdejoueur[i].position[1]=tabdejoueur[i].position[2];
-                plateau(ligne);
-                affichage_possession(tabdejoueur,i,ligne);
+                tabJoueur[i].position[1]=tabJoueur[i].position[0];
+                affichage_plateau(ligne);
+                affichage_possession(tabJoueur,i,ligne);
                 gotoligcol(30+ligne,70);
-                do
-                    {
-                        printf("1. lancer des des\n");
-                        gotoligcol(31+ligne,70);
-                        printf("2. acheter/vendre une maison ou un hotel\n");
-                        gotoligcol(32+ligne,70);
-                        printf("3. hypothequer une case\n");
-                        scanf("%d", &choix);
-                    }while((choix<1 || choix> 3));
 
-        switch(choix)
-            {
-                case 1 :
-                {
-                    break;
-                }
-
-                case 2 :
-                {
-                    achat_vente_maison(&tabdejoueur[i], plateau, &nb_maison, &nb_hotel, t_villes[19][9]);
-                    break;
-                }
-
-                case 3 :
-                {
-                    hypotheque(&tabdejoueur[i], plateau, &nb_maison, &nb_hotel, t_villes[19][9]);
-                    break;
-                }
-            }
-                plateau(ligne);
+                affichage_plateau(ligne);
 
                 gotoligcol(29+ligne,70);
                 printf("vous avez fait:");
                 gotoligcol(30+ligne,75);
                 lancer_de(de);
-                tabdejoueur[i].position[2]=(tabdejoueur[i].position[1]+de[0]+de[1])%32;
-                afficher_point(tabdejoueur,i,plat,ligne);
-                passage_arrivee(tabdejoueur,i);
+                tabJoueur[i].position[2]=(tabJoueur[i].position[1]+de[0]+de[1])%32;
+                afficher_point(tabJoueur,i,plateau,ligne);
+                passage_arrivee(tabJoueur,i);
+
                 ///action apres le tour
+
+                //à revoir
                 nddejoueurenjeu=0;
                 system('cls');
-                for (j=0;j<nbdejoueur;j++)
+                for (j=0;j<nb_joueur;j++)
                 {
-                    if (tabdejoueur[i].argent!=0)
+                    if (tabJoueur[i].argent!=0)
                     {
                         nddejoueurenjeu=nddejoueurenjeu+1;
                     }
                 }
             }
 
-        }while (nddejoueurenjeu=1);
-    }
+        }while (nb_joueur_actu=1);
+    }*/
+
 ///------------------------------------------------------------------------------------------------------------------///
-    gotoligcol(60+ligne,1);
     return 0;
 }
+
+// on peut faire de l'alocation dynamique pour le tab tab_joueur et le tab
+

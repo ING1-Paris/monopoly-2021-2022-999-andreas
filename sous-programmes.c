@@ -5,23 +5,24 @@ int nb_alea()
     return rand()%(6)+1;
 }
 
-
+//renvoie le resultat d'un lancé de des
 void lancer_de(int de[3])
 {
     de[0] = nb_alea();
     de[1] = nb_alea();
 
 
-    if (etat_de[0]==etat_de[1])
+    if (de[0]==de[1])
     {
 
-        etat_de[2]=1; // on a un double
+        de[2]=1; // on a un double
     }
 
-    printf("%d %d", etat_de[0], etat_de[1]);
+    printf("%d %d",de[0], de[1]);
 }
 
-int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre)// renvoie une info preciser dans les parametre d'une ville en particulier
+// renvoie une info preciser dans les parametre d'une ville en particulier
+int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre)
 {
     int i;
     int j;
@@ -39,7 +40,51 @@ int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre)// r
     return 0;
 }
 
-void nom_fichier(char fichiers[2][LEN])//return deux nom de fichier (un pour les joueurs et un pour le plateau)
+// initialise le nom du fichier sur lequel on vas travailler
+void init_nom_sauvegarde(t_fichier* fichiers)
+    {
+        int i = 0;
+        int choix = 0;
+        t_fichier* nom_tempo = (t_fichier*) malloc(1*sizeof(t_fichier));
+
+
+        FILE* pf = fopen("./fichier_saves/noms_save.txt", "r");
+        if (pf == NULL)
+        {
+            printf("Erreur d'ouverture de fichier.");
+        }
+
+        while ((fscanf(pf, "%s", nom_tempo[i].joueur) == 1))
+        {
+            printf("download\n");
+
+            fscanf(pf, "%s", &nom_tempo[i].joueur);
+            fscanf(pf, "%s", &nom_tempo[i].plateau);
+            printf("%d. %s %s\n", i, nom_tempo[i].joueur, nom_tempo[i].plateau);
+
+            i+=1;
+            nom_tempo= (t_fichier*) malloc(((i+1)*sizeof(t_fichier)));
+        }
+
+        fclose(pf);
+        pf = NULL;
+
+        do
+        {
+            printf("entrer le numero de la sauvegarde que vous voulez charger");
+            scanf("%d", &choix);
+        }
+        while((choix<i) && (choix>0));
+
+        for(i = 0; i<60; i++)
+        {
+            strcpy(fichiers->joueur, nom_tempo[choix].joueur);
+            strcpy(fichiers->plateau, nom_tempo[choix].plateau);
+        }
+    }
+
+//return deux noms de fichier (un pour les joueurs et un pour le plateau)
+void nom_fichier(t_fichier* fichiers)
 {
     int i;
     int j;
@@ -47,25 +92,25 @@ void nom_fichier(char fichiers[2][LEN])//return deux nom de fichier (un pour les
 
     time(&now);// Renvoie l'heure actuelle
 
-    strcat(fichiers[0],ctime(&now));
-    strcat(fichiers[1],ctime(&now));
+    strcat(fichiers->joueur,ctime(&now));
+    strcat(fichiers->plateau,ctime(&now));
 
-    strcat(fichiers[0], ".txt");
-    strcat(fichiers[1], ".txt");
+    strcat(fichiers->joueur, ".txt");
+    strcat(fichiers->plateau, ".txt");
 
-    for (j = 0; j<2; j++)
+    for(i = 0 ; fichiers->joueur[i] != '\0' ; i++)
     {
-        for(i = 0 ; fichiers[j][i] != '\0' ; i++)
+        if(fichiers->joueur[i] == ' ')
         {
-            if(fichiers[j][i] == ' ')
-            {
-                fichiers[j][i] = '_';
-            }
+            fichiers->joueur[i] = '_';
+            fichiers->plateau[i] = '_';
         }
     }
+
 }
 
-int sauvegarde_nom(char fichiers[2][LEN])
+//sauvegarde les noms des fichiers sur lesquels on travaille dans un fichier dédié
+int sauvegarde_nom(t_fichier* fichiers)
 {
     FILE* pf = fopen("./fichier_save/noms_save", "a");
     if (pf == NULL)
@@ -73,18 +118,36 @@ int sauvegarde_nom(char fichiers[2][LEN])
         printf("Erreur d'ouverture de fichier.");
         return 1;
     }
-    fprintf(pf, "%s %s\n",fichiers[0], fichiers[1]);
+    fprintf(pf, "%s %s\n",fichiers->joueur, fichiers->plateau);
 
     fclose(pf);
     pf = NULL;
     return 0;
 }
 
+//affiche le menu demarrage
 int menu()
 {
     int choix;
     do{
-        printf("MENU\n");
+
+        printf(" `7MMM.     ,MMF'  .g8""8q.     `7MN.   `7MF'   .g8""8q.     `7MM""'Mq.       .g8""8q.   `7MMF'     `YMM'   `MM'\n");
+        printf("   MMMb    dPMM  .dP'    `YM.   MMN.    M  .dP'    `YM.   MM   `MM..dP'    `YM.   MM          VMA   ,V\n");
+        printf("   M YM   ,M MM  dM'      `MM   M YMb   M  dM'      `MM   MM   ,M9 dM'      `MM   MM           VMA ,V\n");
+        printf("   M  Mb  M' MM  MM        MM   M  `MN. M  MM        MM   MMmmdM9  MM        MM   MM            VMMP\n");
+        printf("   M  YM.P'  MM  MM.      ,MP   M   `MM.M  MM.      ,MP   MM       MM.      ,MP   MM      ,      MM\n");
+        printf("   M  `YM'   MM  `Mb.    ,dP'   M     YMM  `Mb.    ,dP'   MM       `Mb.    ,dP'   MM     ,M      MM\n");
+        printf(" .JML. `'  .JMML.  `'bmmd''   .JML.    YM    `'bmmd''   .JMML.       `'bmmd''   .JMMmmmmMMM    .JMML.\n");
+
+        printf(" 888b     d888  .d88888b.  888b    888  .d88888b.  8888888b.   .d88888b.  888      Y88b   d88P\n");
+        printf(" 8888b   d8888 d88P' 'Y88b 8888b   888 d88P' 'Y88b 888   Y88b d88P' 'Y88b 888       Y88b d88P\n");
+        printf(" 88888b.d88888 888     888 88888b  888 888     888 888    888 888     888 888        Y88o88P\n");
+        printf(" 888Y88888P888 888     888 888Y88b 888 888     888 888   d88P 888     888 888         Y888P\n");
+        printf(" 888 Y888P 888 888     888 888 Y88b888 888     888 8888888P'  888     888 888          888\n");
+        printf(" 888  Y8P  888 888     888 888  Y88888 888     888 888        888     888 888          888\n");
+        printf(" 888   '   888 Y88b. .d88P 888   Y8888 Y88b. .d88P 888        Y88b. .d88P 888          888\n");
+        printf(" 888       888  'Y88888P'  888    Y888  'Y88888P'  888         'Y88888P'  88888888     888\n");
+        printf("\n\n");
     printf("1- NOUVELLE PARTIE\n2-CHARGER UNE PARTIE\n3-REGLE\n4-QUITTER");
     scanf("%d",&choix);
     }while (choix<0 || choix >4);
@@ -92,12 +155,14 @@ int menu()
 
 }
 
+//jsp
 void Color(int couleurDuTexte,int couleurDeFond)
 {
     HANDLE H=GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(H,couleurDeFond*16+couleurDuTexte);
 }
 
+//jsp
 void gotoligcol( int lig, int col ) {
     COORD mycoord;
     mycoord.X = col;
@@ -105,7 +170,7 @@ void gotoligcol( int lig, int col ) {
     SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE ), mycoord );
 }
 
-
+//jsp
 void setConsoleSize()
 {
     keybd_event(VK_MENU,0x38,0,0); //Appuie sur ALT
@@ -114,13 +179,14 @@ void setConsoleSize()
     keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0); //Relache ALT
 }
 
-int init_sauvegarde(info_joueur tabjoueurs[] ,t_mono plateau[32], char fichiers[2][LEN])// fonction lisant le contenue du fichier et le mettant dans un tableau de structure
+//initialise les données d'une partie a partir d'une sauvegarde choisis prealablement
+int init_sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichiers)
 {
     int i = 0;
     int j = 0;
     int nb_joueur;
 
-    FILE* pf = fopen(fichiers[0], "r");
+    FILE* pf = fopen(fichiers->joueur, "r");
     if (pf == NULL)
     {
         printf("Erreur d'ouverture de fichier.");
@@ -144,7 +210,7 @@ int init_sauvegarde(info_joueur tabjoueurs[] ,t_mono plateau[32], char fichiers[
     }
     fclose(pf);
 
-    pf = fopen(fichiers[0], "r");
+    pf = fopen(fichiers->plateau, "r");
     if (pf == NULL)
     {
         printf("Erreur d'ouverture de fichier.");
@@ -166,18 +232,18 @@ int init_sauvegarde(info_joueur tabjoueurs[] ,t_mono plateau[32], char fichiers[
 
     fclose(pf);
     pf = NULL;
-    return 0;
+    return nb_joueur;
 
 }
 
-                                                                
-// fonction ecrivant le tableau de structure dans le fichier texte, la fonction vas cree le fichier (s'il n'existe pas)
-int sauvegarde(info_joueur tabjoueurs[] ,t_mono plateau[32], char fichiers[2][LEN], int nb_joueur)
+
+//sauvegarde les données de la partie actuelle dans deux fichiers, la fonction vas cree le fichier (s'il n'existe pas)
+int sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichiers, int nb_joueur)
 {
     int i = 0;
     int j = 0;
 
-    FILE* pf = fopen(fichiers[0], "w");
+    FILE* pf = fopen(fichiers->joueur, "w");
     if (pf == NULL)
     {
         printf("Erreur d'ouverture de fichier.");
@@ -202,7 +268,7 @@ int sauvegarde(info_joueur tabjoueurs[] ,t_mono plateau[32], char fichiers[2][LE
     }
     fclose(pf);
 
-    pf = fopen(fichiers[1], "w");
+    pf = fopen(fichiers->plateau, "w");
     if (pf == NULL)
     {
         printf("Erreur d'ouverture de fichier.");
@@ -230,7 +296,8 @@ int sauvegarde(info_joueur tabjoueurs[] ,t_mono plateau[32], char fichiers[2][LE
     return 0;
 }
 
-void plateau(int ligne)
+//affiche le plateau
+void affichage_plateau(int ligne)
 {
     /// création des cases
     int i,j;
@@ -468,6 +535,7 @@ void plateau(int ligne)
     printf("GRATUIT");
 }
 
+//affiche le pion ?
 void afficher_point(t_joueur joueur[6],int i,t_mono plat[32],int ligne)
 {
     int colplat;
@@ -535,26 +603,7 @@ void afficher_point(t_joueur joueur[6],int i,t_mono plat[32],int ligne)
         }
 }
 
-
-int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre)// renvoie une info preciser dans les parametre d'une ville en particulier
-{
-    int i;
-    int j;
-
-    for (i=0; i<19; i++)
-    {
-        for (j=0; j<9; j++)
-        {
-            if (la_case_choisi == info_villes[i][j])
-            {
-                return info_villes[i][info_a_rendre];
-            }
-        }
-    }
-    return 0;
-}
-
-
+//affiche les possession du joueur en train de jouer
 void affichage_possession(t_joueur joueur[6], int i,int ligne)
 {
     int j;
