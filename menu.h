@@ -69,6 +69,7 @@ int sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichiers, i
 int sauvegarde_nom(t_fichier* fichiers);
 void nom_fichier(t_fichier* fichiers);
 void init_nom_sauvegarde(t_fichier* fichiers);
+int fin_partie(t_joueur* tabJoueur[], int nb_joueur);
 
 
 //dans banque

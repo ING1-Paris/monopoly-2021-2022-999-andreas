@@ -1,15 +1,6 @@
 #include "menu.h"
 
 
-void passage_arrivee(t_joueur jeanMichel[6], int i)
-{
-    if ((jeanMichel[i].position[0]-jeanMichel[i].position[1])<0)
-    {
-        jeanMichel[i].argent+=200;
-    }
-
-
-}
 
 void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
 {

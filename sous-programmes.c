@@ -40,7 +40,24 @@ int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre)
     return 0;
 }
 
-// initialise le nom du fichier sur lequel on vas travailler
+int fin_partie(t_joueur* tabJoueur[], int nb_joueur)
+{
+    int i;
+    for(i = 0; i<nb_joueur; i++)
+    {
+        if (tabJoueur[i]->argent == 1)
+        {
+            return 1;
+        }
+        return 0;
+    }
+}
+
+
+
+
+
+/// initialise le nom du fichier sur lequel on vas travailler /// c'est cassé de ouf :/
 void init_nom_sauvegarde(t_fichier* fichiers)
     {
         int i = 0;
@@ -58,9 +75,10 @@ void init_nom_sauvegarde(t_fichier* fichiers)
         {
             printf("download\n");
 
-            fscanf(pf, "%s", &nom_tempo[i].joueur);
             fscanf(pf, "%s", &nom_tempo[i].plateau);
-            printf("%d. %s %s\n", i, nom_tempo[i].joueur, nom_tempo[i].plateau);
+
+            printf("%s\n", nom_tempo[i].joueur);
+            printf("%s\n", nom_tempo[i].plateau);
 
             i+=1;
             nom_tempo= (t_fichier*) malloc(((i+1)*sizeof(t_fichier)));
@@ -131,14 +149,6 @@ int menu()
     int choix;
     do{
 
-        printf(" `7MMM.     ,MMF'  .g8""8q.     `7MN.   `7MF'   .g8""8q.     `7MM""'Mq.       .g8""8q.   `7MMF'     `YMM'   `MM'\n");
-        printf("   MMMb    dPMM  .dP'    `YM.   MMN.    M  .dP'    `YM.   MM   `MM..dP'    `YM.   MM          VMA   ,V\n");
-        printf("   M YM   ,M MM  dM'      `MM   M YMb   M  dM'      `MM   MM   ,M9 dM'      `MM   MM           VMA ,V\n");
-        printf("   M  Mb  M' MM  MM        MM   M  `MN. M  MM        MM   MMmmdM9  MM        MM   MM            VMMP\n");
-        printf("   M  YM.P'  MM  MM.      ,MP   M   `MM.M  MM.      ,MP   MM       MM.      ,MP   MM      ,      MM\n");
-        printf("   M  `YM'   MM  `Mb.    ,dP'   M     YMM  `Mb.    ,dP'   MM       `Mb.    ,dP'   MM     ,M      MM\n");
-        printf(" .JML. `'  .JMML.  `'bmmd''   .JML.    YM    `'bmmd''   .JMML.       `'bmmd''   .JMMmmmmMMM    .JMML.\n");
-
         printf(" 888b     d888  .d88888b.  888b    888  .d88888b.  8888888b.   .d88888b.  888      Y88b   d88P\n");
         printf(" 8888b   d8888 d88P' 'Y88b 8888b   888 d88P' 'Y88b 888   Y88b d88P' 'Y88b 888       Y88b d88P\n");
         printf(" 88888b.d88888 888     888 88888b  888 888     888 888    888 888     888 888        Y88o88P\n");
@@ -179,7 +189,7 @@ void setConsoleSize()
     keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0); //Relache ALT
 }
 
-//initialise les données d'une partie a partir d'une sauvegarde choisis prealablement
+//initialise les données d'une partie a partir d'une sauvegarde donner en parametre
 int init_sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichiers)
 {
     int i = 0;

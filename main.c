@@ -80,11 +80,18 @@ int main()
     -lancer la partie
     */
 
-
+    /*
     printf("depart\n");
+    printf("%s\n", fichiers.joueur);
+    printf("%s\n", fichiers.plateau);
+
+
     init_nom_sauvegarde(&fichiers);
+
+    printf("%s\n", fichiers.joueur);
+    printf("%s\n",fichiers.plateau);
     printf("arriver\n");
-    printf("%s %s ", fichiers.joueur, fichiers.plateau);
+    */
 
 
 
@@ -95,83 +102,112 @@ int main()
 
 
 
+///------------------------------------------menu demarrage
 
-
-
-/*
     choix = menu();
 
-/// nouvelle partie
-///----------------------------------------------------------------------------------------------------------------///
-///début de la partie
 
-    if (choix==1)
+
+    if (choix==1) /// 1- NOUVELLE PARTIE
     {
-        ///début de la partie
+        // definition des stock de maisons et hotels
         nb_maison = 32;
         nb_hotel = 12;
 
+        //choix du nombre de joueur entre 2 et 6 joueurs
         do
         {
-            printf("nombre de joueur entre 2 et 6");            ///choix du nombre de joueur entre 2 et 6 joueurs
+            printf("nombre de joueur entre 2 et 6");
             scanf("%d",&nb_joueur);
-        }while(nb_joueur<2 || nb_joueur>6);
+        }
+        while(nb_joueur<2 || nb_joueur>6);
 
-        for(i=0;i<nb_joueur;i++)                                   ///remplissage du tableau de structure joueur
+        //remplissage du tableau de structure joueur
+        for(i=0;i<nb_joueur;i++)
         {
             printf("entrez le nom du joueur n %d",i+1);
             scanf("%s",&tabJoueur[i].nom);
             fflush(stdin);
+
             printf("choisissez un caractere pour votre pion");
             scanf("%c",&tabJoueur[i].pionjoueur);
             fflush(stdin);
+
             tabJoueur[i].argent=1500;
             tabJoueur[i].position[2]=0;
+
             for (j=0;j<23;j++)
             {
                 tabJoueur[i].possession[j]=0;
             }
         }
 
-        do
+        nom_fichier(&fichiers);
+        sauvegarde_nom(&fichiers);
+        sauvegarde(tabjoueurs ,plateau, &fichiers, nb_joueur);
+
+    }
+
+    else if(choix == 2) ///2-CHARGER UNE PARTIE
+    {
+        init_nom_sauvegarde(&fichiers); //c'est turbo cassé, ya rien qui vas
+        init_sauvegarde(tabjoueurs, plateau, &fichiers);
+
+    }
+
+    else if(choix == 3) ///3-REGLE
+    {
+        //fonction qui affiche les regles
+    }
+
+    else if(choix == 4)
+    {
+        //fonction qui fait quitter le jeu ?
+    }
+
+
+
+
+    ///----------------------------------------------------------------LE JEU
+    i = 0;
+    do
+    {
+
+        tabJoueur[i].position[1]=tabJoueur[i].position[0];
+        affichage_plateau(ligne);
+        affichage_possession(tabJoueur,i,ligne);
+        gotoligcol(30+ligne,70);
+
+        affichage_plateau(ligne);
+
+        gotoligcol(29+ligne,70);
+        printf("vous avez fait:");
+        gotoligcol(30+ligne,75);
+        lancer_de(de);
+        tabJoueur[i].position[2]=(tabJoueur[i].position[1]+de[0]+de[1])%32;
+        afficher_point(tabJoueur,i,plateau,ligne);
+        if ((jeanMichel[i].position[0]-jeanMichel[i].position[1])<0)
         {
-            for (i=0;i<nb_joueur;i++)
-            {
-                tabJoueur[i].position[1]=tabJoueur[i].position[0];
-                affichage_plateau(ligne);
-                affichage_possession(tabJoueur,i,ligne);
-                gotoligcol(30+ligne,70);
+            jeanMichel[i].argent+=200;
+        }
 
-                affichage_plateau(ligne);
+        //action sur la case tombé
 
-                gotoligcol(29+ligne,70);
-                printf("vous avez fait:");
-                gotoligcol(30+ligne,75);
-                lancer_de(de);
-                tabJoueur[i].position[2]=(tabJoueur[i].position[1]+de[0]+de[1])%32;
-                afficher_point(tabJoueur,i,plateau,ligne);
-                passage_arrivee(tabJoueur,i);
+        ///action apres le tour
+        sauvegarde(tabjoueurs, plateau, fichiers);
+        i+=1;
+        if (i = nb_joueur_actu)
+        {
+            i = 0;
+        }
 
-                ///action apres le tour
+    }while (fin_partie(tabJoueur));
 
-                //à revoir
-                nddejoueurenjeu=0;
-                system('cls');
-                for (j=0;j<nb_joueur;j++)
-                {
-                    if (tabJoueur[i].argent!=0)
-                    {
-                        nddejoueurenjeu=nddejoueurenjeu+1;
-                    }
-                }
-            }
-
-        }while (nb_joueur_actu=1);
-    }*/
 
 ///------------------------------------------------------------------------------------------------------------------///
     return 0;
 }
 
-// on peut faire de l'alocation dynamique pour le tab tab_joueur et le tab
+// on peut faire de l'alocation dynamique pour le tab tab_joueur
+// il faut modifie les fichier sauvegarde parce que ya un element en plus dans la stucture joueur
 
