@@ -1,5 +1,7 @@
 #include "menu.h"
 
+
+//donne le resultat d'un de
 int nb_alea()
 {
     return rand()%(6)+1;
@@ -40,108 +42,26 @@ int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre)
     return 0;
 }
 
-int fin_partie(t_joueur* tabJoueur[], int nb_joueur)
+int fin_partie(t_joueur tabJoueur[], int nb_joueur)
 {
     int i;
+    int nb = 0;
+
     for(i = 0; i<nb_joueur; i++)
     {
-        if (tabJoueur[i]->argent == 1)
+        if (tabJoueur[i].argent == 1)
         {
-            return 1;
-        }
-        return 0;
-    }
-}
-
-
-
-
-
-/// initialise le nom du fichier sur lequel on vas travailler /// c'est cassé de ouf :/
-void init_nom_sauvegarde(t_fichier* fichiers)
-    {
-        int i = 0;
-        int choix = 0;
-        t_fichier* nom_tempo = (t_fichier*) malloc(1*sizeof(t_fichier));
-
-
-        FILE* pf = fopen("./fichier_saves/noms_save.txt", "r");
-        if (pf == NULL)
-        {
-            printf("Erreur d'ouverture de fichier.");
-        }
-
-        while ((fscanf(pf, "%s", nom_tempo[i].joueur) == 1))
-        {
-            printf("download\n");
-
-            fscanf(pf, "%s", &nom_tempo[i].plateau);
-
-            printf("%s\n", nom_tempo[i].joueur);
-            printf("%s\n", nom_tempo[i].plateau);
-
-            i+=1;
-            nom_tempo= (t_fichier*) malloc(((i+1)*sizeof(t_fichier)));
-        }
-
-        fclose(pf);
-        pf = NULL;
-
-        do
-        {
-            printf("entrer le numero de la sauvegarde que vous voulez charger");
-            scanf("%d", &choix);
-        }
-        while((choix<i) && (choix>0));
-
-        for(i = 0; i<60; i++)
-        {
-            strcpy(fichiers->joueur, nom_tempo[choix].joueur);
-            strcpy(fichiers->plateau, nom_tempo[choix].plateau);
+            nb+=1;
         }
     }
 
-//return deux noms de fichier (un pour les joueurs et un pour le plateau)
-void nom_fichier(t_fichier* fichiers)
-{
-    int i;
-    int j;
-    time_t now;
-
-    time(&now);// Renvoie l'heure actuelle
-
-    strcat(fichiers->joueur,ctime(&now));
-    strcat(fichiers->plateau,ctime(&now));
-
-    strcat(fichiers->joueur, ".txt");
-    strcat(fichiers->plateau, ".txt");
-
-    for(i = 0 ; fichiers->joueur[i] != '\0' ; i++)
+    if (nb>=2)
     {
-        if(fichiers->joueur[i] == ' ')
-        {
-            fichiers->joueur[i] = '_';
-            fichiers->plateau[i] = '_';
-        }
-    }
-
-}
-
-//sauvegarde les noms des fichiers sur lesquels on travaille dans un fichier dédié
-int sauvegarde_nom(t_fichier* fichiers)
-{
-    FILE* pf = fopen("./fichier_save/noms_save", "a");
-    if (pf == NULL)
-    {
-        printf("Erreur d'ouverture de fichier.");
         return 1;
     }
-    fprintf(pf, "%s %s\n",fichiers->joueur, fichiers->plateau);
-
-    fclose(pf);
-    pf = NULL;
     return 0;
 }
+
 
 //affiche le menu demarrage
 int menu()
@@ -187,123 +107,6 @@ void setConsoleSize()
     keybd_event(VK_RETURN,0x1c,0,0); //Appuie ENTREE
     keybd_event(VK_RETURN,0x1c,KEYEVENTF_KEYUP,0); // Relache ENTREE
     keybd_event(VK_MENU,0x38,KEYEVENTF_KEYUP,0); //Relache ALT
-}
-
-//initialise les données d'une partie a partir d'une sauvegarde donner en parametre
-int init_sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichiers)
-{
-    int i = 0;
-    int j = 0;
-    int nb_joueur;
-
-    FILE* pf = fopen(fichiers->joueur, "r");
-    if (pf == NULL)
-    {
-        printf("Erreur d'ouverture de fichier.");
-        return 1;
-    }
-
-    fscanf(pf, "%d", &nb_joueur);
-    for (i = 0 ;i <nb_joueur ; i++)
-    {
-        printf("download\n");
-
-        fscanf(pf, "%d", &tabjoueurs[i].argent);
-        fscanf(pf, "%d", &tabjoueurs[i].nb_double);
-        fscanf(pf, "%s", tabjoueurs[i].nom);
-        fscanf(pf, "%d", &tabjoueurs[i].position[0]);
-        for (j = 0 ;j<10 ;j++)
-        {
-            fscanf(pf, "%d", &tabjoueurs[i].possession[j]);
-        }
-        fscanf(pf, "%d", &tabjoueurs[i].prison);
-    }
-    fclose(pf);
-
-    pf = fopen(fichiers->plateau, "r");
-    if (pf == NULL)
-    {
-        printf("Erreur d'ouverture de fichier.");
-        return 1;
-    }
-
-    for (i = 0 ;i < 32 ; i++)
-    {
-        printf("download\n");
-
-        fscanf(pf, "%d", &plateau[i].hotel);
-        fscanf(pf, "%d", &plateau[i].hypo);
-        fscanf(pf, "%d", &plateau[i].loyer);
-        fscanf(pf, "%d", &plateau[i].maison);
-        fscanf(pf, "%d", &plateau[i].presence);
-        fscanf(pf, "%d", &plateau[i].prix);
-        fscanf(pf, "%d", &plateau[i].type);
-    }
-
-    fclose(pf);
-    pf = NULL;
-    return nb_joueur;
-
-}
-
-
-//sauvegarde les données de la partie actuelle dans deux fichiers, la fonction vas cree le fichier (s'il n'existe pas)
-int sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichiers, int nb_joueur)
-{
-    int i = 0;
-    int j = 0;
-
-    FILE* pf = fopen(fichiers->joueur, "w");
-    if (pf == NULL)
-    {
-        printf("Erreur d'ouverture de fichier.");
-        return 1;
-    }
-
-    fprintf(pf, "%d\n",nb_joueur);
-    for (i = 0; i<nb_joueur ; i++)
-    {
-        printf("sauvegarde joueurs...\n");
-
-        fprintf(pf, "%d ",tabjoueurs[i].argent);
-        fprintf(pf, "%d ",tabjoueurs[i].nb_double);
-        fprintf(pf, "%s ",tabjoueurs[i].nom);
-        fprintf(pf, "%d ",tabjoueurs[i].position[0]);
-        for (j = 0; j<20; j++)
-        {
-            fprintf(pf, "%d ",tabjoueurs[i].possession[j]);
-        }
-        fprintf(pf, "%d\n",tabjoueurs[i].prison);
-
-    }
-    fclose(pf);
-
-    pf = fopen(fichiers->plateau, "w");
-    if (pf == NULL)
-    {
-        printf("Erreur d'ouverture de fichier.");
-        return 1;
-    }
-
-    for (i = 0; i<32; i++)
-    {
-        printf("sauvegarde plateau...\n");
-
-        fprintf(pf, "%d ",plateau[i].hotel);
-        fprintf(pf, "%d ",plateau[i].hypo);
-        fprintf(pf, "%d ",plateau[i].loyer);
-        fprintf(pf, "%d ",plateau[i].maison);
-        fprintf(pf, "%d ",plateau[i].presence);
-        fprintf(pf, "%d ",plateau[i].prix);
-        fprintf(pf, "%d ",plateau[i].type);
-        fprintf(pf,"\n");
-
-    }
-    fclose(pf);
-
-    pf = NULL;
-
-    return 0;
 }
 
 //affiche le plateau
@@ -627,4 +430,5 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
         printf("%d",joueur[i].possession[j]);
     }
 }
+
 

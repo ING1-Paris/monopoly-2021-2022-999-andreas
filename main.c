@@ -80,27 +80,21 @@ int main()
     -lancer la partie
     */
 
-    /*
-    printf("depart\n");
-    printf("%s\n", fichiers.joueur);
-    printf("%s\n", fichiers.plateau);
 
+    nom_fichier(&fichiers);
 
-    init_nom_sauvegarde(&fichiers);
+    //printf("%s %s", fichiers.joueur, fichiers.plateau);
 
-    printf("%s\n", fichiers.joueur);
-    printf("%s\n",fichiers.plateau);
-    printf("arriver\n");
-    */
+    nb_joueur = 2;
+
+    sauvegarde(tabJoueur ,plateau, &fichiers, nb_joueur); // la sauvegarde marche pas
 
 
 
 
 
 
-
-
-
+/*
 
 ///------------------------------------------menu demarrage
 
@@ -126,7 +120,7 @@ int main()
         for(i=0;i<nb_joueur;i++)
         {
             printf("entrez le nom du joueur n %d",i+1);
-            scanf("%s",&tabJoueur[i].nom);
+            scanf("%s",tabJoueur[i].nom);
             fflush(stdin);
 
             printf("choisissez un caractere pour votre pion");
@@ -144,14 +138,15 @@ int main()
 
         nom_fichier(&fichiers);
         sauvegarde_nom(&fichiers);
-        sauvegarde(tabjoueurs ,plateau, &fichiers, nb_joueur);
+        sauvegarde(tabJoueur ,plateau, &fichiers, nb_joueur);
 
+        //choisi le joueur qui commence aleatoirement
     }
 
     else if(choix == 2) ///2-CHARGER UNE PARTIE
     {
-        init_nom_sauvegarde(&fichiers); //c'est turbo cassé, ya rien qui vas
-        init_sauvegarde(tabjoueurs, plateau, &fichiers);
+        init_nom_sauvegarde(&fichiers);
+        init_sauvegarde(tabJoueur, plateau, &fichiers);
 
     }
 
@@ -169,7 +164,13 @@ int main()
 
 
     ///----------------------------------------------------------------LE JEU
+    ///initialisation des trucs à initialiser systematiquement
+
     i = 0;
+
+
+
+    nb_joueur_actu = nb_joueur;
     do
     {
 
@@ -186,23 +187,24 @@ int main()
         lancer_de(de);
         tabJoueur[i].position[2]=(tabJoueur[i].position[1]+de[0]+de[1])%32;
         afficher_point(tabJoueur,i,plateau,ligne);
-        if ((jeanMichel[i].position[0]-jeanMichel[i].position[1])<0)
+        if ((tabJoueur[i].position[0]-tabJoueur[i].position[1])<0)
         {
-            jeanMichel[i].argent+=200;
+            tabJoueur[i].argent+=200;
         }
 
         //action sur la case tombé
 
         ///action apres le tour
-        sauvegarde(tabjoueurs, plateau, fichiers);
+        sauvegarde(tabJoueur, plateau, &fichiers, nb_joueur_actu);
         i+=1;
         if (i = nb_joueur_actu)
         {
             i = 0;
         }
 
-    }while (fin_partie(tabJoueur));
-
+    }while (fin_partie(tabJoueur, nb_joueur));
+*/
+//il faudrait supprimer le fichier quand la partie est fini
 
 ///------------------------------------------------------------------------------------------------------------------///
     return 0;
