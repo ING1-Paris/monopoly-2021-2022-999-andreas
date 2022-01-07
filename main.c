@@ -71,29 +71,6 @@ int main()
     plateau[30].type =VILLE;
     plateau[31].type =VILLE;
 
-    /*
-    -afficher le menu avec le nom des sauvegardes
-    -on travaille sur le fichier choisi
-    -initialisation des cases et joueur en fonction du fichier (si le nom du fichier sur lequel on travaille est en dernier dans le tableau alors tout à 0)
-    -demander le nombre de joueur si besoin
-    -demander les noms des joueurs si besoin
-    -lancer la partie
-    */
-
-    /*
-    nom_fichier(&fichiers);
-
-    printf("%s %s", fichiers.joueur, fichiers.plateau);
-
-    nb_joueur = 2;
-
-    sauvegarde(tabJoueur ,plateau, &fichiers, nb_joueur); // la sauvegarde marche pas
-    */
-
-
-
-
-
 
 
 ///------------------------------------------menu demarrage
@@ -153,6 +130,8 @@ int main()
     else if(choix == 3) ///3-REGLE
     {
         //fonction qui affiche les regles
+        regles();
+
     }
 
     else if(choix == 4)

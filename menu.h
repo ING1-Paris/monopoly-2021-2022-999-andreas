@@ -75,6 +75,7 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne);
 void lance_de(int etat_de[3]);
 int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre);
 int fin_partie(t_joueur tabJoueur[], int nb_joueur);
+void regles();
 
 
 

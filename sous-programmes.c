@@ -1,4 +1,56 @@
 #include "menu.h"
+
+void regles()
+{
+    printf("Deroulement du jeu :\n");
+    printf("\nUne partie de Monopoly se deroule au tour par tour ou les joueurs jouent les uns apres les autres. Les joueurs utilisent les 2 des ordinaires a 6 faces. Chaque joueur lance les des, avance\n");
+    printf("son pion sur le parcours en fonction de la valeur qu'il a obtenu, puis effectue une action en fonction de la case sur laquelle il est arrete :\n");
+    printf("\n");
+    printf("Cases Proprietes :\n");
+    printf("\n");
+    printf("-Le joueur tombe sur un terrain ou une gare qui n'appartient a personne : il peut s'il le souhaite, en devenir proprietaire.\n");
+    printf("-Le joueur tombe sur un terrain une gare qui lui appartient : il peut s'il le souhaite ajouter une maison ou un hotel, s'il en a les capacites fianciere.\n");
+    printf("-Le joueur tombe sur un terrain ou une gare qui appartient a un adversaire : il doit alors lui payer un loyer. Le montant est fixee sur la carte de propriete detenu par le proprietaire. Si la case correspond a un terrain ou une gare\n");
+    printf("hypotheque, le joueur ne doit rien payer au proprietaire.\n");
+    printf("\n");
+    printf("Autres cases :\n");
+    printf("\n");
+    printf("-Le joueur tombe sur la Case Chance : il tire une carte Chance. Comme son nom ne l'indique pas, les cartes Chances ne sont pas forcement synonyme de bonnes chances : La carte Chance  peut en effet generer une amende pour le joueur.\n");
+    printf(" fun fact :Le terme Chance dans les editions françaises est un faux-ami puisqu'il s'agit d'une adaptation de l'anglais Chance qui signifie hasard et donc pas necessaire un bon hasard.\n");
+    printf("-Le joueur tombe sur une Case Caisse de Communaute : il doit alors tirer une carte Caisse de Communaute.\n");
+    printf("-Le joueur tombe sur la Case Taxe de luxe : Pas de chance, il doit payer le montant correspondant a la banque.\n");
+    printf("-Le joueur passe sur la Case Depart : S'il s'arrete exactement sur cette case, il gagne 400 euros. S'il ne fait que passer par cette case, il ne gagne que 200 euros.\n");
+    printf("-Le joueur s'arrete sur la Case Impôts sur le revenu : il doit alors payer 200 euros.\n");
+    printf("-Le joueur tombe sur la Case Allez en Prison : Il doit directement se rendre en prison sans passer par la case depart et donc sans toucher les 200 ou 400 euros prevus normalement.\n");
+    printf("-Le joueur arrive sur la Case Simple visite : Il s'agit d'une case neutre sans action particuliere. Il s'agit d'une simple visite de courtoisie aux prisonniers.\n");
+    printf("-Le joueur tombe sur la Case Prison : il applique les regles pour en sortir, et dans l'edition Monopoly, regles maison, il ne perçoit plus ses loyers.\n");
+    printf("-Le joueur s'arrete sur la Case Parc gratuit : il s'agissait d'une case neutre sans action.\n");
+    printf("Les terrains sont groupes par couleur. Des qu'un joueur est en possession d'un terrain, il pourra y construire des maisons et des hôtels s'il tombe sur celui-ci. Un hôtel correspond a 5 maisons.\n");
+    printf("\n");
+    printf("Case Prison :\n");
+    printf("\n");
+    printf("S'il tombe sur la case correspondante, ou s'il tire une mauvaise carte Chance, le joueur pourra se retrouver en prison avec l'impossibilite d'avancer dans le jeu. Il existe exactement 3 scenarios qui peuvent pousser le joueur a\n");
+    printf("devenir detenu en prison :\n");
+    printf("-Le joueur s'arrete sur la case : Allez en prison ;\n");
+    printf("-Le joueur fait 3 fois de suite, un double de des (1+1, 2+2; 3+3 …) ;\n");
+    printf("-Le joueur pioche une carte “Chance” qui l'invite a se rendre en prison\n");
+    printf("\n");
+    printf("Lorsqu'un joueur est detenu en prison, il pose son pion sur la case Prison et ne peut plus avancer sur le plateau. Il attend son tour jusqu'a ce que sa peine soit terminee et qu'il soit libere de prison. Ainsi, lorsqu'il est en prison,\n");
+    printf("le joueur perçoit les loyers de ses terrains.\n");
+    printf("\n");
+    printf("Il existe plusieurs methodes qui permettent de sortir de prison au Monopoly :\n");
+    printf("-Le joueur prisonnier detient la carte : Vous etes libere de prison qu'il peut acheter a un adversaire ou qu'il peut avoir dans son patrimoine) ;\n");
+    printf("-Lors de son tour de jeu, le joueur fait double des (1+1, 2+2…) ;\n");
+    printf("-Le joueur s'acquitte d'une caution de 50 euros.\n");
+    printf("\n");
+    printf("La duree de detention maximale est de 3 tours. S'il n'a pas reussi a sortir de prison a ce moment la (via un double des par exemple), le joueur sera alors dans l'obligation de payer le montant de la caution fixee a 50 euros\n");
+    printf("\n");
+    printf("Fin de la partie de Monopoly :\n");
+    printf("\n");
+    printf("Une partie de Monopoly s'arrete lorsqu'un joueur (le vainqueur) est le dernier joueur a ne pas avoir fait faillite. A ce moment la, le joueur se retrouve en situation de monopole puisqu'il detient l'ensemble des proprietes du jeu.\n");
+    printf("\n");
+}
+
 // renvoie si la position est possesseder
 int possession(t_joueur jeanMichel)
 {
