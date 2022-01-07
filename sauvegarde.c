@@ -62,7 +62,7 @@ void nom_fichier(t_fichier* fichiers)
 
     for(i = 0 ; fichiers->joueur[i] != '\0' ; i++)
     {
-        if(fichiers->joueur[i] == ' ')
+        if(fichiers->joueur[i] == ' ' || fichiers->joueur[i] == ':')
         {
             fichiers->joueur[i] = '_';
             fichiers->plateau[i] = '_';

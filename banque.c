@@ -11,34 +11,21 @@ int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* n
     jeanMichel->possession[0] = jeanMichel->position[0];
     plateau[jeanMichel->position[0]].loyer = info_case(info_villes, jeanMichel->position[0], 2);
 
-    menu_achat_vente_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes[19][9]);
-
     return 0;
 }
 
 void ajout_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
 {
-    if ((jeanMichel->argent > info_case(info_villes, jeanMichel->position[0], 1))|| (*nb_maison=0))
-    {
-        menu_achat_vente_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
-    }
-
     plateau[jeanMichel->position[0]].maison += 1;
     jeanMichel->argent -= info_case(info_villes, jeanMichel->position[0], 1); // on prend l'info 1 (le prix d'une upgrade) de la case choisi dans info_villes
     plateau[jeanMichel->position[0]].loyer = info_case(info_villes, jeanMichel->position[0], (plateau[jeanMichel->position[0]].maison+2));
     *nb_maison -=1;
 
-    menu_achat_vente_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
 }
 
 void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
 {
     int quantite;
-
-    if ((plateau[jeanMichel->position[0]].hotel==0) ||  (plateau[jeanMichel->position[0]].maison==0))
-    {
-        menu_achat_vente_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
-    }
 
     do
     {
@@ -68,10 +55,6 @@ void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int
 
 void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
 {
-    if((jeanMichel->argent > info_case(info_villes, jeanMichel->position[0], 1)) || (plateau[jeanMichel->position[0]].maison == 4) || (nb_hotel=0))
-    {
-        menu_achat_vente_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
-    }
 
     plateau[jeanMichel->position[0]].hotel  += 1;
     jeanMichel->argent -= info_case(info_villes, jeanMichel->position[0], 1);
@@ -80,7 +63,6 @@ void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* 
     *nb_maison +=4;
     *nb_hotel -=1;
 
-    menu_achat_vente_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
 }
 
 void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
@@ -117,7 +99,7 @@ void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_m
         printf("1. ajouter une maison\n");
         printf("2. vendre une maison/hotel\n");
         printf("3. ajouter un hotel\n");
-        printf("4. ne rien faire\n");
+        printf("4. finir le tour\n");
 
         scanf("%d", &choix);
     }
@@ -127,20 +109,38 @@ void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_m
     {
         case 1 :
         {
+            if ((jeanMichel->argent > info_case(info_villes, jeanMichel->position[0], 1))|| (*nb_maison=0))
+            {
+                menu_achat_vente_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
+            }
+
             ajout_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
 
+            menu_achat_vente_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
             break;
         }
 
         case 2 :
         {
+            if ((plateau[jeanMichel->position[0]].hotel==0) ||  (plateau[jeanMichel->position[0]].maison==0))
+            {
+                menu_achat_vente_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
+            }
+
             vendre_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
             break;
         }
 
         case 3 :
         {
+            if((jeanMichel->argent > info_case(info_villes, jeanMichel->position[0], 1)) || (plateau[jeanMichel->position[0]].maison == 4) || (nb_hotel=0))
+            {
+                menu_achat_vente_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
+            }
+
             ajout_hotel(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
+
+            menu_achat_vente_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
             break;
         }
 

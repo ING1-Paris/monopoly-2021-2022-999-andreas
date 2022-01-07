@@ -269,7 +269,7 @@ int main()
         ///action apres le tour
         sauvegarde(tabJoueur, plateau, &fichiers, nb_joueur_actu);
         i+=1;
-        if (i = nb_joueur_actu)
+        if (i == nb_joueur_actu)
         {
             i = 0;
         }
