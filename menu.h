@@ -1,12 +1,11 @@
 #ifndef MENU_H_INCLUDED
 #define MENU_H_INCLUDED
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <string.h>
+#include <windows.h>
 
-#define LEN 60 //taille d'un nom de fichier
+#define LEN 60
 
 #define VILLE 0
 #define GARE 1
@@ -34,30 +33,35 @@ typedef struct info_joueur // regroupe les infos d'un joueur
     int prison;
     int nb_double;
     char nom[30];
+    char pionjoueur;
     int argent;
     int position[2]; // on garde en memoire la derniere case pour savoir si le joueur passe l'arrivé
-    int possession [20]; //on met juste la place des proprieters, tout le reste est stocke dans le plateau
+    int possession [23]; //on met juste la place des proprieters, tout le reste est stocke dans le plateau
 
-} info_joueur;
+} t_joueur;
 
-#include "sous-programmes.c"
-#include "banque.c"
-
-//dans sous-programmes
 int nb_alea();
-void lance_de(int etat_de[3]);
+void lancer_de(int de[3]);
+int menu();
+int fin_partie(t_joueur* tabJoueur[], int nb_joueur);
+void Color(int couleurDuTexte,int couleurDeFond);
+void gotoligcol( int lig, int col );
+void setConsoleSize();
+void plateau(int ligne);
+void afficher_point(t_joueur joueur[6],int i,t_mono plat[32],int ligne);
+void casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne, int carte);
+void passage_arrivee(t_joueur jeanMichel[6],int i);
 int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre);
-int init_sauvegarde(info_joueur tabjoueurs[] ,t_mono plateau[32], char fichiers[2][LEN]);
-int sauvegarde(info_joueur tabjoueurs[] ,t_mono plateau[32], char fichers[2][LEN], int nb_joueur);
-int sauvegarde_nom(char fichiers[2][LEN]);
+void achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int t_villes[19][9]);
+void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int t_villes[19][9]);
+void casedecommunaute(int ligne, int i, t_mono plat[32], t_joueur tabdejoueur[6], int carte);
+void casedouane( int de[3], int douane, t_joueur tabdejour[6], int i);
 void nom_fichier(char fichiers[2][LEN]);
+int init_sauvegarde(t_joueur* tabjoueurs[] ,t_mono* plateau[32], char fichiers[2][LEN]);
+int sauvegarde(t_joueur* tabjoueurs[] ,t_mono* plateau[32], char fichiers[2][LEN]);
+void affichage_possession(t_joueur joueur[6], int i,int ligne);
+int carteimpot(int i, t_joueur tabdejoueur[6]);
+void actioncase(int t_villes[19][9],t_mono plat[32],t_joueur tabdejoueur[6],int i,int ligne, int carte);
+//void verif_argent(t_joueur jeanMichel[6], int i,int prix,t_mono plateau[32], int* nb_maison, int* nb_hotel, int t_villes[19][9])
 
-//dans banque
-
-void ajout_maison(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
-void vendre_maison(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
-void ajout_hotel(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
-void hypotheque(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
-void faillite(info_joueur* jeanMichel, int paymant, t_mono plateau[32]);
-void menu_achat_vente_maison(info_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
 #endif // MENU_H_INCLUDED
