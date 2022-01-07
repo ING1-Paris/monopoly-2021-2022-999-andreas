@@ -1,6 +1,18 @@
 #include "menu.h"
+// renvoie si la position est possesseder
+int possession(t_joueur jeanMichel)
+{
+    int i;
 
-
+    for(i = 0; i<23; i++)
+    {
+        if (jeanMichel.possession[i]==jeanMichel.position[0])
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
 //donne le resultat d'un de
 int nb_alea()
 {

@@ -1,5 +1,6 @@
 #include "menu.h"
 
+
 void casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne)
 {
     int carte;

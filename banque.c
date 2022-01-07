@@ -1,6 +1,5 @@
 #include "menu.h"
 
-
 int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
 {
    if (jeanMichel->argent > info_case(info_villes, jeanMichel->position[0], 0))

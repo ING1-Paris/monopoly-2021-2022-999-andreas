@@ -19,7 +19,7 @@ int main()
 
     int info_villes[19][9] ={{60,50,2,10,30,90,160,250,1},/// prix | prix maison | loyer sans maison | 1 maison | 2 maisons | 3 maisons | 4 maisons | 1 hotel | place sur le plateau
                         {60,50,4,20,60,180,320,450,3},    ///   0         1                 2              3          4           5           6          7                8
-                        {100,50,6,30,90,270,400,550,6},   // il faut rajouter une case groupe de couleur ou pas
+                        {100,50,6,30,90,270,400,550,6},
                         {120,50,8,40,100,300,450,600,7},
                         {120,100,10,50,150,450,625,750,9},
                         {140,100,10,50,150,450,625,750,10},
@@ -80,21 +80,21 @@ int main()
     -lancer la partie
     */
 
-
+    /*
     nom_fichier(&fichiers);
 
-    //printf("%s %s", fichiers.joueur, fichiers.plateau);
+    printf("%s %s", fichiers.joueur, fichiers.plateau);
 
     nb_joueur = 2;
 
     sauvegarde(tabJoueur ,plateau, &fichiers, nb_joueur); // la sauvegarde marche pas
+    */
 
 
 
 
 
 
-/*
 
 ///------------------------------------------menu demarrage
 
@@ -108,7 +108,7 @@ int main()
         nb_maison = 32;
         nb_hotel = 12;
 
-        //choix du nombre de joueur entre 2 et 6 joueurs
+        //choix du nombre de joueur entre 2 et 6 joueurs // il faudrait faire une alocation dynamique pour le tabJoueur
         do
         {
             printf("nombre de joueur entre 2 et 6");
@@ -192,6 +192,78 @@ int main()
             tabJoueur[i].argent+=200;
         }
 
+
+        switch(tabJoueur[i].position[0])
+        {
+            case 0: //VILLE
+            {
+
+                if (possession(tabJoueur[i]))
+                {
+                    menu_achat_vente_maison(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
+                }
+
+                else if (plateau[tabJoueur->position[0]].possesseder == 0)
+                {
+                    achat_ville(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
+                }
+
+                else
+                {
+                     tabJoueur[i].argent -= plateau[tabJoueur->position[0]].loyer;
+                }
+
+                break;
+            }
+
+            case 1: //GARE
+            {
+
+                if (plateau[tabJoueur->position[0]].possesseder == 0)
+                {
+                    achat_ville(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
+                }
+
+                else
+                {
+                     tabJoueur[i].argent -= plateau[tabJoueur->position[0]].loyer;
+                }
+
+                break;
+            }
+
+            case 2: //CHANCE
+            {
+                casechance(tabJoueur, i, plateau, ligne);
+                break;
+            }
+
+            case 3: //COMM
+            {
+                casedecommunaute(ligne, i, plateau, tabJoueur);
+                break;
+            }
+
+            case 4: //PRISON
+            {
+                //casedouane(de,douane,tabJoueur,i);
+                break;
+            }
+
+            case 5: //ARRIVER
+            case 6: //PARC
+            {
+                printf("il se passe rien");
+                break;
+            }
+
+            case 7: //IMPOT
+            {
+                tabJoueur[i].argent -= 200;
+                break;
+            }
+        }
+
         //action sur la case tombé
 
         ///action apres le tour
@@ -203,7 +275,8 @@ int main()
         }
 
     }while (fin_partie(tabJoueur, nb_joueur));
-*/
+
+
 //il faudrait supprimer le fichier quand la partie est fini
 
 ///------------------------------------------------------------------------------------------------------------------///
