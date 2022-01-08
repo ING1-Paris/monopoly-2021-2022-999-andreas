@@ -6,6 +6,7 @@ int main()
     srand(time(NULL));
     int i, j, choix, nb_joueur, nb_joueur_actu, nb_maison, nb_hotel;
     int ligne = 2;
+    int prix_case;
     setConsoleSize();
 
     int de[3] = {0,0,0};
@@ -105,7 +106,7 @@ int main()
             fflush(stdin);
 
             tabJoueur[i].argent=1500;
-            tabJoueur[i].position[2]=0;
+            tabJoueur[i].position[1]=0;
 
             for (j=0;j<23;j++)
             {
@@ -137,6 +138,7 @@ int main()
     else if(choix == 4)
     {
         //fonction qui fait quitter le jeu ?
+        return 0;
     }
 
 
@@ -147,49 +149,51 @@ int main()
 
     i = 0;
 
-
+    int carte=rand()%(15);
 
     nb_joueur_actu = nb_joueur;
     do
     {
 
-        tabJoueur[i].position[1]=tabJoueur[i].position[0];
+        tabJoueur[i].position[0]=tabJoueur[i].position[1];
         affichage_plateau(ligne);
         affichage_possession(tabJoueur,i,ligne);
-        gotoligcol(30+ligne,70);
-
-        affichage_plateau(ligne);
-
         gotoligcol(29+ligne,70);
         printf("vous avez fait:");
         gotoligcol(30+ligne,75);
         lancer_de(de);
-        tabJoueur[i].position[2]=(tabJoueur[i].position[1]+de[0]+de[1])%32;
-        afficher_point(tabJoueur,i,plateau,ligne);
-        if ((tabJoueur[i].position[0]-tabJoueur[i].position[1])<0)
+        tabJoueur[i].position[1]=(tabJoueur[i].position[1]+de[0]+de[1])%32;
+        for (j=0;j<nb_joueur;j++)
+                {
+                    afficher_point(tabJoueur,j,plateau,ligne);
+                }
+        if ((tabJoueur[i].position[1]-tabJoueur[i].position[0])<0)
         {
+            gotoligcol(15,75);
+            printf("vous avez ressu 200 euros pour avoir passe l'arrive");
             tabJoueur[i].argent+=200;
         }
 
 
-        switch(tabJoueur[i].position[0])
+        switch(plateau[tabJoueur[i].position[1]].type)
         {
             case 0: //VILLE
             {
 
-                if (possession(tabJoueur[i]))
+                if (plateau[tabJoueur->position[1]].possesseder == 1)
                 {
+                    gotoligcol(34,75);
+                    printf("vous etes tomber sur une ville qui appartient a un joueur tu as payer %d euros",plateau[tabJoueur->position[1]].loyer);
+                    tabJoueur[i].argent -= plateau[tabJoueur->position[1]].loyer;
                     menu_achat_vente_maison(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
-                }
-
-                else if (plateau[tabJoueur->position[0]].possesseder == 0)
-                {
-                    achat_ville(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
                 }
 
                 else
                 {
-                     tabJoueur[i].argent -= plateau[tabJoueur->position[0]].loyer;
+                    prix_case=info_case(info_villes,tabJoueur[i].position[1],0);
+                    gotoligcol(34,75);
+                    printf("vous etes sur une ville qui appartient a personne. Elle coute %d euros voulez vous l acheter. Enterez 1 pour oui ou 2 pour non",prix_case);
+                    achat_ville(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
                 }
 
                 break;
@@ -198,14 +202,14 @@ int main()
             case 1: //GARE
             {
 
-                if (plateau[tabJoueur->position[0]].possesseder == 0)
+                if (plateau[tabJoueur->position[1]].possesseder == 0)
                 {
                     achat_ville(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
                 }
 
                 else
                 {
-                     tabJoueur[i].argent -= plateau[tabJoueur->position[0]].loyer;
+                     tabJoueur[i].argent -= plateau[tabJoueur->position[1]].loyer;
                 }
 
                 break;
@@ -213,31 +217,34 @@ int main()
 
             case 2: //CHANCE
             {
-                casechance(tabJoueur, i, plateau, ligne);
+                carte=casechance(tabJoueur, i, plateau, ligne,carte);
                 break;
             }
 
             case 3: //COMM
             {
-                casedecommunaute(ligne, i, plateau, tabJoueur);
+                carte=casedecommunaute(ligne, i, plateau, tabJoueur,carte);
                 break;
             }
 
             case 4: //PRISON
             {
-                //casedouane(de,douane,tabJoueur,i);
+                casedouane( de,tabJoueur,i);
                 break;
             }
 
             case 5: //ARRIVER
             case 6: //PARC
             {
-                printf("il se passe rien");
+                gotoligcol(34,75);
+                printf("reposez vous");
                 break;
             }
 
             case 7: //IMPOT
             {
+                gotoligcol(34,75);
+                printf("vous etes tomber sur la case impot vous avez paye 200 euros");
                 tabJoueur[i].argent -= 200;
                 break;
             }

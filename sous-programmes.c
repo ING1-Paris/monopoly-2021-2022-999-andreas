@@ -52,10 +52,10 @@ void regles()
 }
 
 // renvoie si la position est possesseder
-int possession(t_joueur jeanMichel)
+
+int possession(t_joueur jeanMichel, t_mono plateau[32])
 {
     int i;
-
     for(i = 0; i<23; i++)
     {
         if (jeanMichel.possession[i]==jeanMichel.position[0])
@@ -65,6 +65,7 @@ int possession(t_joueur jeanMichel)
     }
     return 0;
 }
+
 //donne le resultat d'un de
 int nb_alea()
 {
@@ -84,7 +85,7 @@ void lancer_de(int de[3])
         de[2]=1; // on a un double
     }
 
-    printf("%d %d",de[0], de[1]);
+    printf("%d et %d",de[0], de[1]);
 }
 
 // renvoie une info preciser dans les parametre d'une ville en particulier
@@ -113,7 +114,7 @@ int fin_partie(t_joueur tabJoueur[], int nb_joueur)
 
     for(i = 0; i<nb_joueur; i++)
     {
-        if (tabJoueur[i].argent == 1)
+        if (tabJoueur[i].argent >= 1)
         {
             nb+=1;
         }
@@ -416,66 +417,58 @@ void affichage_plateau(int ligne)
 void afficher_point(t_joueur joueur[6],int i,t_mono plat[32],int ligne)
 {
     int colplat;
-    colplat=joueur[i].position[2];
+    colplat=joueur[i].position[1];
     colplat=colplat%8;
-    if (joueur[i].position[2]<9)
+    if (joueur[i].position[1]<8)
         {
             if (colplat!=0)
             {
-                plat[joueur[i].position[2]].presence++;
                 gotoligcol(10+ligne,colplat*19+i);
+                printf("%c",joueur[i].pionjoueur);
+            }
+            else
+            {
+                gotoligcol(10+ligne,5+i);
+                printf("%c",joueur[i].pionjoueur);
+            }
+        }
+        else if (joueur[i].position[1]>=8 && joueur[i].position[1]<16)
+        {
+            if (colplat!=0)
+            {
+                gotoligcol(10+colplat*6+ligne,144+i);
                 printf("%c",joueur[i].pionjoueur);
             }
             else
             {
                 gotoligcol(10+ligne,144+i);
                 printf("%c",joueur[i].pionjoueur);
-                plat[joueur[i].position[2]].presence++;
             }
         }
-        else if (joueur[i].position[2]>=9 && joueur[i].position[2]<17)
+        else if (joueur[i].position[1]>=16 && joueur[i].position[1]<=25)
         {
             if (colplat!=0)
             {
-                plat[joueur[i].position[2]].presence++;
-                gotoligcol(10+colplat*6+ligne,144+i);
+                gotoligcol(59+ligne,154-colplat*19+i);
                 printf("%c",joueur[i].pionjoueur);
             }
             else
             {
                 gotoligcol(59+ligne,144+i);
                 printf("%c",joueur[i].pionjoueur);
-                plat[joueur[i].position[2]].presence++;
-            }
-        }
-        else if (joueur[i].position[2]>=17 && joueur[i].position[2]<=25)
-        {
-            if (colplat!=0)
-            {
-                plat[joueur[i].position[2]].presence++;
-                gotoligcol(59+ligne,154-colplat*19+i);
-                printf("%c",joueur[i].pionjoueur);
-            }
-            else
-            {
-                gotoligcol(59+ligne,5+i);
-                printf("%c",joueur[i].pionjoueur);
-                plat[joueur[i].position[2]].presence++;
             }
         }
         else
         {
             if (colplat!=0)
             {
-                plat[joueur[i].position[2]].presence++;
                 gotoligcol(60-colplat*6,3+i);
                 printf("%c",joueur[i].pionjoueur);
             }
             else
             {
-                gotoligcol(ligne,5+i);
+                gotoligcol(59+ligne,5+i);
                 printf("%c",joueur[i].pionjoueur);
-                plat[joueur[i].position[2]].presence++;
             }
         }
 }
@@ -484,15 +477,157 @@ void afficher_point(t_joueur joueur[6],int i,t_mono plat[32],int ligne)
 void affichage_possession(t_joueur joueur[6], int i,int ligne)
 {
     int j;
+    int a=0;
     gotoligcol(15+ligne,22);
-    printf("joueur numero %d",i+1);
+    printf("%s",joueur[i].nom);
     gotoligcol(16+ligne,22);
     printf("argent: %d",joueur[i].argent);
     for(j=0;j<23;j++)
     {
-        gotoligcol(17+ligne+i,22);
-        printf("%d",joueur[i].possession[j]);
+        if(joueur[i].possession[j]!=0)
+        {
+            a++;
+            switch(joueur[i].possession[j])
+            {
+                case 0:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Bucarest");
+                     break;
+                }
+                case 1:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Sofia");
+                     break;
+                }
+                case 2:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Gare 1");
+                     break;
+                }
+                case 3:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Vienne");
+                     break;
+                }
+                case 4:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Lisbonne");
+                     break;
+                }
+                case 5:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Berne");
+                     break;
+                }
+                case 6:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Athene");
+                     break;
+                }
+                case 7:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Dublin");
+                     break;
+                }
+                case 8:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Gare2");
+                     break;
+                }
+                case 9:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Stockholm");
+                     break;
+                }
+                case 10:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Helsinki");
+                     break;
+                }
+                case 11:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Varsovie");
+                     break;
+                }
+                case 12:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Copenhague");
+                     break;
+                }
+                case 13:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Luxembourg");
+                     break;
+                }
+                case 14:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Gare3");
+                     break;
+                }
+                case 15:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Amsterdam");
+                     break;
+                }
+                case 16:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Bruxelles");
+                     break;
+                }
+                case 17:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Madrid");
+                     break;
+                }
+                case 18:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Londres");
+                     break;
+                }
+                case 19:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Rome");
+                     break;
+                }
+                case 20:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Gare4");
+                     break;
+                }
+                case 21:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Berlin");
+                     break;
+                }
+                case 22:
+                {
+                     gotoligcol(17+ligne+a,22);
+                     printf("Paris");
+                     break;
+                }
+            }
+        }
     }
 }
-
-

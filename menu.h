@@ -28,9 +28,9 @@ typedef struct monopoly
     int type; // ville, gare, chance, communaute, prison, depart, parc, impot
     int prix;
     int loyer;
-    int presence;
     int maison;
     int hotel;
+    int presence;
     int hypo; // si c'est hypotheque ou pas
     int possesseder;
 
@@ -68,9 +68,9 @@ void gotoligcol( int lig, int col );
 void setConsoleSize();
 void affichage_plateau(int ligne);
 void afficher_point(t_joueur joueur[6],int i,t_mono plateau[32],int ligne);
-void casechance(t_joueur tabdejoueur[6],int i, t_mono plateau [32], int ligne);
-void casedecommunaute(int ligne, int i, t_mono plateau[32], t_joueur tabdejoueur[6]);
-void casedouane( int de[3], int douane, t_joueur tabdejour[6], int i);
+int casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne, int carte);
+int casedecommunaute(int ligne, int i, t_mono plat[32], t_joueur tabdejoueur[6],int carte);
+void casedouane( int de[3], t_joueur tabdejoueur[6], int i);
 void affichage_possession(t_joueur joueur[6], int i,int ligne);
 void lance_de(int etat_de[3]);
 int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre);
