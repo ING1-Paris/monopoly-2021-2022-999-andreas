@@ -17,26 +17,30 @@ int main()
     t_joueur tabJoueur[6];
     t_mono plateau[32];
 
-    int info_villes[19][9] ={{60,50,2,10,30,90,160,250,1},/// prix | prix maison | loyer sans maison | 1 maison | 2 maisons | 3 maisons | 4 maisons | 1 hotel | place sur le plateau
-                        {60,50,4,20,60,180,320,450,3},    ///   0         1                 2              3          4           5           6          7                8
+    int info_villes[23][9] ={{60,50,2,10,30,90,160,250,1},/// prix | prix maison | loyer sans maison | 1 maison | 2 maisons | 3 maisons | 4 maisons | 1 hotel | place sur le plateau
+                        {60,50,4,20,60,180,320,450,3},    ///  0         1                 2              3          4           5           6          7                8
+                        {200,0,25,50,100,200,0,0,5},
                         {100,50,6,30,90,270,400,550,6},
                         {120,50,8,40,100,300,450,600,7},
                         {120,100,10,50,150,450,625,750,9},
                         {140,100,10,50,150,450,625,750,10},
                         {160,100,12,60,180,500,700,900,11},
+                        {200,0,25,50,100,200,0,0,12},
                         {180,100,14,70,200,550,750,950,13},
                         {180,100,14,70,200,550,750,950,14},
                         {180,100,16,80,220,600,800,1000,15},
                         {220,150,18,90,250,70,875,1050,17},
                         {240,150,20,100,300,750,925,1100,18},
+                        {200,0,25,50,100,200,0,0,20},
                         {260,150,22,110,330,800,975,1150,22},
                         {280,150,24,120,360,850,1025,1200,23},
                         {300,200,26,130,390,900,1100,1275,25},
                         {300,200,26,130,390,900,1100,1275,26},
                         {320,200,28,150,450,1000,1200,1400,27},
+                        {200,0,25,50,100,200,0,0,28},
                         {350,200,35,175,500,1100,1300,1500,30},
                         {400,200,50,200,600,1400,1700,2000,31}};
-                        //il manque les gares :(
+                        //il faut check si le jour a plusieur possession de type gare et changer les loyer
 
     plateau[0].type =ARRIVE;
     plateau[1].type =VILLE;
@@ -75,81 +79,12 @@ int main()
 
 ///------------------------------------------menu demarrage
 
-    choix = menu();
-
-
-
-    if (choix==1) /// 1- NOUVELLE PARTIE
-    {
-        // definition des stock de maisons et hotels
-        nb_maison = 32;
-        nb_hotel = 12;
-
-        //choix du nombre de joueur entre 2 et 6 joueurs // il faudrait faire une alocation dynamique pour le tabJoueur
-        do
-        {
-            printf("nombre de joueur entre 2 et 6");
-            scanf("%d",&nb_joueur);
-        }
-        while(nb_joueur<2 || nb_joueur>6);
-
-        //remplissage du tableau de structure joueur
-        for(i=0;i<nb_joueur;i++)
-        {
-            printf("entrez le nom du joueur n %d",i+1);
-            scanf("%s",tabJoueur[i].nom);
-            fflush(stdin);
-
-            printf("choisissez un caractere pour votre pion");
-            scanf("%c",&tabJoueur[i].pionjoueur);
-            fflush(stdin);
-
-            tabJoueur[i].argent=1500;
-            tabJoueur[i].position[2]=0;
-
-            for (j=0;j<23;j++)
-            {
-                tabJoueur[i].possession[j]=0;
-            }
-        }
-
-        nom_fichier(&fichiers);
-        sauvegarde_nom(&fichiers);
-        sauvegarde(tabJoueur ,plateau, &fichiers, nb_joueur);
-
-        //choisi le joueur qui commence aleatoirement
-    }
-
-    else if(choix == 2) ///2-CHARGER UNE PARTIE
-    {
-        init_nom_sauvegarde(&fichiers);
-        init_sauvegarde(tabJoueur, plateau, &fichiers);
-
-    }
-
-    else if(choix == 3) ///3-REGLE
-    {
-        //fonction qui affiche les regles
-        regles();
-
-    }
-
-    else if(choix == 4)
-    {
-        //fonction qui fait quitter le jeu ?
-    }
-
-
-
+    demarrage(&nb_maison, &nb_hotel, &nb_joueur, &nb_joueur_actu, &i, plateau, tabJoueur, &fichiers);
 
     ///----------------------------------------------------------------LE JEU
     ///initialisation des trucs à initialiser systematiquement
 
-    i = 0;
 
-
-
-    nb_joueur_actu = nb_joueur;
     do
     {
 
@@ -172,9 +107,9 @@ int main()
         }
 
 
-        switch(tabJoueur[i].position[0])
+        switch(plateau[tabJoueur[i].position[0]].type)
         {
-            case 0: //VILLE
+            case VILLE:
             {
 
                 if (possession(tabJoueur[i]))
@@ -195,7 +130,7 @@ int main()
                 break;
             }
 
-            case 1: //GARE
+            case GARE:
             {
 
                 if (plateau[tabJoueur->position[0]].possesseder == 0)
@@ -211,46 +146,55 @@ int main()
                 break;
             }
 
-            case 2: //CHANCE
+            case CHANCE:
             {
                 casechance(tabJoueur, i, plateau, ligne);
                 break;
             }
 
-            case 3: //COMM
+            case COMM:
             {
                 casedecommunaute(ligne, i, plateau, tabJoueur);
                 break;
             }
 
-            case 4: //PRISON
+            case PRISON:
             {
                 //casedouane(de,douane,tabJoueur,i);
                 break;
             }
 
-            case 5: //ARRIVER
-            case 6: //PARC
+            case ARRIVE:
+            case PARC:
             {
                 printf("il se passe rien");
                 break;
             }
 
-            case 7: //IMPOT
+            case IMPOT:
             {
                 tabJoueur[i].argent -= 200;
                 break;
             }
         }
 
-        //action sur la case tombé
 
         ///action apres le tour
-        sauvegarde(tabJoueur, plateau, &fichiers, nb_joueur_actu);
+        plusieurs_gares(tabJoueur[i], plateau, info_villes);
+
+        sauvegarde(tabJoueur, plateau, &fichiers,nb_joueur, nb_joueur_actu, nb_maison, nb_hotel);
         i+=1;
         if (i == nb_joueur_actu)
         {
             i = 0;
+        }
+
+        printf("voulez vous aller au menu principale ? oui:1 non:0");
+        scanf("%d", &choix);
+
+        if (choix)
+        {
+            demarrage(&nb_maison, &nb_hotel, &nb_joueur, &nb_joueur_actu, &i, plateau, tabJoueur, &fichiers);
         }
 
     }while (fin_partie(tabJoueur, nb_joueur));

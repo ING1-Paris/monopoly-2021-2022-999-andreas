@@ -1,7 +1,17 @@
 #include "menu.h"
-
+// fonction pour afficher les regles (je crois que ça se voit)
 void regles()
 {
+    printf(" 888b     d888  .d88888b.  888b    888  .d88888b.  8888888b.   .d88888b.  888      Y88b   d88P\n");
+    printf(" 8888b   d8888 d88P' 'Y88b 8888b   888 d88P' 'Y88b 888   Y88b d88P' 'Y88b 888       Y88b d88P\n");
+    printf(" 88888b.d88888 888     888 88888b  888 888     888 888    888 888     888 888        Y88o88P\n");
+    printf(" 888Y88888P888 888     888 888Y88b 888 888     888 888   d88P 888     888 888         Y888P\n");
+    printf(" 888 Y888P 888 888     888 888 Y88b888 888     888 8888888P'  888     888 888          888\n");
+    printf(" 888  Y8P  888 888     888 888  Y88888 888     888 888        888     888 888          888\n");
+    printf(" 888   '   888 Y88b. .d88P 888   Y8888 Y88b. .d88P 888        Y88b. .d88P 888          888\n");
+    printf(" 888       888  'Y88888P'  888    Y888  'Y88888P'  888         'Y88888P'  88888888     888\n");
+    printf("\n\n");
+
     printf("Deroulement du jeu :\n");
     printf("\nUne partie de Monopoly se deroule au tour par tour ou les joueurs jouent les uns apres les autres. Les joueurs utilisent les 2 des ordinaires a 6 faces. Chaque joueur lance les des, avance\n");
     printf("son pion sur le parcours en fonction de la valeur qu'il a obtenu, puis effectue une action en fonction de la case sur laquelle il est arrete :\n");
@@ -51,7 +61,7 @@ void regles()
     printf("\n");
 }
 
-// renvoie si la position est possesseder
+// renvoie si la position du joueur est possessedé par quelqu'un
 int possession(t_joueur jeanMichel)
 {
     int i;
@@ -62,20 +72,16 @@ int possession(t_joueur jeanMichel)
         {
             return 1;
         }
+
     }
     return 0;
-}
-//donne le resultat d'un de
-int nb_alea()
-{
-    return rand()%(6)+1;
 }
 
 //renvoie le resultat d'un lancé de des
 void lancer_de(int de[3])
 {
-    de[0] = nb_alea();
-    de[1] = nb_alea();
+    de[0] = rand()%(6)+1;
+    de[1] = rand()%(6)+1;
 
 
     if (de[0]==de[1])
@@ -106,6 +112,7 @@ int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre)
     return 0;
 }
 
+// test si il y a encore des joueur en jeux
 int fin_partie(t_joueur tabJoueur[], int nb_joueur)
 {
     int i;
@@ -128,26 +135,92 @@ int fin_partie(t_joueur tabJoueur[], int nb_joueur)
 
 
 //affiche le menu demarrage
-int menu()
+void demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu, int* k, t_mono plateau[32],t_joueur tabJoueur[6], t_fichier* fichiers)
 {
     int choix;
-    do{
+    int i;
+    int j;
 
-        printf(" 888b     d888  .d88888b.  888b    888  .d88888b.  8888888b.   .d88888b.  888      Y88b   d88P\n");
-        printf(" 8888b   d8888 d88P' 'Y88b 8888b   888 d88P' 'Y88b 888   Y88b d88P' 'Y88b 888       Y88b d88P\n");
-        printf(" 88888b.d88888 888     888 88888b  888 888     888 888    888 888     888 888        Y88o88P\n");
-        printf(" 888Y88888P888 888     888 888Y88b 888 888     888 888   d88P 888     888 888         Y888P\n");
-        printf(" 888 Y888P 888 888     888 888 Y88b888 888     888 8888888P'  888     888 888          888\n");
-        printf(" 888  Y8P  888 888     888 888  Y88888 888     888 888        888     888 888          888\n");
-        printf(" 888   '   888 Y88b. .d88P 888   Y8888 Y88b. .d88P 888        Y88b. .d88P 888          888\n");
-        printf(" 888       888  'Y88888P'  888    Y888  'Y88888P'  888         'Y88888P'  88888888     888\n");
-        printf("\n\n");
+    printf(" 888b     d888  .d88888b.  888b    888  .d88888b.  8888888b.   .d88888b.  888      Y88b   d88P\n");
+    printf(" 8888b   d8888 d88P' 'Y88b 8888b   888 d88P' 'Y88b 888   Y88b d88P' 'Y88b 888       Y88b d88P\n");
+    printf(" 88888b.d88888 888     888 88888b  888 888     888 888    888 888     888 888        Y88o88P\n");
+    printf(" 888Y88888P888 888     888 888Y88b 888 888     888 888   d88P 888     888 888         Y888P\n");
+    printf(" 888 Y888P 888 888     888 888 Y88b888 888     888 8888888P'  888     888 888          888\n");
+    printf(" 888  Y8P  888 888     888 888  Y88888 888     888 888        888     888 888          888\n");
+    printf(" 888   '   888 Y88b. .d88P 888   Y8888 Y88b. .d88P 888        Y88b. .d88P 888          888\n");
+    printf(" 888       888  'Y88888P'  888    Y888  'Y88888P'  888         'Y88888P'  88888888     888\n");
+    printf("\n\n");
     printf("1- NOUVELLE PARTIE\n2-CHARGER UNE PARTIE\n3-REGLE\n4-QUITTER");
-    scanf("%d",&choix);
-    }while (choix<0 || choix >4);
-    return choix;
+    printf("entrer le numero de l'action a suivre : ");
+    do
+    {
+        scanf("%d",&choix);
+    }
+     while (choix<0 || choix >4);
 
+
+    if (choix==1) /// 1- NOUVELLE PARTIE
+    {
+        // definition des stock de maisons et hotels
+        *nb_maison = 32;
+        *nb_hotel = 12;
+
+        //choix du nombre de joueur entre 2 et 6 joueurs
+        do
+        {
+            printf("nombre de joueur entre 2 et 6");
+            scanf("%d", nb_joueur);
+        }
+        while(*nb_joueur<2 || *nb_joueur>6);
+
+        //remplissage du tableau de structure joueur
+        for(i=0;i<*nb_joueur;i++)
+        {
+            printf("entrez le nom du joueur n %d",i+1);
+            scanf("%s",tabJoueur[i].nom);
+            fflush(stdin);
+
+            printf("choisissez un caractere pour votre pion");
+            scanf("%c",&tabJoueur[i].pionjoueur);
+            fflush(stdin);
+
+            tabJoueur[i].argent=1500;
+            tabJoueur[i].position[1]=0;
+
+            for (j=0;j<23;j++)
+            {
+                tabJoueur[i].possession[j]=0;
+            }
+        }
+
+        nom_fichier(fichiers);
+        sauvegarde_nom(fichiers);
+        sauvegarde(tabJoueur ,plateau, fichiers, *nb_joueur, *nb_joueur_actu, *nb_maison, *nb_hotel);
+
+        *k = rand()% *nb_joueur-1;
+        printf("c'est %s qui commence", tabJoueur[*k].nom);
+
+    }
+
+    else if(choix == 2) ///2-CHARGER UNE PARTIE
+    {
+        i = 0;
+        init_nom_sauvegarde(fichiers);
+        init_sauvegarde(tabJoueur, plateau, fichiers, nb_joueur_actu, nb_joueur, nb_maison, nb_hotel);
+
+    }
+
+    else if(choix == 3) ///3-REGLE
+    {
+        regles();
+    }
+
+    else if(choix == 4)
+    {
+        //fonction qui fait quitter le jeu ?
+    }
 }
+
 
 //jsp
 void Color(int couleurDuTexte,int couleurDeFond)
