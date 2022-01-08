@@ -44,7 +44,7 @@ typedef struct info_joueur // regroupe les infos d'un joueur
     char pionjoueur;
     int argent;
     int position[2]; // on garde en memoire la derniere case pour savoir si le joueur passe l'arrivÃ©
-    int possession [23]; //on met juste la place des proprieters, tout le reste est stocke dans le plateau
+    int possession [32]; //on met juste la place des proprieters, tout le reste est stocke dans le plateau
 } t_joueur;
 
 #include "sous-programmes.c"
@@ -73,18 +73,18 @@ int casedecommunaute(int ligne, int i, t_mono plat[32], t_joueur tabdejoueur[6],
 void casedouane( int de[3], t_joueur tabdejoueur[6], int i);
 void affichage_possession(t_joueur joueur[6], int i,int ligne);
 void lance_de(int etat_de[3]);
-int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre);
+int info_case(int info_villes[32][9], int la_case_choisi, int info_a_rendre);
 int fin_partie(t_joueur tabJoueur[], int nb_joueur);
 void regles();
 
 
 
 //dans banque
-void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
-void ajout_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
-void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
-void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
-void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
-int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9]);
+void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
+void ajout_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
+void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
+void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
+void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
+int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
 
 #endif // MENU_H_INCLUDED

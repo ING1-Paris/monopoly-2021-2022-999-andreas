@@ -89,20 +89,16 @@ void lancer_de(int de[3])
 }
 
 // renvoie une info preciser dans les parametre d'une ville en particulier
-int info_case(int info_villes[19][9], int la_case_choisi, int info_a_rendre)
+int info_case(int info_villes[32][9], int la_case_choisi, int info_a_rendre)
 {
     int i;
-    int j;
 
-    for (i=0; i<19; i++)
+    for (i=0; i<32; i++)
     {
-        for (j=0; j<9; j++)
-        {
-            if (la_case_choisi == info_villes[i][j])
+            if (la_case_choisi == info_villes[i][8])
             {
                 return info_villes[i][info_a_rendre];
             }
-        }
     }
     return 0;
 }
@@ -150,14 +146,14 @@ int menu()
 
 }
 
-//jsp
+//cours
 void Color(int couleurDuTexte,int couleurDeFond)
 {
     HANDLE H=GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(H,couleurDeFond*16+couleurDuTexte);
 }
 
-//jsp
+//cours
 void gotoligcol( int lig, int col ) {
     COORD mycoord;
     mycoord.X = col;
@@ -165,7 +161,7 @@ void gotoligcol( int lig, int col ) {
     SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE ), mycoord );
 }
 
-//jsp
+//met la console en grand écran
 void setConsoleSize()
 {
     keybd_event(VK_MENU,0x38,0,0); //Appuie sur ALT
@@ -482,149 +478,192 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
     printf("%s",joueur[i].nom);
     gotoligcol(16+ligne,22);
     printf("argent: %d",joueur[i].argent);
-    for(j=0;j<23;j++)
+    for(j=0;j<32;j++)
     {
         if(joueur[i].possession[j]!=0)
         {
-            a++;
+
             switch(joueur[i].possession[j])
             {
-                case 0:
-                {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Bucarest");
-                     break;
-                }
                 case 1:
                 {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Sofia");
-                     break;
-                }
-                case 2:
-                {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Gare 1");
+                     Color(0,5);
+                     gotoligcol(17+ligne,22);
+                     printf("Bucarest");
+                     Color(15,0);
                      break;
                 }
                 case 3:
                 {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Vienne");
-                     break;
-                }
-                case 4:
-                {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Lisbonne");
+                     Color(0,5);
+                     gotoligcol(17+ligne+1,22);
+                     printf("Sofia");
+                     Color(15,0);
                      break;
                 }
                 case 5:
                 {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Berne");
+
+                     gotoligcol(17+ligne+2,22);
+                     printf("Gare 1");
+                     Color(15,0);
                      break;
                 }
                 case 6:
                 {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Athene");
+                     Color(0,3);
+                     gotoligcol(17+ligne+3,22);
+                     printf("Vienne");
+                     Color(15,0);
                      break;
                 }
                 case 7:
                 {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Dublin");
-                     break;
-                }
-                case 8:
-                {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Gare2");
+                     Color(0,3);
+                     gotoligcol(17+ligne+4,22);
+                     printf("Lisbonne");
+                     Color(15,0);
                      break;
                 }
                 case 9:
                 {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Stockholm");
+
+                     gotoligcol(17+ligne+5,22);
+                     printf("Berne");
+                     Color(15,0);
                      break;
                 }
                 case 10:
                 {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Helsinki");
+                     Color(0,1);
+                     gotoligcol(17+ligne+6,22);
+                     printf("Athene");
+                     Color(15,0);
                      break;
                 }
                 case 11:
                 {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Varsovie");
+                     Color(0,1);
+                     gotoligcol(17+ligne+7,22);
+                     printf("Dublin");
+                     Color(15,0);
                      break;
                 }
                 case 12:
                 {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Copenhague");
+                     gotoligcol(17+ligne+8,22);
+                     printf("Gare2");
+                     Color(15,0);
                      break;
                 }
                 case 13:
                 {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Luxembourg");
+                     Color(0,14);
+                     gotoligcol(17+ligne+9,22);
+                     printf("Stockholm");
+                     Color(15,0);
                      break;
                 }
                 case 14:
                 {
+                     Color(0,14);
                      gotoligcol(17+ligne+a,22);
-                     printf("Gare3");
+                     printf("Helsinki");
+                     Color(15,0);
                      break;
                 }
                 case 15:
                 {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Amsterdam");
-                     break;
-                }
-                case 16:
-                {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Bruxelles");
+                     Color(0,14);
+                     gotoligcol(17+ligne+10,22);
+                     printf("Varsovie");
+                     Color(15,0);
                      break;
                 }
                 case 17:
                 {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Madrid");
-                     break;
-                }
-                case 18:
-                {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Londres");
+                     Color(0,8);
+                     gotoligcol(17+ligne+11,22);
+                     printf("Copenhague");
+                     Color(15,0);
                      break;
                 }
                 case 19:
                 {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Rome");
-                     break;
-                }
-                case 20:
-                {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Gare4");
+                     Color(0,8);
+                     gotoligcol(17+ligne+12,22);
+                     printf("Luxembourg");
+                     Color(15,0);
                      break;
                 }
                 case 21:
                 {
-                     gotoligcol(17+ligne+a,22);
-                     printf("Berlin");
+                     gotoligcol(17+ligne+13,22);
+                     printf("Gare3");
+                     Color(15,0);
                      break;
                 }
-                case 22:
+                case 23:
                 {
-                     gotoligcol(17+ligne+a,22);
+                     Color(0,6);
+                     gotoligcol(17+ligne+14,22);
+                     printf("Amsterdam");
+                     Color(15,0);
+                     break;
+                }
+                case 24:
+                {
+                     Color(0,6);
+                     gotoligcol(17+ligne+15,22);
+                     printf("Bruxelles");
+                     Color(15,0);
+                     break;
+                }
+                case 26:
+                {
+                     Color(0,12);
+                     gotoligcol(17+ligne+16,22);
+                     printf("Madrid");
+                     Color(15,0);
+                     break;
+                }
+                case 27:
+                {
+                     Color(0,12);
+                     gotoligcol(17+ligne+17,22);
+                     printf("Londres");
+                     Color(15,0);
+                     break;
+                }
+                case 28:
+                {
+                     Color(0,12);
+                     gotoligcol(17+ligne+18,22);
+                     printf("Rome");
+                     Color(15,0);
+                     break;
+                }
+                case 29:
+                {
+                     gotoligcol(17+ligne+19,22);
+                     printf("Gare4");
+                     Color(15,0);
+                     break;
+                }
+                case 31:
+                {
+                     Color(0,2);
+                     gotoligcol(17+ligne+20,22);
+                     printf("Berlin");
+                     Color(15,0);
+                     break;
+                }
+                case 32:
+                {
+                     Color(0,2);
+                     gotoligcol(17+ligne+21,22);
                      printf("Paris");
+                     Color(15,0);
                      break;
                 }
             }

@@ -6,7 +6,7 @@ int main()
     srand(time(NULL));
     int i, j, choix, nb_joueur, nb_joueur_actu, nb_maison, nb_hotel;
     int ligne = 2;
-    int prix_case;
+    int prix_case,valid;
     setConsoleSize();
 
     int de[3] = {0,0,0};
@@ -18,25 +18,38 @@ int main()
     t_joueur tabJoueur[6];
     t_mono plateau[32];
 
-    int info_villes[19][9] ={{60,50,2,10,30,90,160,250,1},/// prix | prix maison | loyer sans maison | 1 maison | 2 maisons | 3 maisons | 4 maisons | 1 hotel | place sur le plateau
+    int info_villes[32][9] ={{60,50,2,10,30,90,160,250,1},/// prix | prix maison | loyer sans maison | 1 maison | 2 maisons | 3 maisons | 4 maisons | 1 hotel | place sur le plateau
+                        {0,0,0,0,0,0,0,0,2},
                         {60,50,4,20,60,180,320,450,3},    ///   0         1                 2              3          4           5           6          7                8
+                        {0,0,0,0,0,0,0,0,4},
+                        {100,0,50,100,150,200,0,0,5},
                         {100,50,6,30,90,270,400,550,6},
                         {120,50,8,40,100,300,450,600,7},
+                        {0,0,0,0,0,0,0,0,8},
                         {120,100,10,50,150,450,625,750,9},
                         {140,100,10,50,150,450,625,750,10},
                         {160,100,12,60,180,500,700,900,11},
+                        {0,0,50,100,150,200,0,0,12},
                         {180,100,14,70,200,550,750,950,13},
                         {180,100,14,70,200,550,750,950,14},
                         {180,100,16,80,220,600,800,1000,15},
+                        {0,0,0,0,0,0,0,0,16},
                         {220,150,18,90,250,70,875,1050,17},
                         {240,150,20,100,300,750,925,1100,18},
+                        {0,0,0,0,0,0,0,0,19},
+                        {0,0,0,0,0,0,0,0,20},
+                        {0,0,50,100,150,200,0,0,21},
                         {260,150,22,110,330,800,975,1150,22},
                         {280,150,24,120,360,850,1025,1200,23},
+                        {0,0,0,0,0,0,0,0,24},
                         {300,200,26,130,390,900,1100,1275,25},
                         {300,200,26,130,390,900,1100,1275,26},
                         {320,200,28,150,450,1000,1200,1400,27},
+                        {0,0,0,0,0,0,0,0,28},
+                        {100,0,50,100,150,200,0,0,29},
                         {350,200,35,175,500,1100,1300,1500,30},
-                        {400,200,50,200,600,1400,1700,2000,31}};
+                        {400,200,50,200,600,1400,1700,2000,31},
+                        {0,0,0,0,0,0,0,0,32}};
                         //il manque les gares :(
 
     plateau[0].type =ARRIVE;
@@ -169,7 +182,7 @@ int main()
                 }
         if ((tabJoueur[i].position[1]-tabJoueur[i].position[0])<0)
         {
-            gotoligcol(15,75);
+            gotoligcol(20,70);
             printf("vous avez ressu 200 euros pour avoir passe l'arrive");
             tabJoueur[i].argent+=200;
         }
@@ -180,19 +193,25 @@ int main()
             case 0: //VILLE
             {
 
-                if (plateau[tabJoueur->position[1]].possesseder == 1)
+                if (plateau[tabJoueur[i].position[1]].possesseder == 1)
                 {
                     gotoligcol(34,75);
-                    printf("vous etes tomber sur une ville qui appartient a un joueur tu as payer %d euros",plateau[tabJoueur->position[1]].loyer);
+                    printf("vous etes tomber sur une ville qui appartient a un joueur tu as paye %d euros",plateau[tabJoueur->position[1]].loyer);
+                    scanf("%d",&valid);
                     tabJoueur[i].argent -= plateau[tabJoueur->position[1]].loyer;
-                    menu_achat_vente_maison(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
                 }
 
                 else
                 {
                     prix_case=info_case(info_villes,tabJoueur[i].position[1],0);
-                    gotoligcol(34,75);
-                    printf("vous etes sur une ville qui appartient a personne. Elle coute %d euros voulez vous l acheter. Enterez 1 pour oui ou 2 pour non",prix_case);
+                    do
+                    {
+                        gotoligcol(34,57);
+                        printf("vous etes sur une ville qui appartient a personne.");
+                        gotoligcol(35,53);
+                        printf("Elle coute %d euros voulez vous l acheter. Entrez 1 pour oui ou 2 pour non",prix_case);
+                        scanf("%d",&valid);
+                    }while (valid<1 || valid >2);
                     achat_ville(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
                 }
 
@@ -204,6 +223,15 @@ int main()
 
                 if (plateau[tabJoueur->position[1]].possesseder == 0)
                 {
+                    prix_case=info_case(info_villes,tabJoueur[i].position[1],0);
+                    do
+                    {
+                        gotoligcol(34,57);
+                        printf("vous etes sur un gare qui appartient a personne.");
+                        gotoligcol(35,53);
+                        printf("Elle coute %d euros voulez vous l acheter? Entrez 1 pour oui ou 2 pour non",prix_case);
+                        scanf("%d",&valid);
+                    }while (valid<1 || valid >2);
                     achat_ville(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
                 }
 
@@ -230,6 +258,7 @@ int main()
             case 4: //PRISON
             {
                 casedouane( de,tabJoueur,i);
+                afficher_point(tabJoueur,i,plateau,ligne);
                 break;
             }
 
@@ -249,10 +278,9 @@ int main()
                 break;
             }
         }
+        affichage_possession(tabJoueur,i,ligne);
+        menu_achat_vente_maison(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
 
-        //action sur la case tombé
-
-        ///action apres le tour
         sauvegarde(tabJoueur, plateau, &fichiers, nb_joueur_actu);
         i+=1;
         if (i == nb_joueur_actu)

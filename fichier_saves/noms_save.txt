@@ -1,4 +1,0 @@
-./fichier_save/joueurs.txt ./fichier_save/plateau.txt
-./fichier_save/joueurs1.txt ./fichier_save/plateau1.txt
-./fichier_save/joueurs2.txt ./fichier_save/plateau2.txt
-./fichier_save/joueurs3.txt ./fichier_save/plateau3.txt

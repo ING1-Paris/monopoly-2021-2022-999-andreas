@@ -1,11 +1,7 @@
 #include "menu.h"
 
-int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
+int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9])
 {
-   if (jeanMichel->argent > info_case(info_villes, jeanMichel->position[1], 0))
-    {
-        return 1;
-    }
 
     jeanMichel->argent -= info_case(info_villes, jeanMichel->position[1], 0);
     jeanMichel->possession[0] = jeanMichel->position[1];
@@ -15,7 +11,7 @@ int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* n
     return 0;
 }
 
-void ajout_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
+void ajout_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9])
 {
     plateau[jeanMichel->position[1]].maison += 1;
     jeanMichel->argent -= info_case(info_villes, jeanMichel->position[1], 1); // on prend l'info 1 (le prix d'une upgrade) de la case choisi dans info_villes
@@ -24,7 +20,7 @@ void ajout_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int*
 
 }
 
-void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
+void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9])
 {
     int quantite;
 
@@ -54,7 +50,7 @@ void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int
     }
 }
 
-void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
+void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9])
 {
 
     plateau[jeanMichel->position[1]].hotel  += 1;
@@ -66,7 +62,7 @@ void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* 
 
 }
 
-void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
+void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9])
 {
     int la_case_choisi;
 
@@ -93,7 +89,7 @@ void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* n
     plateau[la_case_choisi].possesseder=plateau[la_case_choisi].possesseder-1;
 }
 
-void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
+void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9])
 {
     int choix;
     do
