@@ -19,9 +19,10 @@ int main()
     t_joueur tabJoueur[6];
     t_mono plateau[32];
 
+    // toute les information concernant les cases du plateau
     int info_villes[32][9] ={{0,0,0,0,0,0,0,0},
                         {60,50,2,10,30,90,160,250,1},/// prix | prix maison | loyer sans maison | 1 maison | 2 maisons | 3 maisons | 4 maisons | 1 hotel | place sur le plateau
-                        {0,0,0,0,0,0,0,0,2},              ///   0         1                 2              3          4           5           6          7                8
+                        {0,0,0,0,0,0,0,0,2},         ///   0         1                 2              3          4           5           6          7                8
                         {60,50,4,20,60,180,320,450,3},
                         {0,0,0,0,0,0,0,0,4},
                         {200,0,25,50,100,200,0,0,5},
@@ -92,13 +93,8 @@ int main()
 
 fin = demarrage(&nb_maison, &nb_hotel, &nb_joueur, &nb_joueur_actu, &i, plateau, tabJoueur, &fichiers);
 
-if (fin)
-{
-    return 0;
-}
-
 ///----------------------------------------------------------------LE JEU
-///initialisation des trucs à initialiser systematiquement
+
 
 int carte=rand()%(15);
 
@@ -107,39 +103,27 @@ int carte=rand()%(15);
     {
         printf("%d", i);
         // test de debut de tour
-        if(tabJoueur[i].faillite)
+        if(tabJoueur[i].faillite) // test de si le joueur est en faillite
         {
             continue;
         }
 
-        if (plateau[tabJoueur[i].position[1]].type == PRISON)
+        if (plateau[tabJoueur[i].position[1]].type == PRISON) // test si le joueur est en prison
         {
             casedouane(de, tabJoueur, i, nb_joueur);
         }
 
-
+        // on decale la position actuelle vers la position precedente
         tabJoueur[i].position[0]=tabJoueur[i].position[1];
         affichage_plateau(ligne);
         affichage_possession(tabJoueur,i,ligne,plateau);
         gotoligcol(29+ligne,70);
         printf("vous avez fait:");
         gotoligcol(30+ligne,75);
-        lancer_de(de, &tabJoueur[i]);
-
-        if(tabJoueur[i].nb_double)
-        {
-            if(tabJoueur[i].nb_double == 3)
-            {
-                gotoligcol(11+ligne,148+i);
-                printf("%c",tabJoueur[i].pionjoueur);
-                tabJoueur[i].position[1]=8;
-                tabJoueur[i].position[0]=7;
-                afficher_point(tabJoueur,i,plateau,ligne);
-            }
-        }
+        lancer_de(de, &tabJoueur[i]); // lance des des
 
         tabJoueur[i].position[1]=(tabJoueur[i].position[1]+de[0]+de[1])%32;
-        affichage_infocase(tabJoueur,i,ligne,plateau,info_villes);
+        affichage_infocase(&tabJoueur[i],ligne,plateau,info_villes);
         for (j=0;j<nb_joueur;j++)
                 {
                     afficher_point(tabJoueur,j,plateau,ligne);
@@ -152,12 +136,12 @@ int carte=rand()%(15);
         }
 
 
-        switch(plateau[tabJoueur[i].position[1]].type)
+        switch(plateau[tabJoueur[i].position[1]].type) // on test le type de la case d'arrive
         {
             case VILLE:
             {
 
-                if (plateau[tabJoueur[i].position[1]].possesseder == 1)
+                if (plateau[tabJoueur[i].position[1]].possesseder == 1) // si elle est possede
                 {
                     gotoligcol(34,75);
                     printf("vous etes tomber sur une ville qui appartient a un joueur vous devez paye %d euros",plateau[tabJoueur->position[1]].loyer);
@@ -165,12 +149,12 @@ int carte=rand()%(15);
                     tabJoueur[i].argent -= plateau[tabJoueur->position[1]].loyer;
                 }
 
-                else if(possession(tabJoueur[i]))
+                else if(possession(tabJoueur[i])) // si le joueur la possede
                 {
                     menu_achat_vente_maison(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
                 }
 
-                else
+                else // si elle appartient a un autre joueur
                 {
                     prix_case=info_case(info_villes,tabJoueur[i].position[1],0);
                     do
@@ -230,13 +214,13 @@ int carte=rand()%(15);
 
             case CHANCE:
             {
-                carte=casechance(tabJoueur, i, plateau, ligne,carte);
+                carte=casechance(tabJoueur, i, plateau, ligne,carte); // on garde en memoire ma derniere carte tire
                 break;
             }
 
             case COMM:
             {
-                carte=casedecommunaute(ligne, i, plateau, tabJoueur,carte);
+                carte=casedecommunaute(ligne, i, plateau, tabJoueur,carte); // on garde en memoire ma derniere carte tire
                 break;
             }
 
@@ -268,7 +252,7 @@ int carte=rand()%(15);
             }
         }
 
-        if(tabJoueur[i].argent<0)
+        if(tabJoueur[i].argent<0) // si le joueur est en negatif, il rattrape l'argent manquant ou il fait faillite
         {
             pas_argent(tabJoueur, plateau, &nb_maison, &nb_hotel, info_villes);
         }
@@ -280,7 +264,7 @@ int carte=rand()%(15);
         ///action apres le tour
         plusieurs_gares(tabJoueur[i], plateau, info_villes);
 
-        if(tabJoueur[i].nb_double == 3)
+        if(tabJoueur[i].nb_double == 3)// on test si le joueur fait trois doubles (il manque des trucs)
         {
             gotoligcol(11+ligne,148+i);
             printf("%c",tabJoueur[i].pionjoueur);
@@ -290,7 +274,7 @@ int carte=rand()%(15);
         }
         tabJoueur[i].nb_double = 0;
 
-        sauvegarde(tabJoueur, plateau, &fichiers,nb_joueur, nb_joueur_actu, nb_maison, nb_hotel);
+        sauvegarde(tabJoueur, plateau, &fichiers,nb_joueur, nb_joueur_actu, nb_maison, nb_hotel); // on sauvegarde l'avancement de la partie
         i+=1;
         if (i == nb_joueur_actu)
         {
@@ -307,7 +291,7 @@ int carte=rand()%(15);
             demarrage(&nb_maison, &nb_hotel, &nb_joueur, &nb_joueur_actu, &i, plateau, tabJoueur, &fichiers);
         }
 
-    }while (fin_partie(tabJoueur, nb_joueur));
+    }while (fin_partie(tabJoueur, nb_joueur));// la partie tant que deux joueurs on de l'argent
 
 
 //il faudrait supprimer le fichier quand la partie est fini

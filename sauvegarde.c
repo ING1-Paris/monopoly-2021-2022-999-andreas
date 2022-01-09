@@ -14,7 +14,7 @@ void init_nom_sauvegarde(t_fichier* fichiers)
         char entrer[LEN];
         t_fichier nom_tempo[15];
 
-        FILE* pf = fopen("./fichier_saves/noms_save", "r");
+        FILE* pf = fopen("./fichier_saves/noms_save", "r");// on ouvre le fichier
         if (pf == NULL)
         {
             printf("Erreur d'ouverture de fichier.");
@@ -36,12 +36,12 @@ void init_nom_sauvegarde(t_fichier* fichiers)
             fscanf(pf, "%s\n", entrer);
             strcpy(nom_tempo[i].plateau, entrer);
 
-            printf("%d\t%s %s\n", nb_sauvegarde+1, nom_tempo[i].joueur, nom_tempo[i].plateau);
+            printf("%d\t%s %s\n", nb_sauvegarde+1, nom_tempo[i].joueur, nom_tempo[i].plateau);// affiche les noms des fichiers
 
             nb_sauvegarde += 1;
         }
 
-        fclose(pf);
+        fclose(pf); //ferme le fichier
         pf = NULL;
 
         do
@@ -88,7 +88,6 @@ void nom_fichier(t_fichier* fichiers)
             strcat(fichiers->plateau, ".txt");
         }
     }
-
 }
 
 /** sauvegarde les noms des fichiers sur lesquels on travaille dans un fichier dédié

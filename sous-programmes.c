@@ -220,7 +220,7 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
         sauvegarde_nom(fichiers);
         sauvegarde(tabJoueur ,plateau, fichiers, *nb_joueur, *nb_joueur_actu, *nb_maison, *nb_hotel);
 
-
+        // on choisit un joueur aleatoire pour commencer
         *k = rand()% (*nb_joueur-1);
         printf("c'est %s qui commence !", tabJoueur[*k].nom);
         break;
@@ -924,14 +924,14 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne, t_mono plateau[32
     }
 }
 
-void affichage_infocase(t_joueur joueur[6], int i,int ligne,t_mono plateau[32], int info_villes[19][9] )
+void affichage_infocase(t_joueur* joueur,int ligne,t_mono plateau[32], int info_villes[19][9] )
 {
     gotoligcol(15+ligne,118);
     printf("info de la case:");
     gotoligcol(16+ligne,118);
-    printf("Le loyer est de %d euros",plateau[joueur[i].position[1]].loyer);
+    printf("Le loyer est de %d euros",plateau[joueur->position[1]].loyer);
     gotoligcol(17+ligne,118);
-    printf("Il y a  %d maison",plateau[joueur[i].position[1]].maison);
+    printf("Il y a  %d maison",plateau[joueur->position[1]].maison);
     gotoligcol(18+ligne,118);
-    printf("Il y a %d hotel",plateau[joueur[i].position[1]].hotel);
+    printf("Il y a %d hotel",plateau[joueur->position[1]].hotel);
 }
