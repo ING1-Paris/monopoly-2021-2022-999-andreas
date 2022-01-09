@@ -100,7 +100,7 @@ int carte=rand()%(15);
     {
         if (plateau[tabJoueur[i].position[1]].type == PRISON)
         {
-            casedouane(de, tabJoueur, i);
+            casedouane(de, tabJoueur, i, nb_joueur);
         }
 
 
@@ -238,7 +238,7 @@ int carte=rand()%(15);
         {
             i = 0;
         }
-
+        gotoligcol(37,55);
         printf("voulez vous aller au menu principale ? oui:1 non:0");
         scanf("%d", &choix);
 
