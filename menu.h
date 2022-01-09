@@ -28,9 +28,9 @@ typedef struct monopoly
     int type; // ville, gare, chance, communaute, prison, depart, parc, impot
     int prix;
     int loyer;
-    int presence; // à enlever
     int maison;
     int hotel;
+    int presence;
     int hypo; // si c'est hypotheque ou pas
     int possesseder;
 
@@ -43,9 +43,8 @@ typedef struct info_joueur // regroupe les infos d'un joueur
     char nom[30];
     char pionjoueur;
     int argent;
-    int position[2]; // on garde en memoire la derniere case pour savoir si le joueur passe l'arrive
-    int possession [23]; //on met juste la place des proprieters, tout le reste est stocke dans le plateau
-
+    int position[2]; // on garde en memoire la derniere case pour savoir si le joueur passe l'arrivÃ©
+    int possession [32]; //on met juste la place des proprieters, tout le reste est stocke dans le plateau
 } t_joueur;
 
 #include "sauvegarde.c"
@@ -75,20 +74,22 @@ void gotoligcol( int lig, int col );
 void setConsoleSize();
 void affichage_plateau(int ligne);
 void afficher_point(t_joueur joueur[6],int i,t_mono plateau[32],int ligne);
+int casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne, int carte);
+int casedecommunaute(int ligne, int i, t_mono plat[32], t_joueur tabdejoueur[6],int carte);
+void casedouane( int de[3], t_joueur tabdejoueur[6], int i);
 void affichage_possession(t_joueur joueur[6], int i,int ligne);
 void lance_de(int etat_de[3]);
-int info_case(int info_villes[23][9], int la_case_choisi, int info_a_rendre);
+int info_case(int info_villes[32][9], int la_case_choisi, int info_a_rendre);
 int fin_partie(t_joueur tabJoueur[], int nb_joueur);
 void regles();
 void demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu, int* k, t_mono plateau[32],t_joueur tabJoueur[6], t_fichier* fichiers);
 
 //dans banque
-void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[23][9]);
-void ajout_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[23][9]);
-void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[23][9]);
-void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[23][9]);
-void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[23][9]);
-int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[23][9]);
-
+void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
+void ajout_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
+void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
+void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
+void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
+int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
 void plusieurs_gares(t_joueur jeanMichel, t_mono plateau[32], int info_villes[23][9]);
 #endif // MENU_H_INCLUDED

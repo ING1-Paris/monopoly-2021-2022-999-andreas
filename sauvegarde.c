@@ -140,7 +140,7 @@ int init_sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichie
         fscanf(pf, "%d", &tabjoueurs[i].argent);
         fscanf(pf, "%d", &tabjoueurs[i].nb_double);
         fscanf(pf, "%s", tabjoueurs[i].nom);
-        fscanf(pf, "%d", &tabjoueurs[i].position[0]);
+        fscanf(pf, "%d", &tabjoueurs[i].position[1]);
         for (j = 0 ;j<10 ;j++)
         {
             fscanf(pf, "%d", &tabjoueurs[i].possession[j]);
@@ -164,7 +164,6 @@ int init_sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichie
         fscanf(pf, "%d", &plateau[i].hypo);
         fscanf(pf, "%d", &plateau[i].loyer);
         fscanf(pf, "%d", &plateau[i].maison);
-        fscanf(pf, "%d", &plateau[i].presence);
         fscanf(pf, "%d", &plateau[i].prix);
         fscanf(pf, "%d", &plateau[i].type);
         fscanf(pf, "%d", &plateau[i].possesseder);
@@ -205,12 +204,11 @@ int sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichiers, i
     fprintf(pf, "%d\n",nb_joueur);
     for (i = 0; i<nb_joueur ; i++)
     {
-        printf("sauvegarde joueurs...\n");
 
         fprintf(pf, "%d ",tabjoueurs[i].argent);
         fprintf(pf, "%d ",tabjoueurs[i].nb_double);
         fprintf(pf, "%s ",tabjoueurs[i].nom);
-        fprintf(pf, "%d ",tabjoueurs[i].position[0]);
+        fprintf(pf, "%d ",tabjoueurs[i].position[1]);
         for (j = 0; j<20; j++)
         {
             fprintf(pf, "%d ",tabjoueurs[i].possession[j]);
@@ -229,13 +227,11 @@ int sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichiers, i
 
     for (i = 0; i<32; i++)
     {
-        printf("sauvegarde plateau...\n");
 
         fprintf(pf, "%d ",plateau[i].hotel);
         fprintf(pf, "%d ",plateau[i].hypo);
         fprintf(pf, "%d ",plateau[i].loyer);
         fprintf(pf, "%d ",plateau[i].maison);
-        fprintf(pf, "%d ",plateau[i].presence);
         fprintf(pf, "%d ",plateau[i].prix);
         fprintf(pf, "%d ",plateau[i].type);
         fprintf(pf, "%d ",plateau[i].possesseder);

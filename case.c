@@ -1,11 +1,9 @@
 #include "menu.h"
 
-
-void casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne)
+int casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne, int carte)
 {
-    int carte;
-    char tab[15][200] = { {"vous prenez 3 jours de conge, vous allez manger des tapas a mardrid.Si vous passer par la case depart prenez 200 euros"},{"sortie de douane.Vous pouvez la conserver(utilisable une seul fois)"},{"avancez jusqu a la case depart"},{"votre passeport à expirer, vous ne jouez pas pendant 2 tours"},{"vous avez ete expule de la ou vous etes, vous revenez a Paris"},{"vous avez gagne une soiree poker à Bucarest vous gagnez 100 euros"},{"On vous a vole votre argent a Sofia vous perdez 100 euros"},{"sortie de douane.Vous pouvez la conserver(utilisable une seul fois)"},{"vous vous faites arnaquer par un portugais vous perdez 150 euros"},{"vous gagnez un prix de beaute et vous remportez 200 euros"},{"Pour votre anniverssaire vos enfants vous offre un voyage a Londres.Si vous passer par la case depart prenez 200 euros"},{"vous payez votre tourne a Dublin et vous perdez 100 euros"},{"direction la case depart"},{"changement de proramme pendant votre voyage,vous allez a Rome.Si vous passer par la case depart prenez 200 euros"},{"vous etes bloquer par la neige à Stockholm,vous y restez 2 jours de plus"},{"vous gagnez un jeu televise,vous partez imediatement pour Berlin.Si vous passer par la case depart prenez 200 euros"}};
-    carte=rand()%(15);
+    char tab[16][200] = { {"vous prenez 3 jours de conge, vous allez manger des tapas a mardrid.Si vous passer par la case depart prenez 200 euros"},{"sortie de douane.Vous pouvez la conserver(utilisable une seul fois)"},{"avancez jusqu a la case depart"},{"votre passeport à expirer, vous ne jouez pas pendant 2 tours"},{"vous avez ete expule de la ou vous etes, vous revenez a Paris"},{"vous avez gagne une soiree poker à Bucarest vous gagnez 100 euros"},{"On vous a vole votre argent a Sofia vous perdez 100 euros"},{"sortie de douane.Vous pouvez la conserver(utilisable une seul fois)"},{"vous vous faites arnaquer par un portugais vous perdez 150 euros"},{"vous gagnez un prix de beaute et vous remportez 200 euros"},{"Pour votre anniverssaire vos enfants vous offre un voyage a Londres.Si vous passer par la case depart prenez 200 euros"},{"vous payez votre tourne a Dublin et vous perdez 100 euros"},{"direction la case depart"},{"changement de proramme pendant votre voyage,vous allez a Rome.Si vous passer par la case depart prenez 200 euros"},{"vous etes bloquer par la neige à Stockholm,vous y restez 2 jours de plus"},{"vous gagnez un jeu televise,vous partez imediatement pour Berlin.Si vous passer par la case depart prenez 200 euros"}};
+    gotoligcol(52+ligne,10);
     printf(tab[carte]);
     switch(carte)
     {
@@ -13,7 +11,7 @@ void casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne)
         {
             gotoligcol(54+ligne,4);
             printf("%c",tabdejoueur[i].pionjoueur);
-            plat[25].presence++;
+            tabdejoueur[i].position[1]=24;
             break;
         }
         case 1:
@@ -26,7 +24,7 @@ void casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne)
         {
             gotoligcol(3+ligne,3);
             printf("%c",tabdejoueur[i].pionjoueur);
-            plat[1].presence++;
+            tabdejoueur[i].position[1]=32;
             break;
         }
 
@@ -39,7 +37,7 @@ void casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne)
         {
             gotoligcol(17+ligne,3);
             printf("%c",tabdejoueur[i].pionjoueur);
-            plat[32].presence++;
+            tabdejoueur[i].position[1]=31;
             break;
         }
         case 5:
@@ -71,7 +69,7 @@ void casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne)
         {
             gotoligcol(47+ligne,3);
             printf("%c",tabdejoueur[i].pionjoueur);
-            plat[26].presence++;
+            tabdejoueur[i].position[1]=25;
             break;
         }
         case 11:
@@ -83,14 +81,14 @@ void casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne)
         {
             gotoligcol(3+ligne,3);
             printf("%c",tabdejoueur[i].pionjoueur);
-            plat[1].presence++;
+            tabdejoueur[i].position[1]=32;
             break;
         }
         case 13:
         {
             gotoligcol(35+ligne,3);
             printf("%c",tabdejoueur[i].pionjoueur);
-            plat[27].presence++;
+            tabdejoueur[i].position[1]=26;
             break;
         }
         case 14:
@@ -102,25 +100,27 @@ void casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne)
         {
             gotoligcol(23+ligne,3);
             printf("%c",tabdejoueur[i].pionjoueur);
-            plat[31].presence++;
+            tabdejoueur[i].position[1]=30;
             break;
         }
     }
+    return carte++;
 }
 
-void casedecommunaute(int ligne, int i, t_mono plat[32], t_joueur tabdejoueur[6])
+int casedecommunaute(int ligne, int i, t_mono plat[32], t_joueur tabdejoueur[6],int carte)
 {
-    int carte,choix;
-    char tab[15][200] = { {"Placez-vous sur la case départ"},{"Erreur de la banque en votre faveur. Recevez 200 euros"},{"Payez la note du médecin 100 euros"},{"Vous pouvez partir de la douane. Cette carte peut être conservée jusqu’à ce qu’elle soit utilisée ou vendue."},{"Aller a la douane. Rendez-vous directement à la prison. Ne franchissez pas par la case depart, ne touchez pas 200 euros"},{"Recevez votre revenu annuel 500 euros"},{"C est votre anniversaire, recevez 150 euros"},{"sortie de douane.Vous pouvez la conserver(utilisable une seul fois)"},{"Les contributions vous remboursent la somme de 100 euros"},{"Vous héritez 100 euros"},{"Payez une amende de 200 euros ou bien tirez une carte « CHANCE »"},{"vous payez votre tourne a Dublin et vous perdez 100 euros"},{"direction la case depart"},{"Amende pour ivresse, vous perdez 200 euros"},{"La banque vous verse un dividende de 200 euros"},{"Retournez à Sofia"}};
+    int choix;
+    char tab[16][200] = { {"Placez-vous sur la case départ"},{"Erreur de la banque en votre faveur. Recevez 200 euros"},{"Payez la note du médecin 100 euros"},{"Vous pouvez partir de la douane. Cette carte peut être conservée jusqu’à ce qu’elle soit utilisée ou vendue."},{"Aller a la douane. Rendez-vous directement à la dozuane. Ne franchissez pas par la case depart, ne touchez pas 200 euros"},{"Recevez votre revenu annuel 500 euros"},{"C est votre anniversaire, recevez 150 euros"},{"sortie de douane.Vous pouvez la conserver(utilisable une seul fois)"},{"Les contributions vous remboursent la somme de 100 euros"},{"Vous héritez 100 euros"},{"Payez une amende de 200 euros ou bien tirez une carte « CHANCE »"},{"vous payez votre tourne a Dublin et vous perdez 100 euros"},{"direction la case depart"},{"Amende pour ivresse, vous perdez 200 euros"},{"La banque vous verse un dividende de 200 euros"},{"Retournez à Sofia"}};
     carte=rand()%(15);
+    gotoligcol(52+ligne,10);
     printf(tab[carte]);
     switch(carte)
     {
         case 0 :
         {
-            gotoligcol(3+ligne,3);
+            gotoligcol(3+ligne,3+i);
             printf("%c",tabdejoueur[i].pionjoueur);
-            plat[1].presence++;
+            tabdejoueur[i].position[1]=32;
             break;
         }
         case 1:
@@ -142,9 +142,10 @@ void casedecommunaute(int ligne, int i, t_mono plat[32], t_joueur tabdejoueur[6]
         }
         case 4 :
         {
-            gotoligcol(11+ligne,148);
+            gotoligcol(11+ligne,148+i);
             printf("%c",tabdejoueur[i].pionjoueur);
-            plat[9].presence++;
+            tabdejoueur[i].position[1]=8;
+            tabdejoueur[i].position[0]=7;
             break;
         }
         case 5:
@@ -185,7 +186,7 @@ void casedecommunaute(int ligne, int i, t_mono plat[32], t_joueur tabdejoueur[6]
                 }
                 else
                 {
-                    casechance(tabdejoueur,i,plat,ligne);
+                    casechance(tabdejoueur,i,plat,ligne,carte);
                 }
             break;
         }
@@ -196,9 +197,9 @@ void casedecommunaute(int ligne, int i, t_mono plat[32], t_joueur tabdejoueur[6]
         }
         case 12:
         {
-            gotoligcol(3+ligne,3);
+            gotoligcol(3+ligne,3+i);
             printf("%c",tabdejoueur[i].pionjoueur);
-            plat[1].presence++;
+            tabdejoueur[i].position[1]=32;
             break;
         }
         case 13:
@@ -215,15 +216,19 @@ void casedecommunaute(int ligne, int i, t_mono plat[32], t_joueur tabdejoueur[6]
         {
             gotoligcol(11+ligne,54);
             printf("%c",tabdejoueur[i].pionjoueur);
-            plat[4].presence++;
+            tabdejoueur[i].position[1]=3;
             break;
         }
     }
+    return carte++;
 }
-/*
-void casedouane( int de[3], int douane, t_joueur tabdejour[6], int i)
+
+void casedouane( int de[3], t_joueur tabdejoueur[6], int i)
 {
     int choix;
+    int verif=1;
+    do
+    {
     do
     {
         printf("1. Payer 50 euros\n2. utiliser une carte sotir de douane\n3.acheter une carte sortir de douane à un joueur et la jouer\n4. lancer les des");
@@ -234,15 +239,39 @@ void casedouane( int de[3], int douane, t_joueur tabdejour[6], int i)
         case 1:
             {
                 tabdejoueur[i].argent=tabdejoueur[i].argent-50;
+                verif=0;
                 break;
             }
         case 2:
             {
-
-                tabdejour[i].possession[0].joueur=
+                if (tabdejoueur[i].possession[24]!=0)
+                {
+                    tabdejoueur[i].possession[24]=tabdejoueur[i].possession[24]-1;
+                    verif=0;
+                    break;
+                }
+                else
+                {
+                    break;
+                }
+            }
+        case 3:
+            {
+                break;
+            }
+        case 4:
+            {
+                verif=0;
                 break;
             }
     }
+    }while (verif==1);
+    lancer_de(de);
 }
 
-*/
+int carteimpot(int i, t_joueur tabdejoueur[6])
+{
+    printf("vous devez payer 200");
+    tabdejoueur[i].argent=tabdejoueur[i].argent-200;
+    return tabdejoueur[i].argent;
+}
