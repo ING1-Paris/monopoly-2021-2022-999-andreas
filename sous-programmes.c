@@ -527,7 +527,7 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                 }
                 case 9:
                 {
-
+                     Color(0,1);
                      gotoligcol(17+ligne+5,22);
                      printf("Berne");
                      Color(15,0);
@@ -567,7 +567,7 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                 case 14:
                 {
                      Color(0,14);
-                     gotoligcol(17+ligne+a,22);
+                     gotoligcol(17+ligne+10,22);
                      printf("Helsinki");
                      Color(15,0);
                      break;
@@ -575,7 +575,7 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                 case 15:
                 {
                      Color(0,14);
-                     gotoligcol(17+ligne+10,22);
+                     gotoligcol(17+ligne+11,22);
                      printf("Varsovie");
                      Color(15,0);
                      break;
@@ -583,7 +583,7 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                 case 17:
                 {
                      Color(0,8);
-                     gotoligcol(17+ligne+11,22);
+                     gotoligcol(17+ligne+12,22);
                      printf("Copenhague");
                      Color(15,0);
                      break;
@@ -591,14 +591,14 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                 case 19:
                 {
                      Color(0,8);
-                     gotoligcol(17+ligne+12,22);
+                     gotoligcol(17+ligne+13,22);
                      printf("Luxembourg");
                      Color(15,0);
                      break;
                 }
                 case 21:
                 {
-                     gotoligcol(17+ligne+13,22);
+                     gotoligcol(17+ligne+14,22);
                      printf("Gare3");
                      Color(15,0);
                      break;
@@ -606,7 +606,7 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                 case 23:
                 {
                      Color(0,6);
-                     gotoligcol(17+ligne+14,22);
+                     gotoligcol(17+ligne+15,22);
                      printf("Amsterdam");
                      Color(15,0);
                      break;
@@ -614,7 +614,7 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                 case 24:
                 {
                      Color(0,6);
-                     gotoligcol(17+ligne+15,22);
+                     gotoligcol(17+ligne+16,22);
                      printf("Bruxelles");
                      Color(15,0);
                      break;
@@ -622,7 +622,7 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                 case 26:
                 {
                      Color(0,12);
-                     gotoligcol(17+ligne+16,22);
+                     gotoligcol(17+ligne+17,22);
                      printf("Madrid");
                      Color(15,0);
                      break;
@@ -630,7 +630,7 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                 case 27:
                 {
                      Color(0,12);
-                     gotoligcol(17+ligne+17,22);
+                     gotoligcol(17+ligne+18,22);
                      printf("Londres");
                      Color(15,0);
                      break;
@@ -638,14 +638,14 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                 case 28:
                 {
                      Color(0,12);
-                     gotoligcol(17+ligne+18,22);
+                     gotoligcol(17+ligne+19,22);
                      printf("Rome");
                      Color(15,0);
                      break;
                 }
                 case 29:
                 {
-                     gotoligcol(17+ligne+19,22);
+                     gotoligcol(17+ligne+20,22);
                      printf("Gare4");
                      Color(15,0);
                      break;
@@ -653,7 +653,7 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                 case 31:
                 {
                      Color(0,2);
-                     gotoligcol(17+ligne+20,22);
+                     gotoligcol(17+ligne+21,22);
                      printf("Berlin");
                      Color(15,0);
                      break;
@@ -661,7 +661,7 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                 case 32:
                 {
                      Color(0,2);
-                     gotoligcol(17+ligne+21,22);
+                     gotoligcol(17+ligne+22,22);
                      printf("Paris");
                      Color(15,0);
                      break;
