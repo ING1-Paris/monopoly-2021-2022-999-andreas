@@ -257,8 +257,7 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
 
     case 5:
     {
-        system("cls");
-        return 0;
+        return 1;
     }
 
     }

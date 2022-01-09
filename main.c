@@ -5,6 +5,7 @@ int main()
 {
     srand(time(NULL));
     int i, j, choix, nb_joueur, nb_joueur_actu, nb_maison, nb_hotel;
+    int fin;
     int ligne = 2;
     int prix_case,valid;
     setConsoleSize();
@@ -89,7 +90,12 @@ int main()
 
 ///------------------------------------------menu demarrage
 
-demarrage(&nb_maison, &nb_hotel, &nb_joueur, &nb_joueur_actu, &i, plateau, tabJoueur, &fichiers);
+fin = demarrage(&nb_maison, &nb_hotel, &nb_joueur, &nb_joueur_actu, &i, plateau, tabJoueur, &fichiers);
+
+if (fin)
+{
+    return 0;
+}
 
 ///----------------------------------------------------------------LE JEU
 ///initialisation des trucs à initialiser systematiquement
