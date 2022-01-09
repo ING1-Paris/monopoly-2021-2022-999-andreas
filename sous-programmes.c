@@ -1,7 +1,9 @@
 #include "menu.h"
 // fonction pour afficher les regles (je crois que ça se voit)
-void regles()
+int regles()
 {
+    int choix;
+
     printf(" 888b     d888  .d88888b.  888b    888  .d88888b.  8888888b.   .d88888b.  888      Y88b   d88P\n");
     printf(" 8888b   d8888 d88P' 'Y88b 8888b   888 d88P' 'Y88b 888   Y88b d88P' 'Y88b 888       Y88b d88P\n");
     printf(" 88888b.d88888 888     888 88888b  888 888     888 888    888 888     888 888        Y88o88P\n");
@@ -59,6 +61,15 @@ void regles()
     printf("\n");
     printf("Une partie de Monopoly s'arrete lorsqu'un joueur (le vainqueur) est le dernier joueur a ne pas avoir fait faillite. A ce moment la, le joueur se retrouve en situation de monopole puisqu'il detient l'ensemble des proprietes du jeu.\n");
     printf("\n");
+
+    printf("voulez vous quitter les regles ? oui:1 non:0\n");
+    scanf("%d", &choix);
+
+    if(choix)
+    {
+        return 0;
+    }
+    return 0;
 }
 
 // renvoie si la position du joueur est possessedé par quelqu'un
@@ -71,7 +82,6 @@ int possession(t_joueur jeanMichel)
         {
             return 1;
         }
-
     }
     return 0;
 }
@@ -130,7 +140,7 @@ int fin_partie(t_joueur tabJoueur[], int nb_joueur)
 
 
 //affiche le menu demarrage
-void demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu, int* k, t_mono plateau[32],t_joueur tabJoueur[6], t_fichier* fichiers)
+int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu, int* k, t_mono plateau[32],t_joueur tabJoueur[6], t_fichier* fichiers)
 {
     int choix;
     int i;
@@ -145,7 +155,7 @@ void demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_act
     printf(" 888   '   888 Y88b. .d88P 888   Y8888 Y88b. .d88P 888        Y88b. .d88P 888          888\n");
     printf(" 888       888  'Y88888P'  888    Y888  'Y88888P'  888         'Y88888P'  88888888     888\n");
     printf("\n\n");
-    printf("1- NOUVELLE PARTIE\n2-CHARGER UNE PARTIE\n3-REGLE\n4-QUITTER");
+    printf("1- NOUVELLE PARTIE\n2-CHARGER UNE PARTIE\n3-REGLE\n4-QUITTER\n");
     printf("entrer le numero de l'action a suivre : ");
     do
     {
@@ -156,6 +166,7 @@ void demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_act
 
     if (choix==1) /// 1- NOUVELLE PARTIE
     {
+        system("cls");
         // definition des stock de maisons et hotels
         *nb_maison = 32;
         *nb_hotel = 12;
@@ -199,6 +210,7 @@ void demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_act
 
     else if(choix == 2) ///2-CHARGER UNE PARTIE
     {
+        system("cls");
         i = 0;
         init_nom_sauvegarde(fichiers);
         init_sauvegarde(tabJoueur, plateau, fichiers, nb_joueur_actu, nb_joueur, nb_maison, nb_hotel);
@@ -207,13 +219,18 @@ void demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_act
 
     else if(choix == 3) ///3-REGLE
     {
+        system("cls");
         regles();
+        system("cls");
+        demarrage(nb_maison, nb_hotel, nb_joueur, nb_joueur_actu, k, plateau, tabJoueur, fichiers);
     }
 
     else if(choix == 4)
     {
-        //fonction qui fait quitter le jeu ?
+        system("cls");
+        return 0;
     }
+    return 0;
 }
 
 
@@ -544,7 +561,7 @@ void afficher_point(t_joueur joueur[6],int i,t_mono plat[32],int ligne)
 void affichage_possession(t_joueur joueur[6], int i,int ligne)
 {
     int j;
-    int a=0;
+
     gotoligcol(15+ligne,22);
     printf("%s",joueur[i].nom);
     gotoligcol(16+ligne,22);

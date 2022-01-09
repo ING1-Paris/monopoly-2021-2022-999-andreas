@@ -20,7 +20,7 @@ int main()
 
     int info_villes[32][9] ={{60,50,2,10,30,90,160,250,1},/// prix | prix maison | loyer sans maison | 1 maison | 2 maisons | 3 maisons | 4 maisons | 1 hotel | place sur le plateau
                         {0,0,0,0,0,0,0,0,2},              ///   0         1                 2              3          4           5           6          7                8
-                        {60,50,4,20,60,180,320,450,3},    
+                        {60,50,4,20,60,180,320,450,3},
                         {0,0,0,0,0,0,0,0,4},
                         {200,0,25,50,100,200,0,0,5},
                         {100,50,6,30,90,270,400,550,6},
@@ -50,7 +50,7 @@ int main()
                         {350,200,35,175,500,1100,1300,1500,30},
                         {400,200,50,200,600,1400,1700,2000,31},
                         {0,0,0,0,0,0,0,0,32}};
-                        
+
 
     plateau[0].type =ARRIVE;
     plateau[1].type =VILLE;
@@ -98,6 +98,11 @@ int carte=rand()%(15);
 
     do
     {
+        if (plateau[tabJoueur[i].position[1]].type == PRISON)
+        {
+            casedouane(de, tabJoueur, i);
+        }
+
 
         tabJoueur[i].position[0]=tabJoueur[i].position[1];
         affichage_plateau(ligne);
@@ -188,7 +193,11 @@ int carte=rand()%(15);
 
             case PRISON:
             {
-                casedouane( de,tabJoueur,i);
+                gotoligcol(11+ligne,148+i);
+                printf("%c",tabJoueur[i].pionjoueur);
+                tabJoueur[i].position[1]=8;
+                tabJoueur[i].position[0]=7;
+
                 afficher_point(tabJoueur,i,plateau,ligne);
                 break;
             }
@@ -209,8 +218,8 @@ int carte=rand()%(15);
                 break;
             }
         }
+
         affichage_possession(tabJoueur,i,ligne);
-        menu_achat_vente_maison(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
 
         ///action apres le tour
         plusieurs_gares(tabJoueur[i], plateau, info_villes);

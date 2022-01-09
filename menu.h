@@ -62,9 +62,9 @@ void nom_fichier(t_fichier* fichiers);
 void init_nom_sauvegarde(t_fichier* fichiers);
 
 //dans case
-void casechance(t_joueur tabdejoueur[6],int i, t_mono plateau [32], int ligne);
-void casedecommunaute(int ligne, int i, t_mono plateau[32], t_joueur tabdejoueur[6]);
-void casedouane( int de[3], int douane, t_joueur tabdejour[6], int i);
+int casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne, int carte);
+int casedecommunaute(int ligne, int i, t_mono plat[32], t_joueur tabdejoueur[6],int carte);
+void casedouane( int de[3], t_joueur tabdejoueur[6], int i);
 
 //dans sous-programmes
 int nb_alea();
@@ -74,15 +74,13 @@ void gotoligcol( int lig, int col );
 void setConsoleSize();
 void affichage_plateau(int ligne);
 void afficher_point(t_joueur joueur[6],int i,t_mono plateau[32],int ligne);
-int casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne, int carte);
-int casedecommunaute(int ligne, int i, t_mono plat[32], t_joueur tabdejoueur[6],int carte);
-void casedouane( int de[3], t_joueur tabdejoueur[6], int i);
+
 void affichage_possession(t_joueur joueur[6], int i,int ligne);
 void lance_de(int etat_de[3]);
 int info_case(int info_villes[32][9], int la_case_choisi, int info_a_rendre);
 int fin_partie(t_joueur tabJoueur[], int nb_joueur);
-void regles();
-void demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu, int* k, t_mono plateau[32],t_joueur tabJoueur[6], t_fichier* fichiers);
+int regles();
+int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu, int* k, t_mono plateau[32],t_joueur tabJoueur[6], t_fichier* fichiers);
 
 //dans banque
 void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
