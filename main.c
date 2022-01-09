@@ -19,17 +19,17 @@ int main()
     t_mono plateau[32];
 
     int info_villes[32][9] ={{60,50,2,10,30,90,160,250,1},/// prix | prix maison | loyer sans maison | 1 maison | 2 maisons | 3 maisons | 4 maisons | 1 hotel | place sur le plateau
-                        {0,0,0,0,0,0,0,0,2},
-                        {60,50,4,20,60,180,320,450,3},    ///   0         1                 2              3          4           5           6          7                8
+                        {0,0,0,0,0,0,0,0,2},              ///   0         1                 2              3          4           5           6          7                8
+                        {60,50,4,20,60,180,320,450,3},    
                         {0,0,0,0,0,0,0,0,4},
-                        {100,0,50,100,150,200,0,0,5},
+                        {200,0,25,50,100,200,0,0,5},
                         {100,50,6,30,90,270,400,550,6},
                         {120,50,8,40,100,300,450,600,7},
                         {0,0,0,0,0,0,0,0,8},
                         {120,100,10,50,150,450,625,750,9},
                         {140,100,10,50,150,450,625,750,10},
                         {160,100,12,60,180,500,700,900,11},
-                        {0,0,50,100,150,200,0,0,12},
+                        {200,0,25,50,100,200,0,0,12},
                         {180,100,14,70,200,550,750,950,13},
                         {180,100,14,70,200,550,750,950,14},
                         {180,100,16,80,220,600,800,1000,15},
@@ -37,20 +37,20 @@ int main()
                         {220,150,18,90,250,70,875,1050,17},
                         {240,150,20,100,300,750,925,1100,18},
                         {0,0,0,0,0,0,0,0,19},
+                        {200,0,25,50,100,200,0,0,21},
                         {0,0,0,0,0,0,0,0,20},
-                        {0,0,50,100,150,200,0,0,21},
                         {260,150,22,110,330,800,975,1150,22},
                         {280,150,24,120,360,850,1025,1200,23},
                         {0,0,0,0,0,0,0,0,24},
                         {300,200,26,130,390,900,1100,1275,25},
                         {300,200,26,130,390,900,1100,1275,26},
                         {320,200,28,150,450,1000,1200,1400,27},
-                        {0,0,0,0,0,0,0,0,28},
-                        {100,0,50,100,150,200,0,0,29},
+                        {200,0,25,50,100,200,0,0,28},
+                        {0,0,0,0,0,0,0,0,29},
                         {350,200,35,175,500,1100,1300,1500,30},
                         {400,200,50,200,600,1400,1700,2000,31},
                         {0,0,0,0,0,0,0,0,32}};
-                        //il manque les gares :(
+                        
 
     plateau[0].type =ARRIVE;
     plateau[1].type =VILLE;
@@ -89,82 +89,13 @@ int main()
 
 ///------------------------------------------menu demarrage
 
-    choix = menu();
+demarrage(&nb_maison, &nb_hotel, &nb_joueur, &nb_joueur_actu, &i, plateau, tabJoueur, &fichiers);
 
+///----------------------------------------------------------------LE JEU
+///initialisation des trucs à initialiser systematiquement
 
+int carte=rand()%(15);
 
-    if (choix==1) /// 1- NOUVELLE PARTIE
-    {
-        // definition des stock de maisons et hotels
-        nb_maison = 32;
-        nb_hotel = 12;
-
-        //choix du nombre de joueur entre 2 et 6 joueurs // il faudrait faire une alocation dynamique pour le tabJoueur
-        do
-        {
-            printf("nombre de joueur entre 2 et 6");
-            scanf("%d",&nb_joueur);
-        }
-        while(nb_joueur<2 || nb_joueur>6);
-
-        //remplissage du tableau de structure joueur
-        for(i=0;i<nb_joueur;i++)
-        {
-            printf("entrez le nom du joueur n %d",i+1);
-            scanf("%s",tabJoueur[i].nom);
-            fflush(stdin);
-
-            printf("choisissez un caractere pour votre pion");
-            scanf("%c",&tabJoueur[i].pionjoueur);
-            fflush(stdin);
-
-            tabJoueur[i].argent=1500;
-            tabJoueur[i].position[1]=0;
-
-            for (j=0;j<23;j++)
-            {
-                tabJoueur[i].possession[j]=0;
-            }
-        }
-
-        nom_fichier(&fichiers);
-        sauvegarde_nom(&fichiers);
-        sauvegarde(tabJoueur ,plateau, &fichiers, nb_joueur);
-
-        //choisi le joueur qui commence aleatoirement
-    }
-
-    else if(choix == 2) ///2-CHARGER UNE PARTIE
-    {
-        init_nom_sauvegarde(&fichiers);
-        init_sauvegarde(tabJoueur, plateau, &fichiers);
-
-    }
-
-    else if(choix == 3) ///3-REGLE
-    {
-        //fonction qui affiche les regles
-        regles();
-
-    }
-
-    else if(choix == 4)
-    {
-        //fonction qui fait quitter le jeu ?
-        return 0;
-    }
-
-
-
-
-    ///----------------------------------------------------------------LE JEU
-    ///initialisation des trucs à initialiser systematiquement
-
-    i = 0;
-
-    int carte=rand()%(15);
-
-    nb_joueur_actu = nb_joueur;
     do
     {
 
@@ -190,7 +121,7 @@ int main()
 
         switch(plateau[tabJoueur[i].position[1]].type)
         {
-            case 0: //VILLE
+            case VILLE:
             {
 
                 if (plateau[tabJoueur[i].position[1]].possesseder == 1)
@@ -218,7 +149,7 @@ int main()
                 break;
             }
 
-            case 1: //GARE
+            case GARE:
             {
 
                 if (plateau[tabJoueur->position[1]].possesseder == 0)
@@ -243,34 +174,34 @@ int main()
                 break;
             }
 
-            case 2: //CHANCE
+            case CHANCE:
             {
                 carte=casechance(tabJoueur, i, plateau, ligne,carte);
                 break;
             }
 
-            case 3: //COMM
+            case COMM:
             {
                 carte=casedecommunaute(ligne, i, plateau, tabJoueur,carte);
                 break;
             }
 
-            case 4: //PRISON
+            case PRISON:
             {
                 casedouane( de,tabJoueur,i);
                 afficher_point(tabJoueur,i,plateau,ligne);
                 break;
             }
 
-            case 5: //ARRIVER
-            case 6: //PARC
+            case ARRIVE:
+            case PARC:
             {
                 gotoligcol(34,75);
                 printf("reposez vous");
                 break;
             }
 
-            case 7: //IMPOT
+            case IMPOT:
             {
                 gotoligcol(34,75);
                 printf("vous etes tomber sur la case impot vous avez paye 200 euros");
@@ -281,11 +212,22 @@ int main()
         affichage_possession(tabJoueur,i,ligne);
         menu_achat_vente_maison(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
 
-        sauvegarde(tabJoueur, plateau, &fichiers, nb_joueur_actu);
+        ///action apres le tour
+        plusieurs_gares(tabJoueur[i], plateau, info_villes);
+
+        sauvegarde(tabJoueur, plateau, &fichiers,nb_joueur, nb_joueur_actu, nb_maison, nb_hotel);
         i+=1;
         if (i == nb_joueur_actu)
         {
             i = 0;
+        }
+
+        printf("voulez vous aller au menu principale ? oui:1 non:0");
+        scanf("%d", &choix);
+
+        if (choix)
+        {
+            demarrage(&nb_maison, &nb_hotel, &nb_joueur, &nb_joueur_actu, &i, plateau, tabJoueur, &fichiers);
         }
 
     }while (fin_partie(tabJoueur, nb_joueur));
