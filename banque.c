@@ -1,6 +1,44 @@
 #include "menu.h"
 
-int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9])
+/** change le loyer des gares en fonction du nombre possédé
+ * paramètres:
+ * les infos d'un joueur
+ * les infos de chaque case du plateau
+ * les infos financière de chaque terrains
+ */
+void plusieurs_gares(t_joueur jeanMichel, t_mono plateau[32], int info_villes[19][9])
+{
+    int i;
+    int nb_gares = 0;
+
+    for(i = 0; i<23; i++)
+    {
+        if (plateau[jeanMichel.possession[i]].type== GARE)
+        {
+            nb_gares+=1;
+        }
+
+    }
+
+    for(i = 0; i<23; i++)
+    {
+        if (plateau[jeanMichel.possession[i]].type== GARE)
+        {
+            plateau[jeanMichel.possession[i]].loyer = info_case(info_villes, jeanMichel.possession[i], nb_gares+1);
+        }
+    }
+}
+
+/** permet d'acheter une ville
+ * paramètres:
+ * les infos d'un joueurs
+ * les infos de chaque case du plateau
+ * le nombre de maison restante
+ * le nombre d'hotel restant
+ * les infos financière de chaque terrains
+ */
+int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
+  
 {
 
     jeanMichel->argent -= info_case(info_villes, jeanMichel->position[1], 0);
@@ -11,7 +49,15 @@ int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* n
     return 0;
 }
 
-void ajout_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9])
+/** permet d'ajouter une ville
+ * paramètres:
+ * les infos d'un joueur
+ * les infos de chaque case du plateau
+ * le nombre de maison resante
+ * le nombe de hotel restant
+ * les infos financière de chaque terrains
+ */
+void ajout_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
 {
     plateau[jeanMichel->position[1]].maison += 1;
     jeanMichel->argent -= info_case(info_villes, jeanMichel->position[1], 1); // on prend l'info 1 (le prix d'une upgrade) de la case choisi dans info_villes
@@ -20,9 +66,26 @@ void ajout_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int*
 
 }
 
-void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9])
+
+/** permet de vendre une maison
+ * paramètres:
+ * les infos d'un joueur
+ * les infos de chaque case du plateau
+ * le nombre de maison resante
+ * le nombe de hotel restant
+ * les infos financière de chaque terrains
+ */
+void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
 {
     int quantite;
+    int case_choisi;
+
+    do
+    {
+        printf("avec quelle case voulez vous interagir ? ");
+        scanf("%d", &case_choisi);
+    }
+    while((plateau[jeanMichel->position[0]].hotel)+(plateau[jeanMichel->position[0]].maison)==0 || possession(*jeanMichel));
 
     do
     {
@@ -30,27 +93,34 @@ void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int
         scanf("%d", &quantite);
         printf("\n");
     }
-    while(quantite<(plateau[jeanMichel->position[1]].hotel)+(plateau[jeanMichel->position[1]].maison));
+    while(quantite<(plateau[case_choisi].hotel)+(plateau[case_choisi].maison));
 
-    if (plateau[jeanMichel->position[1]].hotel)
+    if (plateau[case_choisi].hotel)
     {
         quantite -=1;
-        plateau[jeanMichel->position[1]].hotel = 0;
+        plateau[case_choisi].hotel = 0;
         *nb_hotel +=1;
-        jeanMichel->argent +=(info_case(info_villes, jeanMichel->position[1],1))/2;
+        jeanMichel->argent +=(info_case(info_villes, case_choisi,1))/2;
     }
 
-    if (plateau[jeanMichel->position[1]].maison)
+    if (plateau[case_choisi].maison)
     {
-        plateau[jeanMichel->position[1]].maison -=quantite;
+        plateau[case_choisi].maison -=quantite;
         *nb_maison +=quantite;
-        jeanMichel->argent += (quantite * ((info_case(info_villes, jeanMichel->position[1],1)/2)));
-        plateau[jeanMichel->position[1]].loyer = info_case(info_villes, jeanMichel->position[1], (plateau[jeanMichel->position[1]].maison+2));
+        jeanMichel->argent += (quantite * ((info_case(info_villes, case_choisi,1)/2)));
+        plateau[case_choisi].loyer = info_case(info_villes, case_choisi, (plateau[case_choisi].maison+2));
 
     }
 }
-
-void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9])
+/** permet d'ajouter un hotel
+ * paramètres:
+ * les infos d'un joueur
+ * les infos de chaque case du plateau
+ * le nombre de maison resante
+ * le nombe de hotel restant
+ * les infos financière de chaque terrains
+ */
+void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
 {
 
     plateau[jeanMichel->position[1]].hotel  += 1;
@@ -62,7 +132,15 @@ void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* 
 
 }
 
-void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9])
+/** permet d'hypotheque un terrain
+ * paramètres:
+ * les infos d'un joueur
+ * les infos de chaque case du plateau
+ * le nombre de maison resante
+ * le nombe de hotel restant
+ * les infos financière de chaque terrains
+ */
+void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
 {
     int la_case_choisi;
 
@@ -89,7 +167,15 @@ void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* n
     plateau[la_case_choisi].possesseder=plateau[la_case_choisi].possesseder-1;
 }
 
-void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9])
+/** menu permettant les actions sur une ville possedé
+ * paramètres:
+ * les infos d'un joueur
+ * les infos de chaque case du plateau
+ * le nombre de maison resante
+ * le nombe de hotel restant
+ * les infos financière de chaque terrains
+ */
+void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
 {
     int choix;
     do

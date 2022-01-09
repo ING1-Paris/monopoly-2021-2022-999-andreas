@@ -6,7 +6,7 @@
 #include <windows.h>
 #include <string.h>
 
-#define LEN 60
+#define LEN 60 // longueur d'un nom de fichier
 
 #define VILLE 0
 #define GARE 1
@@ -47,18 +47,24 @@ typedef struct info_joueur // regroupe les infos d'un joueur
     int possession [32]; //on met juste la place des proprieters, tout le reste est stocke dans le plateau
 } t_joueur;
 
+#include "sauvegarde.c"
 #include "sous-programmes.c"
 #include "banque.c"
-#include "sauvegarde.c"
 #include "case.c"
 
 
-//dans save
-int init_sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichiers);
-int sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichiers, int nb_joueur);
+
+//dans sauvegarde
+int init_sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichiers, int *nb_joueur_actu, int* nb_joueur, int* nb_maison, int* nb_hotel);
+int sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichiers, int nb_joueur, int nb_joueur_actu, int nb_maison, int nb_hotel);
 int sauvegarde_nom(t_fichier* fichiers);
 void nom_fichier(t_fichier* fichiers);
 void init_nom_sauvegarde(t_fichier* fichiers);
+
+//dans case
+void casechance(t_joueur tabdejoueur[6],int i, t_mono plateau [32], int ligne);
+void casedecommunaute(int ligne, int i, t_mono plateau[32], t_joueur tabdejoueur[6]);
+void casedouane( int de[3], int douane, t_joueur tabdejour[6], int i);
 
 //dans sous-programmes
 int nb_alea();
@@ -76,8 +82,7 @@ void lance_de(int etat_de[3]);
 int info_case(int info_villes[32][9], int la_case_choisi, int info_a_rendre);
 int fin_partie(t_joueur tabJoueur[], int nb_joueur);
 void regles();
-
-
+void demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu, int* k, t_mono plateau[32],t_joueur tabJoueur[6], t_fichier* fichiers);
 
 //dans banque
 void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
@@ -86,5 +91,5 @@ void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int
 void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
 void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
 int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
-
+void plusieurs_gares(t_joueur jeanMichel, t_mono plateau[32], int info_villes[23][9]);
 #endif // MENU_H_INCLUDED
