@@ -145,7 +145,7 @@ int init_sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichie
         fscanf(pf, "%s", tabjoueurs[i].nom);
         fscanf(pf, "%d", &tabjoueurs[i].position[1]);
         fscanf(pf, "%d", &tabjoueurs[i].position[1]);
-        for (j = 0 ;j<10 ;j++)
+        for (j = 0 ;j<34 ;j++)
         {
             fscanf(pf, "%d", &tabjoueurs[i].possession[j]);
         }
@@ -215,7 +215,7 @@ int sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichiers, i
         fprintf(pf, "%s ",tabjoueurs[i].nom);
         fprintf(pf, "%d ",tabjoueurs[i].position[1]);
         fprintf(pf, "%d ",tabjoueurs[i].position[0]);
-        for (j = 0; j<20; j++)
+        for (j = 0; j<34; j++)
         {
             fprintf(pf, "%d ",tabjoueurs[i].possession[j]);
         }

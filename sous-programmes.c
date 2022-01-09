@@ -76,9 +76,9 @@ int regles()
 int possession(t_joueur jeanMichel)
 {
     int i;
-    for(i = 0; i<23; i++)
+    for(i = 0; i<34; i++)
     {
-        if (jeanMichel.possession[i]==jeanMichel.position[0])
+        if (jeanMichel.possession[i]==jeanMichel.position[1])
         {
             return 1;
         }
@@ -208,7 +208,7 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
             tabJoueur[i].nb_double = 0;
             tabJoueur[i].prison = 0;
 
-            for (j=0;j<23;j++)
+            for (j=0;j<34;j++)
             {
                 tabJoueur[i].possession[j]=0;
             }
@@ -222,7 +222,7 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
 
 
         *k = rand()% (*nb_joueur-1);
-        printf("c'est %s qui commence !", tabJoueur[*k]);
+        printf("c'est %s qui commence !", tabJoueur[*k].nom);
         break;
     }
 
@@ -232,6 +232,7 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
         *k = 0;
         init_nom_sauvegarde(fichiers);
         init_sauvegarde(tabJoueur, plateau, fichiers, nb_joueur_actu, nb_joueur, nb_maison, nb_hotel);
+
         break;
     }
 

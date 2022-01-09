@@ -122,12 +122,14 @@ int carte=rand()%(15);
 
         if(tabJoueur[i].nb_double)
         {
-            gotoligcol(11+ligne,148+i);
-            printf("%c",tabJoueur[i].pionjoueur);
-            tabJoueur[i].position[1]=8;
-            tabJoueur[i].position[0]=7;
-
-            afficher_point(tabJoueur,i,plateau,ligne);
+            if(tabJoueur[i].nb_double == 3)
+            {
+                gotoligcol(11+ligne,148+i);
+                printf("%c",tabJoueur[i].pionjoueur);
+                tabJoueur[i].position[1]=8;
+                tabJoueur[i].position[0]=7;
+                afficher_point(tabJoueur,i,plateau,ligne);
+            }
         }
 
         tabJoueur[i].position[1]=(tabJoueur[i].position[1]+de[0]+de[1])%32;
@@ -152,9 +154,14 @@ int carte=rand()%(15);
                 if (plateau[tabJoueur[i].position[1]].possesseder == 1)
                 {
                     gotoligcol(34,75);
-                    printf("vous etes tomber sur une ville qui appartient a un joueur tu as a paye %d euros",plateau[tabJoueur->position[1]].loyer);
+                    printf("vous etes tomber sur une ville qui appartient a un joueur vous devez paye %d euros",plateau[tabJoueur->position[1]].loyer);
                     scanf("%d",&valid);
                     tabJoueur[i].argent -= plateau[tabJoueur->position[1]].loyer;
+                }
+
+                else if(possession(tabJoueur[i]))
+                {
+                    menu_achat_vente_maison(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
                 }
 
                 else
@@ -167,7 +174,8 @@ int carte=rand()%(15);
                         gotoligcol(35,53);
                         printf("Elle coute %d euros voulez vous l acheter. Entrez 1 pour oui ou 2 pour non",prix_case);
                         scanf("%d",&valid);
-                    }while (valid<1 || valid >2);
+                    }
+                    while (valid<1 || valid >2);
 
                     if (valid == 1)
                     {
@@ -198,9 +206,17 @@ int carte=rand()%(15);
                     }
                 }
 
+                else if(possession(tabJoueur[i]))
+                {
+                    menu_achat_vente_maison(&tabJoueur[i], plateau, &nb_maison, &nb_hotel, info_villes);
+                }
+
                 else
                 {
-                     tabJoueur[i].argent -= plateau[tabJoueur->position[1]].loyer;
+                    gotoligcol(34,75);
+                    printf("vous etes tomber sur une gare qui appartient a un joueur vous devez payer %d euros",plateau[tabJoueur->position[1]].loyer);
+                    scanf("%d",&valid);
+                    tabJoueur[i].argent -= plateau[tabJoueur->position[1]].loyer;
                 }
 
                 break;
@@ -220,12 +236,12 @@ int carte=rand()%(15);
 
             case PRISON:
             {
-                /*gotoligcol(11+ligne,148+i);
+                gotoligcol(11+ligne,148+i);
                 printf("%c",tabJoueur[i].pionjoueur);
                 tabJoueur[i].position[1]=8;
                 tabJoueur[i].position[0]=7;
 
-                afficher_point(tabJoueur,i,plateau,ligne);*/
+                afficher_point(tabJoueur,i,plateau,ligne);
                 break;
             }
 
@@ -258,12 +274,23 @@ int carte=rand()%(15);
         ///action apres le tour
         plusieurs_gares(tabJoueur[i], plateau, info_villes);
 
+        if(tabJoueur[i].nb_double == 3)
+        {
+            gotoligcol(11+ligne,148+i);
+            printf("%c",tabJoueur[i].pionjoueur);
+            tabJoueur[i].position[1]=8;
+            tabJoueur[i].position[0]=7;
+            afficher_point(tabJoueur,i,plateau,ligne);
+        }
+        tabJoueur[i].nb_double = 0;
+
         sauvegarde(tabJoueur, plateau, &fichiers,nb_joueur, nb_joueur_actu, nb_maison, nb_hotel);
         i+=1;
         if (i == nb_joueur_actu)
         {
             i = 0;
         }
+
         gotoligcol(37,55);
         printf("voulez vous aller au menu principale ? oui:1 non:0");
         scanf("%d", &choix);

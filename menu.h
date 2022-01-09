@@ -82,6 +82,7 @@ int fin_partie(t_joueur tabJoueur[], int nb_joueur);
 int regles();
 void affichage_infocase(t_joueur joueur[6], int i,int ligne,t_mono plateau[32], int info_villes[19][9] );
 int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu, int* k, t_mono plateau[32],t_joueur tabJoueur[6], t_fichier* fichiers);
+int possession(t_joueur jeanMichel);
 
 //dans banque
 void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
