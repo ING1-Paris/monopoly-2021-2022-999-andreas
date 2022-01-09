@@ -45,6 +45,7 @@ typedef struct info_joueur // regroupe les infos d'un joueur
     int argent;
     int position[2]; // on garde en memoire la derniere case pour savoir si le joueur passe l'arrivÃ©
     int possession [32]; //on met juste la place des proprieters, tout le reste est stocke dans le plateau
+    int faillite;
 } t_joueur;
 
 #include "sauvegarde.c"
@@ -86,9 +87,9 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
 //dans banque
 void menu_achat_vente_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
 void ajout_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
-void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
+int vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
 void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
-void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
+int hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
 int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[32][9]);
 void plusieurs_gares(t_joueur jeanMichel, t_mono plateau[32], int info_villes[23][9]);
 #endif // MENU_H_INCLUDED

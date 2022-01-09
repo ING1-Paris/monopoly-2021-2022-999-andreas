@@ -38,7 +38,7 @@ void plusieurs_gares(t_joueur jeanMichel, t_mono plateau[32], int info_villes[19
  * les infos financière de chaque terrains
  */
 int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
-  
+
 {
 
     jeanMichel->argent -= info_case(info_villes, jeanMichel->position[1], 0);
@@ -75,15 +75,20 @@ void ajout_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int*
  * le nombe de hotel restant
  * les infos financière de chaque terrains
  */
-void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
+int vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
 {
     int quantite;
     int case_choisi;
 
+    printf("avec quelle case voulez vous interagir ? taper 404 si vous n'avez pas de maison\n");
     do
     {
-        printf("avec quelle case voulez vous interagir ? ");
         scanf("%d", &case_choisi);
+
+        if(case_choisi == 404)
+        {
+            return 0;
+        }
     }
     while((plateau[jeanMichel->position[0]].hotel)+(plateau[jeanMichel->position[0]].maison)==0 || possession(*jeanMichel));
 
@@ -111,6 +116,7 @@ void vendre_maison(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int
         plateau[case_choisi].loyer = info_case(info_villes, case_choisi, (plateau[case_choisi].maison+2));
 
     }
+    return 0;
 }
 /** permet d'ajouter un hotel
  * paramètres:
@@ -140,14 +146,18 @@ void ajout_hotel(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* 
  * le nombe de hotel restant
  * les infos financière de chaque terrains
  */
-void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
+int hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
 {
     int la_case_choisi;
-
+    printf("avec quelle case voulez vous interagir ? taper 404 si vous n'avez de proprieter\n");
     do
     {
-        printf("avec quelle case voulez vous interagir ?\n"); // le mieux serait de pouvoir cliquer
         scanf("%d", &la_case_choisi);
+
+        if(la_case_choisi == 404)
+        {
+            return 0;
+        }
     }
     while(jeanMichel->possession[la_case_choisi]==0);
 
@@ -165,6 +175,44 @@ void hypotheque(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* n
     plateau[la_case_choisi].maison = 0;
     (plateau[la_case_choisi].hotel) = 0;
     plateau[la_case_choisi].possesseder=plateau[la_case_choisi].possesseder-1;
+
+    return 0;
+}
+
+void pas_argent(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* nb_hotel, int info_villes[19][9])
+{
+    int i;
+
+    printf("1. vendre une maison\n");
+    printf("2. hypotheque une case\n");
+    printf("3. abondonner");
+    do
+    {
+        scanf("%d",&i);
+    }
+    while(i!=1 && i!=2);
+
+    switch(i)
+    {
+    case 1:
+        {
+            vendre_maison(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
+            pas_argent(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
+            break;
+        }
+
+    case 2:
+        {
+            hypotheque(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
+            pas_argent(jeanMichel, plateau, nb_maison, nb_hotel, info_villes);
+            break;
+        }
+
+    case 3:
+        {
+            jeanMichel->faillite = 1;
+        }
+    }
 }
 
 /** menu permettant les actions sur une ville possedé

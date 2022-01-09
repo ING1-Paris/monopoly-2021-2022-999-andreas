@@ -220,7 +220,14 @@ int carte=rand()%(15);
             }
         }
 
+        if(tabJoueur[i].argent<0)
+        {
+            pas_argent(tabJoueur, plateau, &nb_maison, &nb_hotel, info_villes);
+        }
+
         affichage_possession(tabJoueur,i,ligne,plateau);
+
+
 
         ///action apres le tour
         plusieurs_gares(tabJoueur[i], plateau, info_villes);
