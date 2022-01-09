@@ -30,7 +30,6 @@ typedef struct monopoly
     int loyer;
     int maison;
     int hotel;
-    int presence;
     int hypo; // si c'est hypotheque ou pas
     int possesseder;
 

@@ -1,5 +1,5 @@
 #include "menu.h"
-// fonction pour afficher les regles (je crois que Ã§a se voit)
+// fonction pour afficher les regles (je crois que ça se voit)
 int regles()
 {
     int choix;
@@ -28,31 +28,31 @@ int regles()
     printf("Autres cases :\n");
     printf("\n");
     printf("-Le joueur tombe sur la Case Chance : il tire une carte Chance. Comme son nom ne l'indique pas, les cartes Chances ne sont pas forcement synonyme de bonnes chances : La carte Chance  peut en effet generer une amende pour le joueur.\n");
-    printf(" fun fact :Le terme Chance dans les editions franÃ§aises est un faux-ami puisqu'il s'agit d'une adaptation de l'anglais Chance qui signifie hasard et donc pas necessaire un bon hasard.\n");
+    printf(" fun fact :Le terme Chance dans les editions françaises est un faux-ami puisqu'il s'agit d'une adaptation de l'anglais Chance qui signifie hasard et donc pas necessaire un bon hasard.\n");
     printf("-Le joueur tombe sur une Case Caisse de Communaute : il doit alors tirer une carte Caisse de Communaute.\n");
     printf("-Le joueur tombe sur la Case Taxe de luxe : Pas de chance, il doit payer le montant correspondant a la banque.\n");
     printf("-Le joueur passe sur la Case Depart : S'il s'arrete exactement sur cette case, il gagne 400 euros. S'il ne fait que passer par cette case, il ne gagne que 200 euros.\n");
-    printf("-Le joueur s'arrete sur la Case ImpÃ´ts sur le revenu : il doit alors payer 200 euros.\n");
+    printf("-Le joueur s'arrete sur la Case Impôts sur le revenu : il doit alors payer 200 euros.\n");
     printf("-Le joueur tombe sur la Case Allez en Prison : Il doit directement se rendre en prison sans passer par la case depart et donc sans toucher les 200 ou 400 euros prevus normalement.\n");
     printf("-Le joueur arrive sur la Case Simple visite : Il s'agit d'une case neutre sans action particuliere. Il s'agit d'une simple visite de courtoisie aux prisonniers.\n");
-    printf("-Le joueur tombe sur la Case Prison : il applique les regles pour en sortir, et dans l'edition Monopoly, regles maison, il ne perÃ§oit plus ses loyers.\n");
+    printf("-Le joueur tombe sur la Case Prison : il applique les regles pour en sortir, et dans l'edition Monopoly, regles maison, il ne perçoit plus ses loyers.\n");
     printf("-Le joueur s'arrete sur la Case Parc gratuit : il s'agissait d'une case neutre sans action.\n");
-    printf("Les terrains sont groupes par couleur. Des qu'un joueur est en possession d'un terrain, il pourra y construire des maisons et des hÃ´tels s'il tombe sur celui-ci. Un hÃ´tel correspond a 5 maisons.\n");
+    printf("Les terrains sont groupes par couleur. Des qu'un joueur est en possession d'un terrain, il pourra y construire des maisons et des hôtels s'il tombe sur celui-ci. Un hôtel correspond a 5 maisons.\n");
     printf("\n");
     printf("Case Prison :\n");
     printf("\n");
     printf("S'il tombe sur la case correspondante, ou s'il tire une mauvaise carte Chance, le joueur pourra se retrouver en prison avec l'impossibilite d'avancer dans le jeu. Il existe exactement 3 scenarios qui peuvent pousser le joueur a\n");
     printf("devenir detenu en prison :\n");
     printf("-Le joueur s'arrete sur la case : Allez en prison ;\n");
-    printf("-Le joueur fait 3 fois de suite, un double de des (1+1, 2+2; 3+3 â€¦) ;\n");
-    printf("-Le joueur pioche une carte â€œChanceâ€ qui l'invite a se rendre en prison\n");
+    printf("-Le joueur fait 3 fois de suite, un double de des (1+1, 2+2; 3+3 …) ;\n");
+    printf("-Le joueur pioche une carte “Chance” qui l'invite a se rendre en prison\n");
     printf("\n");
     printf("Lorsqu'un joueur est detenu en prison, il pose son pion sur la case Prison et ne peut plus avancer sur le plateau. Il attend son tour jusqu'a ce que sa peine soit terminee et qu'il soit libere de prison. Ainsi, lorsqu'il est en prison,\n");
-    printf("le joueur perÃ§oit les loyers de ses terrains.\n");
+    printf("le joueur perçoit les loyers de ses terrains.\n");
     printf("\n");
     printf("Il existe plusieurs methodes qui permettent de sortir de prison au Monopoly :\n");
     printf("-Le joueur prisonnier detient la carte : Vous etes libere de prison qu'il peut acheter a un adversaire ou qu'il peut avoir dans son patrimoine) ;\n");
-    printf("-Lors de son tour de jeu, le joueur fait double des (1+1, 2+2â€¦) ;\n");
+    printf("-Lors de son tour de jeu, le joueur fait double des (1+1, 2+2…) ;\n");
     printf("-Le joueur s'acquitte d'une caution de 50 euros.\n");
     printf("\n");
     printf("La duree de detention maximale est de 3 tours. S'il n'a pas reussi a sortir de prison a ce moment la (via un double des par exemple), le joueur sera alors dans l'obligation de payer le montant de la caution fixee a 50 euros\n");
@@ -72,7 +72,7 @@ int regles()
     return 0;
 }
 
-// renvoie si la position du joueur est possessedÃ© par quelqu'un
+// renvoie si la position du joueur est possessedé par quelqu'un
 int possession(t_joueur jeanMichel)
 {
     int i;
@@ -86,8 +86,8 @@ int possession(t_joueur jeanMichel)
     return 0;
 }
 
-//renvoie le resultat d'un lancÃ© de des
-void lancer_de(int de[3])
+//renvoie le resultat d'un lancé de des
+void lancer_de(int de[3], t_joueur* jeanMichel)
 {
     de[0] = rand()%(6)+1;
     de[1] = rand()%(6)+1;
@@ -95,7 +95,7 @@ void lancer_de(int de[3])
 
     if (de[0]==de[1])
     {
-
+        jeanMichel->nb_double +=1;
         de[2]=1; // on a un double
     }
 
@@ -125,7 +125,7 @@ int fin_partie(t_joueur tabJoueur[], int nb_joueur)
 
     for(i = 0; i<nb_joueur; i++)
     {
-        if (tabJoueur[i].argent >= 1)
+        if (tabJoueur[i].argent > 0)
         {
             nb+=1;
         }
@@ -145,7 +145,7 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
     int choix;
     int i;
     int j;
-
+    system("cls");
     printf(" 888b     d888  .d88888b.  888b    888  .d88888b.  8888888b.   .d88888b.  888      Y88b   d88P\n");
     printf(" 8888b   d8888 d88P' 'Y88b 8888b   888 d88P' 'Y88b 888   Y88b d88P' 'Y88b 888       Y88b d88P\n");
     printf(" 88888b.d88888 888     888 88888b  888 888     888 888    888 888     888 888        Y88o88P\n");
@@ -161,7 +161,7 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
     {
         scanf("%d",&choix);
     }
-     while (choix<0 || choix >4);
+    while (choix<0 || choix >4);
 
     switch(choix)
     {
@@ -187,6 +187,7 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
             plateau[i].loyer=0;
             plateau[i].hotel=0;
             plateau[i].maison=0;
+
         }
         //remplissage du tableau de structure joueur
         for(i=0;i<*nb_joueur;i++)
@@ -194,6 +195,7 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
             printf("entrez le nom du joueur n %d",i+1);
             scanf("%s",tabJoueur[i].nom);
             fflush(stdin);
+            *nb_joueur_actu = *nb_joueur;
 
             printf("choisissez un caractere pour votre pion");
             scanf("%c",&tabJoueur[i].pionjoueur);
@@ -201,25 +203,33 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
 
             tabJoueur[i].argent=1500;
             tabJoueur[i].position[1]=0;
+            tabJoueur[i].position[0]=0;
+            tabJoueur[i].faillite = 0;
+            tabJoueur[i].nb_double = 0;
+            tabJoueur[i].prison = 0;
+
             for (j=0;j<23;j++)
             {
                 tabJoueur[i].possession[j]=0;
             }
         }
 
+
+
         nom_fichier(fichiers);
         sauvegarde_nom(fichiers);
         sauvegarde(tabJoueur ,plateau, fichiers, *nb_joueur, *nb_joueur_actu, *nb_maison, *nb_hotel);
 
-        *k = rand()% *nb_joueur-1;
-        printf("c'est %s qui commence", tabJoueur[*k].nom);
+
+        *k = rand()% (*nb_joueur-1);
+        printf("c'est %s qui commence !", tabJoueur[*k]);
         break;
     }
 
     case 2: ///2-CHARGER UNE PARTIE
     {
         system("cls");
-        i = 0;
+        *k = 0;
         init_nom_sauvegarde(fichiers);
         init_sauvegarde(tabJoueur, plateau, fichiers, nb_joueur_actu, nb_joueur, nb_maison, nb_hotel);
         break;
@@ -236,6 +246,11 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
 
     case 4:
     {
+        if((*k) >6)
+        {
+            demarrage(nb_maison, nb_hotel, nb_joueur, nb_joueur_actu, k, plateau, tabJoueur, fichiers);
+        }
+
         break;
     }
 
@@ -246,6 +261,7 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
     }
 
     }
+    system("cls");
     return 0;
 }
 
@@ -265,7 +281,7 @@ void gotoligcol( int lig, int col ) {
     SetConsoleCursorPosition( GetStdHandle( STD_OUTPUT_HANDLE ), mycoord );
 }
 
-//met la console en grand Ã©cran
+//met la console en grand écran
 void setConsoleSize()
 {
     keybd_event(VK_MENU,0x38,0,0); //Appuie sur ALT
@@ -277,7 +293,7 @@ void setConsoleSize()
 //affiche le plateau
 void affichage_plateau(int ligne)
 {
-    /// crÃ©ation des cases
+    /// création des cases
     int i,j;
     gotoligcol(5+ligne,0);
         printf(" \n==============================================================================================================================================================="); /// 144
@@ -513,7 +529,7 @@ void affichage_plateau(int ligne)
     printf("GRATUIT");
 }
 
-//affiche le pion ?
+//affiche le pion
 void afficher_point(t_joueur joueur[6],int i,t_mono plat[32],int ligne)
 {
     int colplat;

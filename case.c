@@ -266,7 +266,7 @@ void casedouane( int de[3], t_joueur tabdejoueur[6], int i)
             }
     }
     }while (verif==1);
-    lancer_de(de);
+    lancer_de(de, &tabdejoueur[i]);
 }
 
 int carteimpot(int i, t_joueur tabdejoueur[6])

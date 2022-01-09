@@ -26,7 +26,10 @@ void init_nom_sauvegarde(t_fichier* fichiers)
 
             fscanf(pf, "%s\n", entrer);
 
-            if((entrer[2] != 'f') && (entrer[3] != 'i')) {continue;} // on verifie que c'est un fichier valide afin de ne pas prendre inutilement les case vides
+            if((entrer[2] != 'f') && (entrer[3] != 'i'))
+            {
+                continue;
+            } // on verifie que c'est un fichier valide afin de ne pas prendre inutilement les case vides
 
             strcpy(nom_tempo[i].joueur, entrer);
 
@@ -141,11 +144,13 @@ int init_sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichie
         fscanf(pf, "%d", &tabjoueurs[i].nb_double);
         fscanf(pf, "%s", tabjoueurs[i].nom);
         fscanf(pf, "%d", &tabjoueurs[i].position[1]);
+        fscanf(pf, "%d", &tabjoueurs[i].position[1]);
         for (j = 0 ;j<10 ;j++)
         {
             fscanf(pf, "%d", &tabjoueurs[i].possession[j]);
         }
         fscanf(pf, "%d", &tabjoueurs[i].prison);
+        fscanf(pf, "%d", &tabjoueurs[i].faillite);
     }
     fclose(pf);
 
@@ -209,12 +214,13 @@ int sauvegarde(t_joueur tabjoueurs[] ,t_mono plateau[32], t_fichier* fichiers, i
         fprintf(pf, "%d ",tabjoueurs[i].nb_double);
         fprintf(pf, "%s ",tabjoueurs[i].nom);
         fprintf(pf, "%d ",tabjoueurs[i].position[1]);
+        fprintf(pf, "%d ",tabjoueurs[i].position[0]);
         for (j = 0; j<20; j++)
         {
             fprintf(pf, "%d ",tabjoueurs[i].possession[j]);
         }
         fprintf(pf, "%d\n",tabjoueurs[i].prison);
-
+        fprintf(pf, "%d\n",tabjoueurs[i].faillite);
     }
     fclose(pf);
 

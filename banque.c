@@ -44,7 +44,7 @@ int achat_ville(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* n
     jeanMichel->argent -= info_case(info_villes, jeanMichel->position[1], 0);
     jeanMichel->possession[0] = jeanMichel->position[1];
     plateau[jeanMichel->position[1]].loyer = info_case(info_villes, jeanMichel->position[1], 2);
-    plateau[jeanMichel->position[1]].possesseder++;
+    plateau[jeanMichel->position[1]].possesseder = 1;
 
     return 0;
 }
