@@ -96,7 +96,7 @@ fin = demarrage(&nb_maison, &nb_hotel, &nb_joueur, &nb_joueur_actu, &i, plateau,
 ///----------------------------------------------------------------LE JEU
 
 
-int carte=rand()%(15);
+int carte=rand()%(15);          // tire un nombre aléatoire entre 0 et 15. Il serra utilisé pour les cartes chances et carte de communauté
 
 
     do

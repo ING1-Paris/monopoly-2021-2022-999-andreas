@@ -533,22 +533,22 @@ void affichage_plateau(int ligne)
 void afficher_point(t_joueur joueur[6],int i,t_mono plat[32],int ligne)
 {
     int colplat;
-    colplat=joueur[i].position[1];
+    colplat=joueur[i].position[1];      // colplat est détermine la position du joueur sur chaque côté du plateau
     colplat=colplat%8;
-    if (joueur[i].position[1]<8)
+    if (joueur[i].position[1]<8)            // si le joueur est sur la première ligne
         {
             if (colplat!=0)
             {
                 gotoligcol(10+ligne,colplat*19+i);
-                printf("%c",joueur[i].pionjoueur);
+                printf("%c",joueur[i].pionjoueur);      // on affiche son pion sur la bonne case
             }
             else
             {
-                gotoligcol(10+ligne,5+i);
+                gotoligcol(10+ligne,5+i);                       // on affiche son pion sur la premiére case de ce côté du plateau
                 printf("%c",joueur[i].pionjoueur);
             }
         }
-        else if (joueur[i].position[1]>=8 && joueur[i].position[1]<16)
+        else if (joueur[i].position[1]>=8 && joueur[i].position[1]<16)          // on fait pareil pour chaque côté
         {
             if (colplat!=0)
             {
@@ -595,15 +595,15 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne, t_mono plateau[32
     int j;
 
     gotoligcol(15+ligne,22);
-    printf("%s",joueur[i].nom);
+    printf("%s",joueur[i].nom);         // affiche le nom du joueur
     gotoligcol(16+ligne,22);
-    printf("argent: %d",joueur[i].argent);
+    printf("argent: %d",joueur[i].argent);      // affiche son argent
     for(j=0;j<32;j++)
     {
         if(joueur[i].possession[j]!=0)
         {
 
-            switch(joueur[i].possession[j])
+            switch(joueur[i].possession[j])         // On affiche chaque possétion du joueur
             {
                 case 1:
                 {
@@ -923,7 +923,7 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne, t_mono plateau[32
         }
     }
 }
-
+// affiche les info de la case ou tombe un joueur
 void affichage_infocase(t_joueur* joueur,int ligne,t_mono plateau[32], int info_villes[19][9] )
 {
     gotoligcol(15+ligne,118);
