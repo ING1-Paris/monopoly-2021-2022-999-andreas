@@ -75,11 +75,12 @@ void setConsoleSize();
 void affichage_plateau(int ligne);
 void afficher_point(t_joueur joueur[6],int i,t_mono plateau[32],int ligne);
 
-void affichage_possession(t_joueur joueur[6], int i,int ligne);
+void affichage_possession(t_joueur joueur[6], int i,int ligne, t_mono plateau[32]);
 void lance_de(int etat_de[3]);
 int info_case(int info_villes[32][9], int la_case_choisi, int info_a_rendre);
 int fin_partie(t_joueur tabJoueur[], int nb_joueur);
 int regles();
+void affichage_infocase(t_joueur joueur[6], int i,int ligne,t_mono plateau[32], int info_villes[19][9] );
 int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu, int* k, t_mono plateau[32],t_joueur tabJoueur[6], t_fichier* fichiers);
 
 //dans banque

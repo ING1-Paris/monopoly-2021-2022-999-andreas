@@ -106,12 +106,13 @@ int carte=rand()%(15);
 
         tabJoueur[i].position[0]=tabJoueur[i].position[1];
         affichage_plateau(ligne);
-        affichage_possession(tabJoueur,i,ligne);
+        affichage_possession(tabJoueur,i,ligne,plateau);
         gotoligcol(29+ligne,70);
         printf("vous avez fait:");
         gotoligcol(30+ligne,75);
         lancer_de(de);
         tabJoueur[i].position[1]=(tabJoueur[i].position[1]+de[0]+de[1])%32;
+        affichage_infocase(tabJoueur,i,ligne,plateau,info_villes);
         for (j=0;j<nb_joueur;j++)
                 {
                     afficher_point(tabJoueur,j,plateau,ligne);
@@ -219,7 +220,7 @@ int carte=rand()%(15);
             }
         }
 
-        affichage_possession(tabJoueur,i,ligne);
+        affichage_possession(tabJoueur,i,ligne,plateau);
 
         ///action apres le tour
         plusieurs_gares(tabJoueur[i], plateau, info_villes);

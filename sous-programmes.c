@@ -179,6 +179,12 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
         }
         while(*nb_joueur<2 || *nb_joueur>6);
 
+        for (i=0;i<32;i++)
+        {
+            plateau[i].loyer=0;
+            plateau[i].hotel=0;
+            plateau[i].maison=0;
+        }
         //remplissage du tableau de structure joueur
         for(i=0;i<*nb_joueur;i++)
         {
@@ -192,7 +198,6 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
 
             tabJoueur[i].argent=1500;
             tabJoueur[i].position[1]=0;
-
             for (j=0;j<23;j++)
             {
                 tabJoueur[i].possession[j]=0;
@@ -558,7 +563,7 @@ void afficher_point(t_joueur joueur[6],int i,t_mono plat[32],int ligne)
 }
 
 //affiche les possession du joueur en train de jouer
-void affichage_possession(t_joueur joueur[6], int i,int ligne)
+void affichage_possession(t_joueur joueur[6], int i,int ligne, t_mono plateau[32])
 {
     int j;
 
@@ -579,6 +584,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne,22);
                      printf("Bucarest");
                      Color(15,0);
+                     gotoligcol(17+ligne,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 3:
@@ -587,6 +599,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+1,22);
                      printf("Sofia");
                      Color(15,0);
+                     gotoligcol(17+ligne+1,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+1,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 5:
@@ -603,6 +622,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+3,22);
                      printf("Vienne");
                      Color(15,0);
+                     gotoligcol(17+ligne+3,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+3,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 7:
@@ -611,6 +637,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+4,22);
                      printf("Lisbonne");
                      Color(15,0);
+                     gotoligcol(17+ligne+4,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+4,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 9:
@@ -619,6 +652,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+5,22);
                      printf("Berne");
                      Color(15,0);
+                     gotoligcol(17+ligne+5,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+5,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 10:
@@ -627,6 +667,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+6,22);
                      printf("Athene");
                      Color(15,0);
+                     gotoligcol(17+ligne+6,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+6,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 11:
@@ -635,6 +682,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+7,22);
                      printf("Dublin");
                      Color(15,0);
+                     gotoligcol(17+ligne+7,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+7,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 12:
@@ -650,6 +704,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+9,22);
                      printf("Stockholm");
                      Color(15,0);
+                     gotoligcol(17+ligne+9,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+9,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 14:
@@ -658,6 +719,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+10,22);
                      printf("Helsinki");
                      Color(15,0);
+                     gotoligcol(17+ligne+10,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+10,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 15:
@@ -666,6 +734,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+11,22);
                      printf("Varsovie");
                      Color(15,0);
+                     gotoligcol(17+ligne+11,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+11,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 17:
@@ -674,6 +749,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+12,22);
                      printf("Copenhague");
                      Color(15,0);
+                     gotoligcol(17+ligne+12,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+12,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 19:
@@ -682,6 +764,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+13,22);
                      printf("Luxembourg");
                      Color(15,0);
+                     gotoligcol(17+ligne+13,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+13,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 21:
@@ -697,6 +786,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+15,22);
                      printf("Amsterdam");
                      Color(15,0);
+                     gotoligcol(17+ligne+15,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+15,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 24:
@@ -705,6 +801,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+16,22);
                      printf("Bruxelles");
                      Color(15,0);
+                     gotoligcol(17+ligne+16,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+16,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 26:
@@ -713,6 +816,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+17,22);
                      printf("Madrid");
                      Color(15,0);
+                     gotoligcol(17+ligne+17,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+17,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 27:
@@ -721,6 +831,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+18,22);
                      printf("Londres");
                      Color(15,0);
+                     gotoligcol(17+ligne+18,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+18,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 28:
@@ -729,6 +846,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+19,22);
                      printf("Rome");
                      Color(15,0);
+                     gotoligcol(17+ligne+19,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+19,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 29:
@@ -744,6 +868,13 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+21,22);
                      printf("Berlin");
                      Color(15,0);
+                     gotoligcol(17+ligne+21,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+21,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
                 case 32:
@@ -752,9 +883,28 @@ void affichage_possession(t_joueur joueur[6], int i,int ligne)
                      gotoligcol(17+ligne+22,22);
                      printf("Paris");
                      Color(15,0);
+                     gotoligcol(17+ligne+22,35);
+                     printf("%d maison",plateau[joueur[i].possession[j]].maison);
+                     if (plateau[joueur[i].possession[j]].hotel!=0)
+                     {
+                         gotoligcol(17+ligne+22,35);
+                        printf("%d hotel",plateau[joueur[i].possession[j]].hotel);
+                     }
                      break;
                 }
             }
         }
     }
+}
+
+void affichage_infocase(t_joueur joueur[6], int i,int ligne,t_mono plateau[32], int info_villes[19][9] )
+{
+    gotoligcol(15+ligne,118);
+    printf("info de la case:");
+    gotoligcol(16+ligne,118);
+    printf("Le loyer est de %d euros",plateau[joueur[i].position[1]].loyer);
+    gotoligcol(17+ligne,118);
+    printf("Il y a  %d maison",plateau[joueur[i].position[1]].maison);
+    gotoligcol(18+ligne,118);
+    printf("Il y a %d hotel",plateau[joueur[i].position[1]].hotel);
 }
