@@ -155,7 +155,7 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
     printf(" 888   '   888 Y88b. .d88P 888   Y8888 Y88b. .d88P 888        Y88b. .d88P 888          888\n");
     printf(" 888       888  'Y88888P'  888    Y888  'Y88888P'  888         'Y88888P'  88888888     888\n");
     printf("\n\n");
-    printf("1- NOUVELLE PARTIE\n2-CHARGER UNE PARTIE\n3-REGLE\n4-RETOUR A LA PARTIE\n5-QUITTER\n");
+    printf("1- NOUVELLE PARTIE\n2-CHARGER UNE PARTIE\n3-REGLE\n4-QUITTER\n");
     printf("entrer le numero de l'action a suivre : ");
     do
     {
@@ -163,11 +163,8 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
     }
      while (choix<0 || choix >4);
 
-    switch(choix)
-    {
 
-
-    case 1: /// 1- NOUVELLE PARTIE
+    if (choix==1) /// 1- NOUVELLE PARTIE
     {
         system("cls");
         // definition des stock de maisons et hotels
@@ -213,38 +210,30 @@ int demarrage(int* nb_maison, int* nb_hotel, int* nb_joueur, int* nb_joueur_actu
 
         *k = rand()% *nb_joueur-1;
         printf("c'est %s qui commence", tabJoueur[*k].nom);
-        break;
+
     }
 
-    case 2: ///2-CHARGER UNE PARTIE
+    else if(choix == 2) ///2-CHARGER UNE PARTIE
     {
         system("cls");
         i = 0;
         init_nom_sauvegarde(fichiers);
         init_sauvegarde(tabJoueur, plateau, fichiers, nb_joueur_actu, nb_joueur, nb_maison, nb_hotel);
-        break;
+
     }
 
-    case 3: ///3-REGLE
+    else if(choix == 3) ///3-REGLE
     {
         system("cls");
         regles();
         system("cls");
         demarrage(nb_maison, nb_hotel, nb_joueur, nb_joueur_actu, k, plateau, tabJoueur, fichiers);
-        break;
     }
 
-    case 4:
-    {
-        break;
-    }
-
-    case 5:
+    else if(choix == 4)
     {
         system("cls");
         return 0;
-    }
-
     }
     return 0;
 }

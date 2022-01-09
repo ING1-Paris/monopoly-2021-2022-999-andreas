@@ -211,6 +211,7 @@ void pas_argent(t_joueur* jeanMichel, t_mono plateau[32], int* nb_maison, int* n
     case 3:
         {
             jeanMichel->faillite = 1;
+            break;
         }
     }
 }

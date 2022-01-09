@@ -95,12 +95,13 @@ demarrage(&nb_maison, &nb_hotel, &nb_joueur, &nb_joueur_actu, &i, plateau, tabJo
 ///initialisation des trucs à initialiser systematiquement
 
 int carte=rand()%(15);
-
+i=0;
     do
     {
+        printf("HHHHHHHHHHHELLLLLLLLLLLLLLLLLOOOOOOOOOOO");
         if (plateau[tabJoueur[i].position[1]].type == PRISON)
         {
-            casedouane(de, tabJoueur, i);
+             casedouane(de, tabJoueur, i, nb_joueur);
         }
 
 
@@ -238,7 +239,7 @@ int carte=rand()%(15);
         {
             i = 0;
         }
-
+        gotoligcol(37,55);
         printf("voulez vous aller au menu principale ? oui:1 non:0");
         scanf("%d", &choix);
 
@@ -246,7 +247,6 @@ int carte=rand()%(15);
         {
             demarrage(&nb_maison, &nb_hotel, &nb_joueur, &nb_joueur_actu, &i, plateau, tabJoueur, &fichiers);
         }
-
     }while (fin_partie(tabJoueur, nb_joueur));
 
 
