@@ -43,7 +43,7 @@ typedef struct info_joueur // regroupe les infos d'un joueur
     char pionjoueur;
     int argent;
     int position[2]; // on garde en memoire la derniere case pour savoir si le joueur passe l'arrivÃ©
-    int possession [32]; //on met juste la place des proprieters, tout le reste est stocke dans le plateau
+    int possession [34]; //on met juste la place des proprieters, tout le reste est stocke dans le plateau
     int faillite;
 } t_joueur;
 
@@ -64,7 +64,7 @@ void init_nom_sauvegarde(t_fichier* fichiers);
 //dans case
 int casechance(t_joueur tabdejoueur[6],int i, t_mono plat [32], int ligne, int carte);
 int casedecommunaute(int ligne, int i, t_mono plat[32], t_joueur tabdejoueur[6],int carte);
-void casedouane( int de[3], t_joueur tabdejoueur[6], int i);
+void casedouane( int de[3], t_joueur tabdejoueur[6], int i, int nb_joueur);
 
 //dans sous-programmes
 int nb_alea();
